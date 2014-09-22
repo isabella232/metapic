@@ -1,0 +1,6 @@
+{
+    "require": {
+        "metapic/api-client": "dev-master"
+    },
+	"minimum-stability": "dev"
+}

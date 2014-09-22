@@ -1,6 +1,10 @@
 (function ($) {
 	tinymce.PluginManager.add('metapic', function (editor, url) {
 		var dom, currentImage;
+		var editorSettings = {
+			access_token: window.parent.$_metapic_access_token,
+			api_url: "http://api.metapic.dev"
+		};
 
 		editor.on("init", function() {
 			dom = editor.dom;
@@ -23,12 +27,26 @@
 					'contenteditable': false,
 					'class': 'dashicons dashicons-tag metapic'
 				});
+
+				var deleteElement = dom.create(elementType, {
+					'data-mce-bogus': '1',
+					'contenteditable': false,
+					'class': 'dashicons dashicons-trash metapic'
+				});
+
 				$(dom.select(".dashicons-edit")).after(element);
+				$(dom.select(".dashicons-tag")).after(deleteElement);
 				$(element).on("click", function(e) {
-					var metapicEditor = currentImage.MetapicEditor({
-						access_token: "$2y$10$dd9QS4h6m2/.sz55NmOdx.WU0NPlehVdo61khohYKrN3NpHpz56AW"
-					});
+					var metapicEditor = currentImage.MetapicEditor(editorSettings);
 					metapicEditor.fireModal();
+				});
+
+				$(deleteElement).on("click", function(e) {
+					var imageId = parseInt(currentImage.attr("data-metapic-id"), 10);
+					if (imageId > 0) {
+						var metapicEditor = currentImage.MetapicEditor(editorSettings);
+						metapicEditor.deleteImage(imageId);
+					}
 				});
 			}
 		});
@@ -39,12 +57,13 @@
 			}
 		});
 
+		/*
 		editor.addButton('metapic', {
 			text:    'Metapic',
 			icon:    false,
 			onclick: function () {
 				editor.insertContent('WPExplorer.com is awesome!');
 			}
-		});
+		});*/
 	});
 })(jQuery);

@@ -51,4 +51,8 @@ call_user_func( function () {
 		$styles .= ',' . $plugin_url . '/css/metapic.css';
 		return $styles;
 	} );
+
+	add_action("wp_head", function() {
+		wp_enqueue_script( "metapic-frontend", "http://s3-eu-west-1.amazonaws.com/metapic-cdn/site/javascript/metapic/metapic.nattstad.js", ['jquery'] );
+	});
 } );
