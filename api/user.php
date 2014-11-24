@@ -35,6 +35,10 @@ class User_Api {
 		});
 	}
 
+	public function is_active() {
+		return (bool)$this->client_id;
+	}
+
 	private function get_from_store($key, Callable $value_to_store, $use_cached = true) {
 		$value = get_option($key);
 		if (!$value || !$use_cached) {

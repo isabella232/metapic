@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle3.git",
-                "reference": "d27346b6c8cb6a42092e763f8a2f674dfc560956"
+                "reference": "5e6fb7097efac7180bd75006079144025255eb63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/d27346b6c8cb6a42092e763f8a2f674dfc560956",
-                "reference": "d27346b6c8cb6a42092e763f8a2f674dfc560956",
+                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/5e6fb7097efac7180bd75006079144025255eb63",
+                "reference": "5e6fb7097efac7180bd75006079144025255eb63",
                 "shasum": ""
             },
             "require": {
@@ -96,7 +96,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2014-09-16 21:19:27"
+            "time": "2014-10-29 23:08:23"
         },
         {
             "name": "metapic/api-client",
@@ -104,12 +104,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/raket/metapic-api-client.git",
-                "reference": "be9d7a9d0c574bf5b25b6b9d8c0a91f71e9dc633"
+                "reference": "5f65f173b91fc3a9e791f77fb6b04a23b73198c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/raket/metapic-api-client/zipball/be9d7a9d0c574bf5b25b6b9d8c0a91f71e9dc633",
-                "reference": "be9d7a9d0c574bf5b25b6b9d8c0a91f71e9dc633",
+                "url": "https://api.github.com/repos/raket/metapic-api-client/zipball/5f65f173b91fc3a9e791f77fb6b04a23b73198c4",
+                "reference": "5f65f173b91fc3a9e791f77fb6b04a23b73198c4",
                 "shasum": ""
             },
             "require": {
@@ -134,21 +134,21 @@
                 }
             ],
             "description": "MetaPic PHP Client API",
-            "time": "2014-07-30 11:24:29"
+            "time": "2014-11-22 20:51:15"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "dev-master",
+            "version": "2.7.x-dev",
             "target-dir": "Symfony/Component/EventDispatcher",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "68ab3c3f50eae2b152075da722204d4de67f596f"
+                "reference": "30e571ce1bba949b44f49b977966898a41c77a01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/68ab3c3f50eae2b152075da722204d4de67f596f",
-                "reference": "68ab3c3f50eae2b152075da722204d4de67f596f",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/30e571ce1bba949b44f49b977966898a41c77a01",
+                "reference": "30e571ce1bba949b44f49b977966898a41c77a01",
                 "shasum": ""
             },
             "require": {
@@ -157,7 +157,8 @@
             "require-dev": {
                 "psr/log": "~1.0",
                 "symfony/config": "~2.0",
-                "symfony/dependency-injection": "~2.0",
+                "symfony/dependency-injection": "~2.6",
+                "symfony/expression-language": "~2.6",
                 "symfony/stopwatch": "~2.2"
             },
             "suggest": {
@@ -167,7 +168,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "2.7-dev"
                 }
             },
             "autoload": {
@@ -191,7 +192,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "http://symfony.com",
-            "time": "2014-07-28 13:20:53"
+            "time": "2014-11-20 13:24:30"
         }
     ],
     "packages-dev": [],
