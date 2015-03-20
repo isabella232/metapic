@@ -1,5 +1,6 @@
+<script type="text/javascript" src="http://metapic-api.localhost/javascript/iframeScript.js"></script>
 <script type="text/javascript">
-	(function($) {
+/*	(function($) {
 		if ($.fn.MetapicEditor) {
 			window.$_metapic_access_token = "<?= $token ?>";
 			window.$_metapic_user_config = <?= json_encode($config) ?>;
@@ -9,4 +10,5 @@
 			};
 		}
 	})(jQuery);
+	*/
 </script>
