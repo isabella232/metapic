@@ -4,6 +4,6 @@
 	$.fn.MetapicEditor.config = {
 		access_token: window.$_metapic_access_token,
 		client_id: "591571223752267",
-		api_url: "http://api.metapic.dev"
+		api_url: "http://metapic-api.localhost/"
 	};
 })(jQuery);
