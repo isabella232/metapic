@@ -101,12 +101,14 @@
             icon: false,
             onclick: function () {
                 $.get( "/?metapic_randomNummber", function( data ) {
+                    var src=$(editor.selection.getNode()).attr("src")
                     data=JSON.parse( data);
                     $.event.trigger({
                         type: "metapic",
                         baseUrl:data['metapicApi'],
                         startPage: "tag-editor",
                         hideSidebar:true,
+                        imgSrc:src,
                         text:editor.selection.getNode(),
                         randomKey:data['random_token']
                     });

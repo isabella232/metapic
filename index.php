@@ -117,7 +117,7 @@ call_user_func( function () {
 	}, 100);
 	*/
 });
-
+/*
 add_filter('tiny_mce_before_init', 'vipx_filter_tiny_mce_before_init');
 function vipx_filter_tiny_mce_before_init( $options ) {
     if ( ! isset( $options['extended_valid_elements'] ) ) {
@@ -136,7 +136,7 @@ function vipx_filter_tiny_mce_before_init( $options ) {
     $options['custom_elements']         .= 'div[contenteditable|class|id|style]';
     return $options;
 }
-
+*/
 //options parts
 add_action('admin_init', 'plugin_admin_init');
 function plugin_admin_init(){
