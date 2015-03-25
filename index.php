@@ -123,11 +123,11 @@ call_user_func( function () {
         add_options_page('Metapic', 'Metapic', 'manage_options', 'metapic_settings', 'metapic_options_page');
     }
 
-    /*
-    add_action("wp_footer", function() use ($user, $config, $token, $plugin_dir, $plugin_url) {
+
+    add_action("wp_footer", function() use ($plugin_dir, $plugin_url) {
         require($plugin_dir."/templates/frontend-js.php");
     }, 100);
-    */
+
 });
 /*
 add_filter('tiny_mce_before_init', 'vipx_filter_tiny_mce_before_init');
