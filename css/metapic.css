@@ -3,7 +3,7 @@
 }
 
 #metapic-backdrop {
-    background: rgba(60,73,81,.8);
+    background: rgba(60,73,81,.9);
     background: rgba(#3C4951,.5);
     position: fixed;
     top: 0px;
@@ -11,4 +11,8 @@
     left: 0px;
     right: 0px;
     z-index: 100150;
+}
+
+html body.metapic-iframe-open {
+    overflow: hidden !important;
 }
