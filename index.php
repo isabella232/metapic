@@ -97,6 +97,11 @@ call_user_func( function () {
     }, 100);
 */
 
+	add_action( 'admin_enqueue_scripts', function ( $styles ) use ( $plugin_url ) {
+		wp_enqueue_style( 'metapic_admin_css', $plugin_url . '/css/metapic.css' );
+	});
+
+
     add_action( 'admin_enqueue_scripts', function ( $hook ) use ( $plugin_url ) {
         if ($hook != 'post.php' && $hook != 'post-new.php') return;
 
