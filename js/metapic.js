@@ -81,7 +81,7 @@
                         type: "metapic",
                         text:editor.selection.getContent(),
                         baseUrl:data['metapicApi'],
-                        startPage: "find",
+                        startPage: "find/default",
                         hideSidebar:true,
                         randomKey:data['random_token']
                     })
