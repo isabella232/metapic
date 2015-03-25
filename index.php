@@ -14,20 +14,20 @@ use MetaPic\User_Api;
 use MetaPic\UserApiClient;
 
 call_user_func( function () {
-	$plugin_url = plugins_url() . '/' . basename( __DIR__ );
-	$plugin_dir = dirname( __FILE__ );
-	$mce_plugin_name = "metapic";
-	require($plugin_dir.'/vendor/autoload.php');
+    $plugin_url = plugins_url() . '/' . basename( __DIR__ );
+    $plugin_dir = dirname( __FILE__ );
+    $mce_plugin_name = "metapic";
+    require($plugin_dir.'/vendor/autoload.php');
 
-   // echo "hej";
-	/* @var User_Api $user_api */
-	/*
-	$user_api = require($plugin_dir.'/api/user.php');
-	if (!$user_api->is_active()) return;
+    // echo "hej";
+    /* @var User_Api $user_api */
+    /*
+    $user_api = require($plugin_dir.'/api/user.php');
+    if (!$user_api->is_active()) return;
 
-	$user = $user_api->get_user();
-	$token = $user_api->get_user_token();
-	$config = $user_api->get_user_config();
+    $user = $user_api->get_user();
+    $token = $user_api->get_user_token();
+    $config = $user_api->get_user_config();
 */
     add_action( 'init', 'wpse9870_init_internal' );
     function wpse9870_init_internal()
@@ -53,57 +53,69 @@ call_user_func( function () {
     }
 
 
-	add_action( 'admin_head', function () use ( $plugin_dir, $plugin_url, $mce_plugin_name ) {
+    /* add_action('wp_footer', function () use ( $plugin_dir, $plugin_url, $mce_plugin_name ) {
+         //wp_enqueue_script( 'iframeScript',"http://".$options['uri_string'].'/javascript/iframeScript.js', array(), '1.0.0', true );
+
+         //http://metapic.se/javascript/metapic/classes/Load.js" id="metapic_load" metapic_userid="2"
+
+         //js/vendor/metapic/loading.js" id="metapic_load" metapic_userid="<?= $user["id"] ?>" metapic_no_login="true" metapic_async_load="false"></script>
+         ///js/vendor/metapic/metapic.preLoginNoLogin.js" async></script>
+
+     });
+ */
+
+
+    add_action( 'admin_head', function () use ( $plugin_dir, $plugin_url, $mce_plugin_name ) {
         $options = get_option('metapic_options');
 
-		// check if WYSIWYG is enabled
-		if ('true' == get_user_option( 'rich_editing' )) {
+        // check if WYSIWYG is enabled
+        if ('true' == get_user_option( 'rich_editing' )) {
 
             //wp_enqueue_script( 'iframeScript',  , array());
             wp_enqueue_script( 'iframeScript',"http://".$options['uri_string'].'/javascript/iframeScript.js', array(), '1.0.0', true );
-			// Declare script for new button
-			add_filter( 'mce_external_plugins', function ( $plugin_array ) use ( $plugin_url, $mce_plugin_name ) {
-				$plugin_array[$mce_plugin_name] = $plugin_url . '/js/metapic.js';
-				return $plugin_array;
-			} );
+            // Declare script for new button
+            add_filter( 'mce_external_plugins', function ( $plugin_array ) use ( $plugin_url, $mce_plugin_name ) {
+                $plugin_array[$mce_plugin_name] = $plugin_url . '/js/metapic.js';
+                return $plugin_array;
+            } );
 
-			// Register new button in the editor
-			add_filter( 'mce_buttons', function ( $buttons ) use ( $mce_plugin_name ) {
-				array_push( $buttons, $mce_plugin_name );
+            // Register new button in the editor
+            add_filter( 'mce_buttons', function ( $buttons ) use ( $mce_plugin_name ) {
+                array_push( $buttons, $mce_plugin_name );
                 array_push( $buttons, "metapicimg" );
                 array_push( $buttons, "metapicCollage" );
 
-				return $buttons;
-			} );
-		}
+                return $buttons;
+            } );
+        }
 
-	});
+    });
 
-	/*
-	add_action( 'admin_print_footer_scripts', function() use ($user, $config, $token, $plugin_dir) {
-		require($plugin_dir."/templates/admin-js.php");
-	}, 100);
+    /*
+    add_action( 'admin_print_footer_scripts', function() use ($user, $config, $token, $plugin_dir) {
+        require($plugin_dir."/templates/admin-js.php");
+    }, 100);
 */
 
-	add_action( 'admin_enqueue_scripts', function ( $hook ) use ( $plugin_url ) {
-		if ($hook != 'post.php' && $hook != 'post-new.php') return;
+    add_action( 'admin_enqueue_scripts', function ( $hook ) use ( $plugin_url ) {
+        if ($hook != 'post.php' && $hook != 'post-new.php') return;
 
-		// Enqueue your scripts here!
+        // Enqueue your scripts here!
 //		wp_enqueue_script( 'metapic-jquery-ui', $plugin_url . '/js/vendor/metapic/old/jquery-ui-1.10.4.custom.min.js', ['jquery'] );
 //		wp_enqueue_script( 'metapic-image-editor', $plugin_url . '/js/vendor/metapic/old/metapic-image-editor.min.js', ['metapic-angular'] );
 //		wp_enqueue_script( 'metapic-jsonp', $plugin_url . '/js/vendor/metapic/old/jsonp-save-handler.min.js', ['metapic-image-editor'] );
-	});
+    });
 
-	add_filter( 'mce_css', function ( $styles ) use ( $plugin_url ) {
-		$styles .= ',' . $plugin_url . '/css/metapic.css';
-		return $styles;
-	} );
+    add_filter( 'mce_css', function ( $styles ) use ( $plugin_url ) {
+        $styles .= ',' . $plugin_url . '/css/metapic.css';
+        return $styles;
+    } );
 
-	add_action("wp_head", function() use ($plugin_url) {
-		// Enqueue frontend scripts here!
-		//wp_enqueue_style( 'metapic-frontend-css', $plugin_url . '/js/vendor/metapic/metapic.preLogin.css' );
-		//wp_enqueue_style( 'metapic-frontend-css', $plugin_url . '/js/vendor/metapic/metapic.postLogin.css' );
-	}, 100);
+    add_action("wp_head", function() use ($plugin_url) {
+        // Enqueue frontend scripts here!
+        //wp_enqueue_style( 'metapic-frontend-css', $plugin_url . '/js/vendor/metapic/metapic.preLogin.css' );
+        //wp_enqueue_style( 'metapic-frontend-css', $plugin_url . '/js/vendor/metapic/metapic.postLogin.css' );
+    }, 100);
 
 
     add_action('admin_menu', 'plugin_admin_add_page');
@@ -111,11 +123,11 @@ call_user_func( function () {
         add_options_page('Metapic', 'Metapic', 'manage_options', 'metapic_settings', 'metapic_options_page');
     }
 
-	/*
-	add_action("wp_footer", function() use ($user, $config, $token, $plugin_dir, $plugin_url) {
-		require($plugin_dir."/templates/frontend-js.php");
-	}, 100);
-	*/
+    /*
+    add_action("wp_footer", function() use ($user, $config, $token, $plugin_dir, $plugin_url) {
+        require($plugin_dir."/templates/frontend-js.php");
+    }, 100);
+    */
 });
 /*
 add_filter('tiny_mce_before_init', 'vipx_filter_tiny_mce_before_init');
