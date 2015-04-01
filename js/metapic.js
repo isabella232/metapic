@@ -25,7 +25,7 @@
         */
         $(document).on("metapicReturn", function(data){
             console.log("metapicReturn");
-            console.log(data.text);
+            console.log(data);
             editor.insertContent(data.text);
         });
 
@@ -88,7 +88,6 @@
                 });
 			},
 			onPostRender: function () {
-
 				editor.on('nodechange', function (event) {
 					setState(metapicButton, event);
 				});
@@ -116,7 +115,6 @@
             },
             onPostRender: function () {
                 metapicButton = this;
-
                 editor.on('nodechange', function (event) {
                     setState(metapicButton, event);
                 });
@@ -135,6 +133,7 @@
                         type: "metapic",
                         baseUrl:data['metapicApi'],
                         startPage: "collage",
+                        imgsrc:editor.selection.getNode(),
                         hideSidebar:true,
                         randomKey:data['random_token']
                     })
