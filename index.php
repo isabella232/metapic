@@ -72,7 +72,7 @@ call_user_func( function () {
         if ('true' == get_user_option( 'rich_editing' )) {
 
             //wp_enqueue_script( 'iframeScript',  , array());
-            wp_enqueue_script( 'iframeScript',"http://".$options['uri_string'].'/javascript/iframeScript.js', array(), '1.0.0', true );
+            wp_enqueue_script( 'iframeScript',$options['uri_string'].'/javascript/iframeScript.js', array(), '1.0.0', true );
             // Declare script for new button
             add_filter( 'mce_external_plugins', function ( $plugin_array ) use ( $plugin_url, $mce_plugin_name ) {
                 $plugin_array[$mce_plugin_name] = $plugin_url . '/js/metapic.js';
