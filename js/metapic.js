@@ -76,7 +76,7 @@
 			icon: false,
 			onclick: function () {
                 $.get( "/?metapic_randomNummber", function( data ) {
-                    data=JSON.parse( data);
+                    var data=JSON.parse( data);
                     $.event.trigger({
                         type: "metapic",
                         text:editor.selection.getContent(),
@@ -100,8 +100,8 @@
             icon: false,
             onclick: function () {
                 $.get( "/?metapic_randomNummber", function( data ) {
-                    var src=$(editor.selection.getNode()).attr("src")
-                    data=JSON.parse( data);
+                    var src=$(editor.selection.getNode()).attr("src");
+                    var data=JSON.parse( data);
                     $.event.trigger({
                         type: "metapic",
                         baseUrl:data['metapicApi'],
@@ -128,12 +128,13 @@
                // editor.insertContent('metapicCollage');
 
                 $.get( "/?metapic_randomNummber", function( data ) {
-                    data=JSON.parse( data);
+                    var data=JSON.parse( data);
+                    var src=$(editor.selection.getNode()).attr("src");
                     $.event.trigger({
                         type: "metapic",
                         baseUrl:data['metapicApi'],
                         startPage: "collage",
-                        imgsrc:editor.selection.getNode(),
+                        imgSrc:src,
                         hideSidebar:true,
                         randomKey:data['random_token']
                     })
@@ -154,20 +155,20 @@
 		function setState(button, event) {
 			var editorContent = editor.selection.getContent();
 			var c = editor.selection.getNode().nodeName;
-			console.log(c);
+			//console.log(c);
 
 			button.removeClass("metapic-new").removeClass("metapic-image").removeClass("metapic-text");
 			if (editor.selection.isCollapsed() && !button.hasClass("metapic-new")) {
 				removeButtonClasses(button).addClass("metapic-new");
-				console.log("BRAND NEW");
+				//console.log("BRAND NEW");
 			}
 			else if (c == "IMG") {
 				removeButtonClasses(button).addClass("metapic-image");
-				console.log("IT'S AN IMAGE");
+				//console.log("IT'S AN IMAGE");
 			}
 			else if (editorContent.length > 0) {
 				removeButtonClasses(button).addClass("metapic-text");
-				console.log("IT'S TEXT");
+				//console.log("IT'S TEXT");
 			}
 			else {
 			}
