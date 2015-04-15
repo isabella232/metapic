@@ -108,7 +108,7 @@
                         startPage: "tag-editor",
                         hideSidebar:true,
                         imgSrc:src,
-                        text:editor.selection.getNode(),
+                        //text:editor.selection.getNode(),
                         randomKey:data['random_token']
                     });
                 });
