@@ -83,7 +83,7 @@
                         baseUrl:data['metapicApi'],
                         startPage: "find/default",
                         hideSidebar:true,
-                        randomKey:data['random_token']
+                        randomKey:data['access_token']['access_token']
                     })
                 });
 			},
@@ -109,7 +109,7 @@
                         hideSidebar:true,
                         imgSrc:src,
                         //text:editor.selection.getNode(),
-                        randomKey:data['random_token']
+                        randomKey:data['access_token']['access_token']
                     });
                 });
             },
@@ -136,7 +136,8 @@
                         startPage: "collage",
                         imgSrc:src,
                         hideSidebar:true,
-                        randomKey:data['random_token']
+                        randomKey:data['access_token']['access_token']
+
                     })
                 })
             },
