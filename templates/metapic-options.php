@@ -1,4 +1,4 @@
-<div>
+<div class="wrap">
 	<h2>Metapic settings page</h2>
 	<form action="options.php" method="post">
 		<?php settings_fields('metapic_options'); ?>
