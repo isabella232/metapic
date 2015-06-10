@@ -75,8 +75,7 @@
 			text: 'Metapic text',
 			icon: false,
 			onclick: function () {
-                $.get( "/?metapic_randomNummber", function( data ) {
-                    var data=JSON.parse( data);
+                $.getJSON( "/?metapic_randomNummber", function( data ) {
                     $.event.trigger({
                         type: "metapic",
                         text:editor.selection.getContent(),
@@ -99,9 +98,8 @@
             text: 'Metapic image',
             icon: false,
             onclick: function () {
-                $.get( "/?metapic_randomNummber", function( data ) {
+                $.getJSON( "/?metapic_randomNummber", function( data ) {
                     var src=$(editor.selection.getNode()).attr("src");
-                    var data=JSON.parse( data);
                     $.event.trigger({
                         type: "metapic",
                         baseUrl:data['metapicApi'],
@@ -127,8 +125,7 @@
 
                // editor.insertContent('metapicCollage');
 
-                $.get( "/?metapic_randomNummber", function( data ) {
-                    var data=JSON.parse( data);
+                $.getJSON( "/?metapic_randomNummber", function( data ) {
                     var src=$(editor.selection.getNode()).attr("src");
                     $.event.trigger({
                         type: "metapic",

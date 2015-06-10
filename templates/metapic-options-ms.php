@@ -10,7 +10,11 @@ $this->validUser = isset($user["id"]);
 <div class="wrap">
 		<?php if (!$this->hasAccount && $this->user) {
 			$this->getTemplate("ms-options/reactivate");
-		} else {
+		}
+		else if ($this->hasAccount && $this->user) {
+			$this->getTemplate("ms-options/my-account");
+		}
+		else {
 			$this->getTemplate("ms-options/new");
 		} ?>
 </div>

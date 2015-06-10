@@ -19,23 +19,6 @@ call_user_func(function () {
 	require_once($plugin_dir . '/classes/WP_MTPC.php');
 	new WP_MTPC($plugin_dir);
 
-	add_action('init', function() {
-		add_rewrite_rule('hello.php$', 'index.php?metapic_randomNummber', 'top');
-	});
-
-	add_filter('query_vars', function ($query_vars) {
-		$query_vars[] = 'metapic_randomNummber';
-		return $query_vars;
-	});
-
-	add_action('parse_request', function ($wp) {
-		if (array_key_exists('metapic_randomNummber', $wp->query_vars)) {
-			include 'randomNummber.php';
-			exit();
-		}
-		return;
-	});
-
 	add_action('admin_head', function () use ($plugin_dir, $plugin_url, $mce_plugin_name) {
 		$options = get_option('metapic_options');
 

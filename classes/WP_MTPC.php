@@ -15,6 +15,7 @@ class WP_MTPC extends stdClass {
 		$this->setupOptionsPage();
 		$this->setupLang();
 		$this->setupNetworkOptions();
+		$this->setupIframeRoutes();
 	}
 
 	private function setupOptionsPage() {
@@ -22,12 +23,22 @@ class WP_MTPC extends stdClass {
 			$options = get_option('metapic_options');
 			register_setting('metapic_options', 'metapic_options', function ($input) {
 				$options = get_option('metapic_options');
-				$options['email_string'] = trim($input['email_string']);
-				$options['password_string'] = trim($input['password_string']);
-				$options['uri_string'] = trim($input['uri_string']);
-				$user = $this->client->login($options['email_string'], $options['password_string']);
-				var_dump($user);
-				die();
+				switch ($_POST["mtpc_action"]) {
+					case "reactivate":
+						$adminEmail = get_bloginfo("admin_email");
+						$user = $this->client->activateUser($adminEmail);
+						if (isset($user["id"])) {
+							update_option("mtpc_active_account", true);
+							update_option("mtpc_access_token", $user["access_token"]["access_token"]);
+						}
+						break;
+					default:
+						$options['email_string'] = trim($input['email_string']);
+						$options['password_string'] = trim($input['password_string']);
+						$options['uri_string'] = trim($input['uri_string']);
+						$user = $this->client->login($options['email_string'], $options['password_string']);
+						break;
+				}
 				return $options;
 			});
 
@@ -103,5 +114,26 @@ class WP_MTPC extends stdClass {
 
 	public function __set($var, $value) {
 		$this->templateVars[$var] = $value;
+	}
+
+	private function setupIframeRoutes() {
+		add_action('init', function() {
+			add_rewrite_rule('hello.php$', 'index.php?metapic_randomNummber', 'top');
+		});
+
+		add_filter('query_vars', function ($query_vars) {
+			$query_vars[] = 'metapic_randomNummber';
+			return $query_vars;
+		});
+
+		add_action('parse_request', function ($wp) {
+			if (array_key_exists('metapic_randomNummber', $wp->query_vars)) {
+				wp_send_json([
+					"access_token" => ["access_token" => get_option("mtpc_access_token")],
+					"metapicApi" => $this->client->getBaseUrl()
+				]);
+			}
+			return;
+		});
 	}
 }
