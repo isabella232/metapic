@@ -1,6 +1,12 @@
 {
-    "require": {
-        "metapic/api-client": "dev-master"
-    },
-	"minimum-stability": "dev"
+  "repositories": [
+	{
+	  "type": "vcs",
+	  "url": "https://github.com/raket/metapic-api-client.git"
+	}
+  ],
+  "require": {
+	"metapic/api-client": "dev-master"
+  },
+  "minimum-stability": "dev"
 }
