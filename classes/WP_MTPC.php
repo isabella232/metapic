@@ -14,7 +14,7 @@ class WP_MTPC extends stdClass {
 		$this->debugMode = (defined("MTPC_DEBUG") && MTPC_DEBUG === true);
 		$this->plugin_dir = $plugin_dir;
 		$this->plugin_url = plugins_url() . '/' . basename(__DIR__);
-		$apiUrl = ($this->debugMode && isset($options["uri_string"])) ? $options["uri_string"] : "http://metapic-testapi.herokuapp.com/";
+		$apiUrl = ($this->debugMode && isset($options["uri_string"]) && $options["uri_string"] != "") ? $options["uri_string"] : "http://metapic-testapi.herokuapp.com/";
 		$this->client = new ApiClient($apiUrl, get_site_option("mtpc_api_key"), get_site_option("mtpc_secret_key"));
 		$this->setupOptionsPage();
 		$this->setupLang();
@@ -54,25 +54,7 @@ class WP_MTPC extends stdClass {
 						}
 						break;
 					default:
-						$options['email_string'] = trim($input['email_string']);
-						$options['password_string'] = trim($input['password_string']);
-						$options['uri_string'] = trim($input['uri_string'], "/");
-						try {
-							$user = $this->client->login($options['email_string'], $options['password_string']);
-							if ($user) {
-								update_option("mtpc_active_account", true);
-								update_option("mtpc_access_token", $user["access_token"]["access_token"]);
-								$this->setStatusMessage("Login successful");
-							}
-							else {
-								throw new Exception;
-							}
-						}
-						catch (Exception $e) {
-							delete_option("mtpc_active_account");
-							delete_option("mtpc_access_token");
-							$this->setStatusMessage("Invalid username or password", "error");
-						}
+						$options = $this->updateOptions($options, $input);
 						break;
 				}
 				return $options;
@@ -120,6 +102,31 @@ class WP_MTPC extends stdClass {
 				});
 			}
 		});
+	}
+
+	private function updateOptions($options, $input) {
+		$options['uri_string'] = trim($input['uri_string'], "/");
+		if (!get_option("mtpc_active_account")) {
+			$options['email_string'] = trim($input['email_string']);
+			$options['password_string'] = trim($input['password_string']);
+			try {
+				$user = $this->client->login($options['email_string'], $options['password_string']);
+				if ($user) {
+					update_option("mtpc_active_account", true);
+					update_option("mtpc_access_token", $user["access_token"]["access_token"]);
+					$this->setStatusMessage("Login successful");
+				}
+				else {
+					throw new Exception;
+				}
+			}
+			catch (Exception $e) {
+				delete_option("mtpc_active_account");
+				delete_option("mtpc_access_token");
+				$this->setStatusMessage("Invalid username or password", "error");
+			}
+		}
+		return $options;
 	}
 
 	private function setupLang() {
