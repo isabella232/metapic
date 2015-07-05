@@ -21,11 +21,11 @@ call_user_func(function () {
 
 	add_action('admin_head', function () use ($plugin_dir, $plugin_url, $mce_plugin_name) {
 		$options = get_option('metapic_options');
-
-		// check if WYSIWYG is enabled
+       // check if WYSIWYG is enabled
 		if ('true' == get_user_option('rich_editing')) {
 
 			//wp_enqueue_script( 'iframeScript',  , array());
+            $options['uri_string']="http://metapic-api.localhost";
 			wp_enqueue_script('iframeScript', $options['uri_string'] . '/javascript/iframeScript.js', array(), '1.0.0', true);
 			// Declare script for new button
 			add_filter('mce_external_plugins', function ($plugin_array) use ($plugin_url, $mce_plugin_name) {

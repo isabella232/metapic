@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "87d5352afd663a5e1c64c3f6ed2201f2",
+    "hash": "ed527fcd212550f8a4836112f18609a0",
     "packages": [
         {
             "name": "guzzle/guzzle",
@@ -107,12 +107,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/raket/metapic-api-client.git",
-                "reference": "bdb8b2e9c3406b5480f39219d95e981b9eb8ac73"
+                "reference": "98d16f81741095a10e3a6117ad6639a38a210fdf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/raket/metapic-api-client/zipball/bdb8b2e9c3406b5480f39219d95e981b9eb8ac73",
-                "reference": "bdb8b2e9c3406b5480f39219d95e981b9eb8ac73",
+                "url": "https://api.github.com/repos/raket/metapic-api-client/zipball/98d16f81741095a10e3a6117ad6639a38a210fdf",
+                "reference": "98d16f81741095a10e3a6117ad6639a38a210fdf",
                 "shasum": ""
             },
             "require": {
@@ -125,7 +125,6 @@
                     "MetaPic\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "Marcus Dalgren",
@@ -137,7 +136,11 @@
                 }
             ],
             "description": "MetaPic PHP Client API",
-            "time": "2015-06-10 12:39:03"
+            "support": {
+                "source": "https://github.com/raket/metapic-api-client/tree/master",
+                "issues": "https://github.com/raket/metapic-api-client/issues"
+            },
+            "time": "2015-06-13 16:36:48"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -145,12 +148,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "d91fb729673cc8587d0471bab5be02c77d608e77"
+                "reference": "d7246885b7fe4cb5a2786bda34362d2f0e40b730"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/d91fb729673cc8587d0471bab5be02c77d608e77",
-                "reference": "d91fb729673cc8587d0471bab5be02c77d608e77",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/d7246885b7fe4cb5a2786bda34362d2f0e40b730",
+                "reference": "d7246885b7fe4cb5a2786bda34362d2f0e40b730",
                 "shasum": ""
             },
             "require": {
@@ -195,7 +198,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2015-06-11 17:27:52"
+            "time": "2015-06-24 15:32:32"
         }
     ],
     "packages-dev": [],

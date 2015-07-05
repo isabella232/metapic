@@ -18,11 +18,20 @@
 				<th scope="row"><label for="secret_key"><?php _e( 'Secret Key' ) ?></label></th>
 				<td>
 					<input name="secret_key" type="text" id="secret_key" class="regular-text" value="<?php echo esc_attr( get_site_option( 'mtpc_secret_key' ) ) ?>" />
-					<p class="description" id="admin-email-desc">
-						<?php _e( 'This email address will receive notifications. Registration and support emails will also come from this address.' ); ?>
-					</p>
 				</td>
+
+
 			</tr>
+
+            <tr>
+                <th scope="row"><label for="api_url"><?php _e( 'Api url' ) ?></label></th>
+                <?php if($debugMode) {
+                    echo '<td >
+                    <input name = "API url" type = "text" id = "api_url" class="regular-text" value = "'.esc_attr( get_site_option( 'mtpc_api_url' ) ).'" />
+                    </td >';
+                }
+                ?>
+            </tr>
 		</table>
 		<?php submit_button(); ?>
 	</form>
