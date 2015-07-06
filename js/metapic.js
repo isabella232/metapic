@@ -33,7 +33,6 @@
 		editor.on('NodeChange', function (e) {
 			var editorToolbar = dom.select("#mceu_6");
 			var metapicTagIcon = dom.select(".metapic");
-			console.log(editor);
 			if (editorToolbar.length > 0 && metapicTagIcon.length === 0) {
 				var elementType = $(editorToolbar).find(">:first-child").prop('tagName');
 				var element = dom.create(elementType, {

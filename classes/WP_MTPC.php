@@ -2,6 +2,7 @@
 use MetaPic\ApiClient;
 
 class WP_MTPC extends stdClass {
+	private $api_url = "http://metapic-testapi.herokuapp.com";
 	private $plugin_dir;
 	private $plugin_url;
 	/* @var ApiClient $client */
@@ -9,18 +10,64 @@ class WP_MTPC extends stdClass {
 	private $templateVars = [];
 	private $debugMode = false;
 
-	public function __construct($plugin_dir) {
+	public function __construct($plugin_dir, $plugin_url) {
 		$options = get_option('metapic_options');
 		$this->debugMode = (defined("MTPC_DEBUG") && MTPC_DEBUG === true);
-        $this->debugMode= true; //overwrite line above
+        $this->debugMode = true; //overwrite line above
 		$this->plugin_dir = $plugin_dir;
-		$this->plugin_url = plugins_url() . '/' . basename(__DIR__);
-        $this->client = new ApiClient( get_site_option("mtpc_api_url"), get_site_option("mtpc_api_key"), get_site_option("mtpc_secret_key"));
+		$this->plugin_url = $plugin_url;
+        $this->client = new ApiClient($this->getApiUrl(), get_site_option("mtpc_api_key"), get_site_option("mtpc_secret_key"));
+
        // echo json_encode($this->client->getUsers());
         $this->setupOptionsPage();
 		$this->setupLang();
 		$this->setupNetworkOptions();
 		$this->setupIframeRoutes();
+		if (get_option("mtpc_active_account") && get_option("mtpc_access_token"))
+			$this->setupJsOptions();
+	}
+
+	private function setupJsOptions() {
+		add_action('admin_head', function () {
+			$mce_plugin_name = "metapic";
+			$options = get_option('metapic_options');
+			// check if WYSIWYG is enabled
+			if ('true' == get_user_option('rich_editing')) {
+
+				//wp_enqueue_script( 'iframeScript',  , array());
+				//$options['uri_string']="http://metapic-api.localhost";
+				wp_enqueue_script('iframeScript', $this->getApiUrl() . '/javascript/iframeScript.js', array(), '1.0.0', true);
+				// Declare script for new button
+				add_filter('mce_external_plugins', function ($plugin_array) use ($mce_plugin_name) {
+					$plugin_array[$mce_plugin_name] = $this->plugin_url . '/js/metapic.js';
+					return $plugin_array;
+				}
+				);
+
+				// Register new button in the editor
+				add_filter('mce_buttons', function ($buttons) use ($mce_plugin_name) {
+					array_push($buttons, $mce_plugin_name);
+					array_push($buttons, "metapicimg");
+					array_push($buttons, "metapicCollage");
+
+					return $buttons;
+				});
+			}
+		});
+
+		add_action('admin_enqueue_scripts', function ($styles) {
+			wp_enqueue_style('metapic_admin_css', $this->plugin_url . '/css/metapic.css');
+		});
+
+		add_filter('mce_css', function ($styles) {
+			$styles .= ',' . $this->plugin_url . '/css/metapic.css';
+			return $styles;
+		});
+
+		add_action("wp_footer", function () {
+			require($this->plugin_dir . "/templates/frontend-js.php");
+		}, 100);
+
 	}
 
 	/**
@@ -130,13 +177,16 @@ class WP_MTPC extends stdClass {
                 $adminEmail = get_bloginfo("admin_email");
                 $user = $this->client->activateUser($adminEmail);
 
-                if($user["access_token"]==null){
+                if($user["access_token"] == null){
                     $this->client->createUser(array("email"=>$adminEmail));
                     $user = $this->client->activateUser($adminEmail);
+	                $this->setStatusMessage("Account created");
                 }
+	            else {
+		            $this->setStatusMessage("Account activated");
+	            }
                 update_option("mtpc_active_account", true);
                 update_option("mtpc_access_token",$user["access_token"]["access_token"] );
-                $this->setStatusMessage("Login successful");
             }
 		}
 		return $options;
@@ -157,9 +207,9 @@ class WP_MTPC extends stdClass {
 					update_site_option("mtpc_secret_key", $_POST["secret_key"]);
                     //echo json_encode($_POST);
                     if(isset($_POST["API_url"])) {
-                        $apiUrl=$_POST["API_url"];
+                        $apiUrl = $_POST["API_url"];
                     }else{
-                        $apiUrl="http://metapic-testapi.herokuapp.com";
+                        $apiUrl = $this->api_url;
                     }
                     update_site_option("mtpc_api_url",$apiUrl);
                     $this->client = new ApiClient($apiUrl, $_POST["api_key"], $_POST["secret_key"]);
@@ -169,6 +219,11 @@ class WP_MTPC extends stdClass {
 				$this->getTemplate("metapic-site-options",array("debugMode"=>$this->debugMode));
 			});
 		});
+	}
+
+	private function getApiUrl() {
+		$url = (is_multisite()) ? get_site_option("mtpc_api_url") : @get_option('metapic_options')["uri_string"];
+		return ($url) ? $url : $this->api_url;
 	}
 
 	private function getTemplate($templateName, array $templateVars = []) {
