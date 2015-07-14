@@ -193,7 +193,8 @@ class WP_MTPC extends stdClass {
 				$user = $this->client->activateUser($adminEmail);
 
 				if ($user["access_token"] == null) {
-					$this->client->createUser(array("email" => $adminEmail));
+					$details = get_user_by("email", $adminEmail);
+					$this->client->createUser(array("email" => $adminEmail, "username" => $details->user_login));
 					$user = $this->client->activateUser($adminEmail);
 					$this->setStatusMessage("Account created");
 				}
