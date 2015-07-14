@@ -1,152 +1,141 @@
 (function ($) {
 
 	tinymce.PluginManager.add('metapic', function (editor, url) {
-		var dom, currentImage;
+		var dom, currentImage, currentMode;
 
 
 		editor.on("init", function () {
 			dom = editor.dom;
 
 
-        });
+		});
 
 		// Register a command so that it can be invoked by using tinyMCE.activeEditor.execCommand( 'WP_Link' );
 		editor.addCommand('Metapic', function () {
-            editor.insertContent('<strong>Metapic is awesome!</strong>');
+			editor.insertContent('<strong>Metapic is awesome!</strong>');
 		});
 		editor.addShortcut('ctrl+m', '', 'Metapic');
 
-		/*$(document).on('metapic.save-success', function (e, data) {
-			if (currentImage) {
-				currentImage.attr("data-metapic-id", data.image.id);
-				currentImage.attr("data-metapic-tags", JSON.stringify(data.tags));
-			}
-		});
-        */
-        $(document).on("metapicReturn", function(data){
-            console.log("metapicReturn");
-            console.log(data);
-            editor.insertContent(data.text);
-        });
-
-
-		editor.on('NodeChange', function (e) {
-			var editorToolbar = dom.select("#mceu_6");
-			var metapicTagIcon = dom.select(".metapic");
-			if (editorToolbar.length > 0 && metapicTagIcon.length === 0) {
-				var elementType = $(editorToolbar).find(">:first-child").prop('tagName');
-				var element = dom.create(elementType, {
-					'data-mce-bogus': '1',
-					'contenteditable': false,
-					'class': 'dashicons dashicons-tag metapic'
-				});
-
-				var deleteElement = dom.create(elementType, {
-					'data-mce-bogus': '1',
-					'contenteditable': false,
-					'class': 'dashicons dashicons-trash metapic'
-				});
-
-				$(dom.select(".dashicons-edit")).after(element);
-				$(dom.select(".dashicons-tag")).after(deleteElement);
-				$(element).on("click", function (e) {
-					var metapicEditor = currentImage.MetapicEditor(editorSettings);
-					metapicEditor.fireModal();
-				});
-
-				$(deleteElement).on("click", function (e) {
-					var imageId = parseInt(currentImage.attr("data-metapic-id"), 10);
-					if (imageId > 0) {
-						var metapicEditor = currentImage.MetapicEditor(editorSettings);
-						metapicEditor.deleteImage(imageId);
-					}
-				});
+		$(document).on("metapicReturn", function (data) {
+			var returnElement, selection;
+			switch (currentMode) {
+				case "image":
+					returnElement = $(data.text);
+					selection = $(editor.selection.getNode());
+					selection.attr("data-metapic-id", returnElement.attr("data-metapic-id"));
+					selection.attr("data-metapic-tags", returnElement.attr("data-metapic-tags"));
+					break;
+				default:
+					editor.insertContent(data.text);
+					break;
 			}
 		});
 
-		editor.on('click', function (event) {
-			if (event.target.nodeName === 'IMG') {
-				currentImage = $(event.target);
-			}
-		});
 		var metapicButton;
 		editor.addButton('metapic', {
 			text: 'Metapic text',
 			icon: false,
 			onclick: function () {
-                $.getJSON( "/?metapic_randomNummber", function( data ) {
-                    $.event.trigger({
-                        type: "metapic",
-                        text:editor.selection.getContent(),
-                        baseUrl:data['metapicApi'],
-                        startPage: "find/default",
-                        hideSidebar:true,
-                        randomKey:data['access_token']['access_token']
-                    })
-                });
+				currentMode = "text";
+				$.getJSON("/?metapic_randomNummber", function (data) {
+					$.event.trigger({
+						type: "metapic",
+						text: editor.selection.getContent(),
+						baseUrl: data['metapicApi'],
+						startPage: "find/default",
+						hideSidebar: true,
+						randomKey: data['access_token']['access_token']
+					})
+				});
 			},
 			onPostRender: function () {
-				editor.on('nodechange', function (event) {
-					setState(metapicButton, event);
-				});
+				editor.on('nodechange', setupTextButton);
+				editor.on('click', setupTextButton);
 			}
 		});
 
-
-        editor.addButton('metapicimg', {
-            text: 'Metapic image',
-            icon: false,
-            onclick: function () {
-                $.getJSON( "/?metapic_randomNummber", function( data ) {
-                    var src=$(editor.selection.getNode()).attr("src");
-                    $.event.trigger({
-                        type: "metapic",
-                        baseUrl:data['metapicApi'],
-                        startPage: "tag-editor",
-                        hideSidebar:true,
-                        imgSrc:src,
-                        //text:editor.selection.getNode(),
-                        randomKey:data['access_token']['access_token']
-                    });
-                });
-            },
-            onPostRender: function () {
-                metapicButton = this;
-                editor.on('nodechange', function (event) {
-                    setState(metapicButton, event);
-                });
-            }
-        });
-        editor.addButton('metapicCollage', {
-            text: 'Collage',
-            icon: false,
-            onclick: function () {
-
-               // editor.insertContent('metapicCollage');
-
-                $.getJSON( "/?metapic_randomNummber", function( data ) {
-                    var src=$(editor.selection.getNode()).attr("src");
-                    $.event.trigger({
-                        type: "metapic",
-                        baseUrl:data['metapicApi'],
-                        startPage: "collage",
-                        imgSrc:src,
-                        hideSidebar:true,
-                        randomKey:data['access_token']['access_token']
-
-                    })
-                })
-            },
-            onPostRender: function () {
-                metapicButton = this;
-
-                editor.on('nodechange', function (event) {
-                    setState(metapicButton, event);
-                });
-            }
-        });
+		function setupTextButton(event) {
+			if ($.trim(editor.selection.getContent()) == "") {
+				editor.controlManager.setDisabled('metapic', true);
+				editor.controlManager.setActive('metapic', false);
+			}
+			else {
+				editor.controlManager.setDisabled('metapic', false);
+				if (editor.selection.getNode().nodeName == "A") {
+					editor.controlManager.setActive('metapic', true);
+				}
+			}
+		}
 
 
+		editor.addButton('metapicimg', {
+			text: 'Metapic image',
+			icon: false,
+			onclick: function () {
+				currentMode = "image";
+				$.getJSON("/?metapic_randomNummber", function (data) {
+					var src = $(editor.selection.getNode()).attr("src");
+					$.event.trigger({
+						type: "metapic",
+						baseUrl: data['metapicApi'],
+						startPage: "tag-editor",
+						hideSidebar: true,
+						imgSrc: src,
+						//text:editor.selection.getNode(),
+						randomKey: data['access_token']['access_token']
+					});
+				});
+			},
+			onPostRender: function () {
+				metapicButton = this;
+				editor.on('click', setupImageButton);
+				editor.on('nodechange', setupImageButton);
+			}
+		});
+
+		function setupImageButton(event) {
+			if (editor.selection.getNode().nodeName != "IMG") {
+				editor.controlManager.setDisabled('metapicimg', true);
+			}
+			else {
+				editor.controlManager.setDisabled('metapicimg', false);
+			}
+
+			if ($(editor.selection.getNode()).attr("data-metapic-id")) {
+				editor.controlManager.setActive('metapicimg', true);
+
+			}
+			else {
+				editor.controlManager.setActive('metapicimg', false);
+			}
+		}
+
+
+		editor.addButton('metapicCollage', {
+			text: 'Collage',
+			icon: false,
+			onclick: function () {
+				currentMode = "collage";
+				$.getJSON("/?metapic_randomNummber", function (data) {
+					var src = $(editor.selection.getNode()).attr("src");
+					$.event.trigger({
+						type: "metapic",
+						baseUrl: data['metapicApi'],
+						startPage: "collage",
+						imgSrc: src,
+						hideSidebar: true,
+						randomKey: data['access_token']['access_token']
+
+					})
+				})
+			},
+			onPostRender: function () {
+				metapicButton = this;
+
+				editor.on('nodechange', function (event) {
+				});
+			}
+		});
 
 
 		function setState(button, event) {
@@ -177,9 +166,6 @@
 			return button;
 		}
 	});
-
-
-
 
 
 })(jQuery);
