@@ -9,6 +9,7 @@ class WP_MTPC extends stdClass {
 	private $client;
 	private $templateVars = [];
 	private $debugMode = false;
+	private $accessKey = "metapic_access_token";
 
 	public function __construct($plugin_dir, $plugin_url) {
 		$options = get_option('metapic_options');
@@ -27,6 +28,11 @@ class WP_MTPC extends stdClass {
 	}
 
 	private function setupJsOptions() {
+		add_filter('tiny_mce_before_init', function($mceInit, $editor_id) {
+			$mceInit["mtpc_iframe_url"] = rtrim(get_bloginfo("url"), "/")."/?".$this->accessKey;
+			return $mceInit;
+		},10,2);
+
 		add_action('admin_head', function () {
 			$mce_plugin_name = "metapic";
 			$options = get_option('metapic_options');
@@ -277,18 +283,18 @@ class WP_MTPC extends stdClass {
 
 	private function setupIframeRoutes() {
 		add_action('init', function () {
-			add_rewrite_rule('hello.php$', 'index.php?metapic_randomNummber', 'top');
+			add_rewrite_rule('hello.php$', 'index.php?'.$this->accessKey, 'top');
 		}
 		);
 
 		add_filter('query_vars', function ($query_vars) {
-			$query_vars[] = 'metapic_randomNummber';
+			$query_vars[] = $this->accessKey;
 			return $query_vars;
 		}
 		);
 
 		add_action('parse_request', function ($wp) {
-			if (array_key_exists('metapic_randomNummber', $wp->query_vars)) {
+			if (array_key_exists($this->accessKey, $wp->query_vars)) {
 
 				wp_send_json([
 					"access_token" => ["access_token" => get_option("mtpc_access_token")],

@@ -6,10 +6,10 @@ $this->blogInfo = get_bloginfo("admin_email");
 $this->mtpcEmail = get_option("mtpc_email");
 /* @ WP_User $this->wp_user */
 $this->wp_user = wp_get_current_user();
-$this->user = $this->client->getUserByEmail($this->mtpcEmail);
+$this->user = $this->client->getUserByEmail($this->wp_user->user_email);
 $this->validUser = isset($user["id"]);
 $this->submitText = ($this->hasAccount && $this->user) ? "Deactivate account" : "Create account";
-
+var_dump(get_option("mtpc_access_token"));
 ?>
 <div class="wrap">
 		<?php if (!$this->hasAccount && $this->user) {

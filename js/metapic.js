@@ -6,8 +6,6 @@
 
 		editor.on("init", function () {
 			dom = editor.dom;
-
-
 		});
 
 		// Register a command so that it can be invoked by using tinyMCE.activeEditor.execCommand( 'WP_Link' );
@@ -37,7 +35,7 @@
 			icon: false,
 			onclick: function () {
 				currentMode = "text";
-				$.getJSON("/?metapic_randomNummber", function (data) {
+				$.getJSON(editor.settings.mtpc_iframe_url, function (data) {
 					$.event.trigger({
 						type: "metapic",
 						text: editor.selection.getContent(),
@@ -73,7 +71,7 @@
 			icon: false,
 			onclick: function () {
 				currentMode = "image";
-				$.getJSON("/?metapic_randomNummber", function (data) {
+				$.getJSON(editor.settings.mtpc_iframe_url, function (data) {
 					var src = $(editor.selection.getNode()).attr("src");
 					$.event.trigger({
 						type: "metapic",
@@ -116,7 +114,7 @@
 			icon: false,
 			onclick: function () {
 				currentMode = "collage";
-				$.getJSON("/?metapic_randomNummber", function (data) {
+				$.getJSON(editor.settings.mtpc_iframe_url, function (data) {
 					var src = $(editor.selection.getNode()).attr("src");
 					$.event.trigger({
 						type: "metapic",
