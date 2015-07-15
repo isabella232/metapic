@@ -25,13 +25,21 @@ class WP_MTPC extends stdClass {
 		$this->setupIframeRoutes();
 		if (get_option("mtpc_active_account") && get_option("mtpc_access_token"))
 			$this->setupJsOptions();
+
+		add_filter('wp_kses_allowed_html', function($tags, $context) {
+			foreach ($tags as $key => $value) {
+				$tags[$key]["data-metapic-id"] = 1;
+				$tags[$key]["data-metapic-tags"] = 1;
+			}
+			return $tags;
+		},500, 2);
 	}
 
 	private function setupJsOptions() {
 		add_filter('tiny_mce_before_init', function($mceInit, $editor_id) {
 			$mceInit["mtpc_iframe_url"] = rtrim(get_bloginfo("url"), "/")."/?".$this->accessKey;
 			return $mceInit;
-		},10,2);
+		},500,2);
 
 		add_action('admin_head', function () {
 			$mce_plugin_name = "metapic";
