@@ -97,13 +97,10 @@ class WP_MTPC extends stdClass {
 			register_setting('metapic_options', 'metapic_options', function ($input) {
 				$options = get_option('metapic_options');
 				switch ($_POST["mtpc_action"]) {
-					case "reactivate":
-						$adminEmail = get_bloginfo("admin_email");
-						$user = $this->client->activateUser($adminEmail);
-						if (isset($user["id"])) {
-							update_option("mtpc_active_account", true);
-							update_option("mtpc_access_token", $user["access_token"]["access_token"]);
-						}
+					case "deactivate":
+						delete_option("mtpc_active_account");
+						delete_option("mtpc_access_token");
+						$this->setStatusMessage("Account deactivated");
 						break;
 					default:
 						$options = $this->updateOptions($options, $input);
@@ -167,7 +164,7 @@ class WP_MTPC extends stdClass {
 	private function updateOptions($options, $input) {
 		$options['uri_string'] = trim($input['uri_string'], "/");
 
-		if (!get_option("mtpc_active_account")) {
+		if (!get_option("mtpc_active_account") && !get_option("mtpc_access_token")) {
 
 			if (!is_multisite()) {
 				$options['email_string'] = trim($input['email_string']);
@@ -176,6 +173,7 @@ class WP_MTPC extends stdClass {
 					$user = $this->client->login($options['email_string'], $options['password_string']);
 					if ($user) {
 						update_option("mtpc_active_account", true);
+						update_option("mtpc_email", $options['email_string']);
 						update_option("mtpc_access_token", $user["access_token"]["access_token"]);
 						$this->setStatusMessage("Login successful");
 					}
@@ -185,24 +183,30 @@ class WP_MTPC extends stdClass {
 				} catch (Exception $e) {
 					delete_option("mtpc_active_account");
 					delete_option("mtpc_access_token");
+					delete_option("mtpc_email");
 					$this->setStatusMessage("Invalid username or password", "error");
 				}
 			}
 			else {
-				$adminEmail = get_bloginfo("admin_email");
-				$user = $this->client->activateUser($adminEmail);
-
-				if ($user["access_token"] == null) {
-					$details = get_user_by("email", $adminEmail);
-					$this->client->createUser(array("email" => $adminEmail, "username" => $details->user_login));
-					$user = $this->client->activateUser($adminEmail);
-					$this->setStatusMessage("Account created");
+				$user_email = (isset($_POST["mtpc_email"])) ? $_POST["mtpc_email"] : wp_get_current_user()->user_email;
+				$wp_user = get_user_by("email", $user_email);
+				if ($wp_user) {
+					$user = $this->client->activateUser($wp_user->user_email);
+					if ($user["access_token"] == null) {
+						$this->client->createUser(array("email" => $wp_user->user_email, "username" => $wp_user->user_login));
+						$user = $this->client->activateUser($wp_user->user_email);
+						$this->setStatusMessage("Account created");
+					}
+					else {
+						$this->setStatusMessage("Account activated");
+					}
+					update_option("mtpc_active_account", true);
+					update_option("mtpc_email", $wp_user->user_email);
+					update_option("mtpc_access_token", $user["access_token"]["access_token"]);
 				}
 				else {
-					$this->setStatusMessage("Account activated");
+					$this->setStatusMessage("User not found", "error");
 				}
-				update_option("mtpc_active_account", true);
-				update_option("mtpc_access_token", $user["access_token"]["access_token"]);
 			}
 		}
 		return $options;

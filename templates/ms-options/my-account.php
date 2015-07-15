@@ -9,7 +9,8 @@
 		<br/>
 
 	</p>
-	<p>Kontot är kopplat till e-postadressen: <strong><?= $blogInfo ?></strong></p>
+	<p>Kontot är kopplat till e-postadressen: <strong><?= $mtpcEmail ?></strong></p>
+	<input type="hidden" name="mtpc_action" id="mtpc_action" value="deactivate"/>
 	<p class="submit"><input type="submit" value="<?php esc_attr_e($submitText, 'metapic'); ?>"
 	                         class="button button-primary" id="submit" name="submit"></p>
 </form>
