@@ -27,8 +27,12 @@
 					break;
 				default:
 					if (selection.is("img")) {
-						console.log("ITS AN IMAGE");
-						selection.replaceWith(returnData);
+						if (selection.parent().is("a")) {
+							selection.parent().replaceWith(returnData);
+						}
+						else {
+							selection.replaceWith(returnData);
+						}
 					}
 					else {
 						editor.insertContent(data.text);
@@ -152,30 +156,6 @@
 			else {
 				editor.controlManager.setDisabled(collageButton, false);
 			}
-		}
-
-
-		function setState(button, event) {
-			var editorContent = editor.selection.getContent();
-			var c = editor.selection.getNode().nodeName;
-			//console.log(c);
-
-			button.removeClass("metapic-new").removeClass("metapic-image").removeClass("metapic-text");
-			if (editor.selection.isCollapsed() && !button.hasClass("metapic-new")) {
-				removeButtonClasses(button).addClass("metapic-new");
-				//console.log("BRAND NEW");
-			}
-			else if (c == "IMG") {
-				removeButtonClasses(button).addClass("metapic-image");
-				//console.log("IT'S AN IMAGE");
-			}
-			else if (editorContent.length > 0) {
-				removeButtonClasses(button).addClass("metapic-text");
-				//console.log("IT'S TEXT");
-			}
-			else {
-			}
-			//console.log(editor.selection.isCollapsed(), editor.selection.getContent());
 		}
 
 		function removeButtonClasses(button) {
