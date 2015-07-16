@@ -1,10 +1,11 @@
 <h2><?= __('Metapic settings page', 'metapic') ?></h2>
 <form action="options.php" method="post">
 	<?php settings_fields('metapic_options'); ?>
-	<h3 class="title">Skapa Metapic-konto</h3>
+	<h3 class="title"><?= __('Create account', 'metapic') ?></h3>
 
 	<p>
-		Metapic har aktiverats på din blogg av er näverksadministratör.
+		<?= __('Metapic has been activated on your site by the network administrator.', 'metapic') ?>
+
 	</p>
 	<?php if(is_super_admin()):
 		/* @var WPDB $wpdb */
@@ -12,8 +13,7 @@
 		$users = get_users(["blog_id" => null]);
 		?>
 		<p>
-			Som nätverksadministratör kan du koppla denna blogg till valfritt användarkonto på denna sajt.<br/>
-			Var god välj ett konto i listan.
+			<?= __("As the network administrator you can connect this blog to any account on this site.<br/>Please select an account from the list.", 'metapic')?>
 		</p>
 		<table class="form-table">
 			<tr>
@@ -30,9 +30,7 @@
 		</table>
 		<?php else: ?>
 		<p>
-			För att börja använda Metapic för att tagga bilder och göra kollage så måste du först acceptera
-			medlemsvillkoren.<br/>
-			Ett konto kommer att skapas kopplat till e-postadressen: <strong><?= $wp_user->user_email ?></strong>
+			<?php printf(__("In order to start using Metapic to link content, tag images and make collages you first have to accept our terms of use.<br/>An account will be created connected to the email address: <strong>%s</strong>.", 'metapic'), $wp_user->user_email) ?>
 		</p>
 		<table class="form-table">
 			<tbody>

@@ -1,15 +1,14 @@
-<h2><?= __('Aktivera Metapic-konto', 'metapic') ?></h2>
+<h2><?= __('Activate Metapic account', 'metapic') ?></h2>
 <form action="options.php" method="post" id="mtpc_reactivate">
 	<?php settings_fields('metapic_options'); ?>
 	<input type="hidden" name="mtpc_action" value="reactivate"/>
 	<p>
-		Metapic har aktiverats på er sajt av er näverksadministratör.<br/>
-		Det finns redan ett Metapic-konto kopplat till din e-postadress, <strong><?= $wp_user->user_email ?></strong>.
+		<?php printf(__('Metapic has been activated on your site by the network administrator.<br/>There is an existing account connected to your email address, <strong>%s</strong>.', 'metapic'), $wp_user->user_email) ?>
+
 	</p>
 
 	<p>
-		Detta kan betyda att du antingen redan använder Metapic på en blogg i detta nätverk eller att du har använt Metapic tidigare.<br/>
-		Om du redan använder Metapic på en annan blogg i nätverket så kommer klick att räknas från båda bloggarna.<br/>
+		<?= __("This could mean that you're either already using Metapic on a blog in the network or that you have used Metapic before.<br/>Total clicks will be pooled from all blogs using your account in the network", 'metapic') ?>
 	</p>
 	<?php if(is_super_admin()):
 		/* @var WPDB $wpdb */
@@ -17,8 +16,7 @@
 		$users = get_users(["blog_id" => null]);
 		?>
 		<p>
-			Som nätverksadministratör kan du koppla denna blogg till valfritt användarkonto på denna sajt.<br/>
-			Var god välj ett konto i listan.
+			<?= __("As the network administrator you can connect this blog to any account on this site.<br/>Please select an account from the list.", 'metapic')?>
 		</p>
 		<table class="form-table">
 			<tr>
@@ -34,7 +32,7 @@
 			</tr>
 		</table>
 	<?php endif; ?>
-	<p class="submit"><input type="submit" value="<?php esc_attr_e('Activate account', 'metapic'); ?>"
+	<p class="submit"><input type="submit" value="<?php _e('Activate account', 'metapic'); ?>"
 	                         class="button button-primary" id="submit" name="submit"></p>
 </form>
 <script>

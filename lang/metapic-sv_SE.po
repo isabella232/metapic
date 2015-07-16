@@ -1,0 +1,259 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Metapic WordPress Plugin\n"
+"POT-Creation-Date: 2015-07-16 16:53+0200\n"
+"PO-Revision-Date: 2015-07-16 16:54+0200\n"
+"Last-Translator: \n"
+"Language-Team: Metapic <info@metapic.se>\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.2\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: vendor\n"
+
+#: classes/WP_MTPC.php:118
+msgid "Account deactivated"
+msgstr "Kontot har deaktiverats"
+
+#: classes/WP_MTPC.php:129
+msgid "Login"
+msgstr "Inloggning"
+
+#: classes/WP_MTPC.php:130
+msgid "Please login to your Metapic account"
+msgstr "Var god logga in på ditt Metapic-konto"
+
+#: classes/WP_MTPC.php:133
+msgid "Email"
+msgstr "E-post"
+
+#: classes/WP_MTPC.php:138
+msgid "Password"
+msgstr "Lösenord"
+
+#: classes/WP_MTPC.php:144
+msgid "Your account"
+msgstr "Ditt konto"
+
+#: classes/WP_MTPC.php:145
+msgid "You are currently logged in"
+msgstr "Du är inloggad"
+
+#: classes/WP_MTPC.php:151
+msgid "Advanced"
+msgstr "Avancerat"
+
+#: classes/WP_MTPC.php:152
+msgid "Advanced settings"
+msgstr "Avancerade inställningar"
+
+#: classes/WP_MTPC.php:156
+msgid "Server address"
+msgstr "Serveradress"
+
+#: classes/WP_MTPC.php:193
+msgid "Login successful"
+msgstr "Du är nu inloggad"
+
+#: classes/WP_MTPC.php:202
+msgid "Invalid username or password"
+msgstr "Ogiltigt användarnamn eller lösenord"
+
+#: classes/WP_MTPC.php:213
+msgid "Account created"
+msgstr "Ditt konto har skapats"
+
+#: classes/WP_MTPC.php:216
+msgid "Account activated"
+msgstr "Ditt konto har aktiverats"
+
+#: classes/WP_MTPC.php:223
+msgid "User not found"
+msgstr "Användaren kunde inte hittas"
+
+#: classes/WP_MTPC.php:264
+msgid ""
+"Account activated. You can now activate individual blogs in the network."
+msgstr ""
+"Ert konto har aktiverats. Ni kan nu aktivera individuella bloggar i ert "
+"nätverk."
+
+#: classes/WP_MTPC.php:267
+msgid ""
+"Account not found. Please check your credentials. If the problem persists "
+"please contact support."
+msgstr ""
+"Kontot kunde inte hittas. Var god kontrollera dina uppgifter. Om problemet "
+"kvarstår var god kontakta supporten på info@metapic.se."
+
+#: templates/metapic-options-ms.php:11
+msgid "Deactivate account"
+msgstr "Deaktivera konto"
+
+#: templates/metapic-options-ms.php:11 templates/ms-options/new.php:4
+msgid "Create account"
+msgstr "Skapa konto"
+
+#: templates/metapic-options.php:5 templates/ms-options/my-account.php:1
+#: templates/ms-options/new.php:1
+msgid "Metapic settings page"
+msgstr "Metapic inställningssida"
+
+#: templates/metapic-site-options.php:2
+msgid "Metapic site settings page"
+msgstr "Metapic nätverksinställningar"
+
+#: templates/metapic-site-options.php:6
+msgid "API Settings"
+msgstr "API-inställningar"
+
+#: templates/metapic-site-options.php:8
+msgid ""
+"Please enter your credentials below. You should have already received your "
+"client credentials from Metapic.<br/>If you haven't received your "
+"credentials please contact Metapic technical support."
+msgstr ""
+"Var god fyll i dina uppgifter nedan. Du skall redan ha fått uppgifterna för "
+"din portal från Metapic.<br/> Om du inte har fått dessa uppgifter så "
+"kontakta Metapics tekniska support på info@metapic.se."
+
+#: templates/metapic-site-options.php:11
+msgid "API Key"
+msgstr "API-nyckel"
+
+#: templates/metapic-site-options.php:19
+msgid "Secret Key"
+msgstr "Hemlig nyckel"
+
+#: templates/metapic-site-options.php:30
+msgid "Api url"
+msgstr "API-url"
+
+#: templates/ms-options/my-account.php:4
+msgid "My settings"
+msgstr "Mina inställningar"
+
+#: templates/ms-options/my-account.php:6
+msgid ""
+"Metapic has been activated on your site by the network administrator.<br/"
+">You have an active account and you can use the service to tag images and "
+"create collages."
+msgstr ""
+"Metapic har aktiverats på din blogg av er näverksadministratör.<br/>\n"
+"Du har ett aktivt Metapic-konto och kan nu använda tjänsten för att tagga "
+"bilder och skapa kollage."
+
+#: templates/ms-options/my-account.php:7
+msgid "The account is connected to the following email address:"
+msgstr "Kontot är kopplat till e-postadressen:"
+
+#: templates/ms-options/new.php:7
+msgid "Metapic has been activated on your site by the network administrator."
+msgstr "Metapic har aktiverats på din blogg av er näverksadministratör."
+
+#: templates/ms-options/new.php:16 templates/ms-options/reactivate.php:19
+msgid ""
+"As the network administrator you can connect this blog to any account on "
+"this site.<br/>Please select an account from the list."
+msgstr ""
+"Som nätverksadministratör kan du koppla denna blogg till valfritt "
+"användarkonto på denna sajt.<br/>Var god välj ett konto i listan."
+
+#: templates/ms-options/new.php:20 templates/ms-options/reactivate.php:23
+msgid "Select user"
+msgstr "Välj användare"
+
+#: templates/ms-options/new.php:23 templates/ms-options/reactivate.php:26
+msgid "&mdash; Select &mdash;"
+msgstr ""
+
+#: templates/ms-options/new.php:33
+#, php-format
+msgid ""
+"In order to start using Metapic to link content, tag images and make "
+"collages you first have to accept our terms of use.<br/>An account will be "
+"created connected to the email address: <strong>%s</strong>."
+msgstr ""
+"För att börja använda Metapic för att länka innehåll, tagga bilder och göra "
+"kollage så måste du först acceptera medlemsvillkoren.<br/>Ett konto kommer "
+"att skapas kopplat till e-postadressen: <strong>%s</strong>."
+
+#: templates/ms-options/new.php:40
+msgid "I accept the terms."
+msgstr "Jag accepterar användarvillkoren"
+
+#: templates/ms-options/new.php:56
+msgid "You must accept the terms."
+msgstr "Du måste acceptera användarvillkoren"
+
+#: templates/ms-options/reactivate.php:1
+msgid "Activate Metapic account"
+msgstr "Aktivera Metapic-konto"
+
+#: templates/ms-options/reactivate.php:6
+#, php-format
+msgid ""
+"Metapic has been activated on your site by the network administrator.<br/"
+">There is an existing account connected to your email address, <strong>%s</"
+"strong>."
+msgstr ""
+"Metapic har aktiverats på er sajt av er näverksadministratör.<br/>Det finns "
+"redan ett Metapic-konto kopplat till din e-postadress, <strong>%s</strong>."
+
+#: templates/ms-options/reactivate.php:11
+msgid ""
+"This could mean that you're either already using Metapic on a blog in the "
+"network or that you have used Metapic before.<br/>Total clicks will be "
+"pooled from all blogs using your account in the network"
+msgstr ""
+"Detta kan betyda att du antingen redan använder Metapic på en blogg i detta "
+"nätverk eller att du har använt Metapic tidigare.<br/>\tOm du redan använder "
+"Metapic på andra bloggar i nätverket så kommer klicken att räknas ihop till "
+"en totalsumma."
+
+#: templates/ms-options/reactivate.php:35
+msgid "Activate account"
+msgstr "Aktivera konto"
+
+#: templates/ms-options/reactivate.php:43
+msgid "You must select a user."
+msgstr "Du måste välja en användare"
+
+#: tinymce-lang/metapic-langs.php:5
+msgid "Link content"
+msgstr "Länka innehåll"
+
+#: tinymce-lang/metapic-langs.php:6
+msgid "Metapic link"
+msgstr "Metapic länk"
+
+#: tinymce-lang/metapic-langs.php:7
+msgid "Tag image"
+msgstr "Tagga bild"
+
+#: tinymce-lang/metapic-langs.php:8
+msgid "Metapic image"
+msgstr "Metapic bild"
+
+#: tinymce-lang/metapic-langs.php:9
+msgid "Add collage"
+msgstr "Skapa kollage"
+
+#: tinymce-lang/metapic-langs.php:10
+msgid "Metapic collage"
+msgstr "Metapic kollage"
+
+#~ msgid ""
+#~ "Metapic has been activated on your site by the network administrator.\n"
+#~ "<br/>You have an active account and you can use the service to tag images "
+#~ "and create collages."
+#~ msgstr ""
+#~ "Metapic har aktiverats på din blogg av er näverksadministratör.<br/>\n"
+#~ "Du har ett aktivt Metapic-konto och kan nu använda tjänsten för att tagga "
+#~ "bilder och skapa kollage."

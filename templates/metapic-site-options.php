@@ -1,5 +1,5 @@
 <div class="wrap">
-	<h2>Metapic site settings page</h2>
+	<h2><?= __('Metapic site settings page', 'metapic')?></h2>
 
 	<form method="post" action="" novalidate="novalidate">
 		<?php settings_fields('metapic_site_options'); ?>

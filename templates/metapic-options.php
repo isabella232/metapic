@@ -2,7 +2,7 @@
 $activeAccount = get_option("mtpc_active_account");
 ?>
 <div class="wrap">
-	<h2>Metapic settings page</h2>
+	<h2><?= __('Metapic settings page', 'metapic')?></h2>
 	<form action="options.php" method="post">
 		<?php settings_fields('metapic_options'); ?>
 		<?php do_settings_sections('plugin'); ?>

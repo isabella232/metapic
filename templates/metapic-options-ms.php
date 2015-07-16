@@ -8,7 +8,7 @@ $this->mtpcEmail = get_option("mtpc_email");
 $this->wp_user = wp_get_current_user();
 $this->user = $this->client->getUserByEmail($this->wp_user->user_email);
 $this->validUser = isset($user["id"]);
-$this->submitText = ($this->hasAccount && $this->user) ? "Deactivate account" : "Create account";
+$this->submitText = ($this->hasAccount && $this->user) ? __("Deactivate account", "metapic") : __("Create account", "metapic");
 
 ?>
 <div class="wrap">

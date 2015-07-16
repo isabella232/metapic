@@ -38,6 +38,7 @@ class WP_MTPC extends stdClass {
 	private function setupJsOptions() {
 		add_filter('tiny_mce_before_init', function($mceInit, $editor_id) {
 			$mceInit["mtpc_iframe_url"] = rtrim(get_bloginfo("url"), "/")."/?".$this->accessKey;
+			$mceInit["mtpc_plugin_url"] = $this->plugin_url;
 			return $mceInit;
 		},500,2);
 
@@ -59,9 +60,9 @@ class WP_MTPC extends stdClass {
 
 				// Register new button in the editor
 				add_filter('mce_buttons', function ($buttons) use ($mce_plugin_name) {
-					array_push($buttons, $mce_plugin_name);
-					array_push($buttons, "metapicimg");
-					array_push($buttons, "metapicCollage");
+					array_push($buttons, $mce_plugin_name."link");
+					array_push($buttons, $mce_plugin_name."img");
+					array_push($buttons, $mce_plugin_name."collage");
 
 					return $buttons;
 				}
@@ -94,15 +95,7 @@ class WP_MTPC extends stdClass {
 	 * @param string $class - Class for the element. Valid options are updated, error or update-nag
 	 */
 	private function setStatusMessage($message, $class = "updated") {
-		add_settings_error('general', 'settings_updated', __($message, "metapic"), $class);
-		/*
-		$statusMessage = function() use ($message, $class) {
-			$message = __($message, "metapic");
-			echo "<div class=\"$class notice is-dismissible\"><p><strong>$message</strong></p></div>";
-		};
-		add_action( 'admin_notices', $statusMessage, 3 );
-		add_action( 'network_admin_notices', $statusMessage, 3 );
-		*/
+		add_settings_error('general', 'settings_updated', $message, $class);
 	}
 
 	private function setupOptionsPage() {
@@ -114,7 +107,7 @@ class WP_MTPC extends stdClass {
 					case "deactivate":
 						delete_option("mtpc_active_account");
 						delete_option("mtpc_access_token");
-						$this->setStatusMessage("Account deactivated");
+						$this->setStatusMessage(__("Account deactivated", "metapic"));
 						break;
 					default:
 						$options = $this->updateOptions($options, $input);
@@ -125,34 +118,34 @@ class WP_MTPC extends stdClass {
 
 			$activeAccount = get_option("mtpc_active_account");
 			if (!$activeAccount) {
-				add_settings_section('plugin_main', 'Login', function () {
-					echo '<p>Please login to your Metapic account</p>';
+				add_settings_section('plugin_main', __('Login', "metapic"), function () {
+					echo '<p>'.__('Please login to your Metapic account', 'metapic').'</p>';
 				}, 'plugin'
 				);
-				add_settings_field('email_field', 'Email', function () use ($options) {
+				add_settings_field('email_field', __('Email', "metapic"), function () use ($options) {
 					echo "<input id='plugin_text_string' name='metapic_options[email_string]' size='40' type='text' value='{$options['email_string']}' />";
 				}, 'plugin', 'plugin_main'
 				);
 
-				add_settings_field('password_field', 'Password', function () use ($options) {
+				add_settings_field('password_field', __('Password', "metapic"), function () use ($options) {
 					echo "<input id='plugin_text_string' type='password' name='metapic_options[password_string]' size='40' type='text' value='{$options['password_string']}' />";
 				}, 'plugin', 'plugin_main'
 				);
 			}
 			else {
-				add_settings_section('plugin_main', 'Your account', function () {
-					echo '<p>You are currently logged in</p>';
+				add_settings_section('plugin_main', __('Your account', "metapic"), function () {
+					echo '<p>'.__('You are currently logged in', 'metapic').'</p>';
 				}, 'plugin'
 				);
 			}
 
 			if ($this->debugMode) {
-				add_settings_section('plugin_advanced', 'Advanced', function () {
-					echo '<p>Advanced settings</p>';
+				add_settings_section('plugin_advanced', __('Advanced', 'metapic'), function () {
+					echo '<p>'.__('Advanced settings', 'metapic').'</p>';
 				}, 'plugin'
 				);
 
-				add_settings_field('uri_field', 'Address to the server', function () use ($options) {
+				add_settings_field('uri_field', __('Server address', 'metapic'), function () use ($options) {
 					echo "<input id='plugin_text_string' name='metapic_options[uri_string]' size='40' type='text' value='{$options['uri_string']}' />";
 				}, 'plugin', 'plugin_advanced'
 				);
@@ -189,7 +182,7 @@ class WP_MTPC extends stdClass {
 						update_option("mtpc_active_account", true);
 						update_option("mtpc_email", $options['email_string']);
 						update_option("mtpc_access_token", $user["access_token"]["access_token"]);
-						$this->setStatusMessage("Login successful");
+						$this->setStatusMessage(__("Login successful", "metapic"));
 					}
 					else {
 						throw new Exception;
@@ -198,7 +191,7 @@ class WP_MTPC extends stdClass {
 					delete_option("mtpc_active_account");
 					delete_option("mtpc_access_token");
 					delete_option("mtpc_email");
-					$this->setStatusMessage("Invalid username or password", "error");
+					$this->setStatusMessage(__("Invalid username or password", "metapic"), "error");
 				}
 			}
 			else {
@@ -209,17 +202,17 @@ class WP_MTPC extends stdClass {
 					if ($user["access_token"] == null) {
 						$this->client->createUser(array("email" => $wp_user->user_email, "username" => $wp_user->user_login));
 						$user = $this->client->activateUser($wp_user->user_email);
-						$this->setStatusMessage("Account created");
+						$this->setStatusMessage(__("Account created", "metapic"));
 					}
 					else {
-						$this->setStatusMessage("Account activated");
+						$this->setStatusMessage(__("Account activated", "metapic"));
 					}
 					update_option("mtpc_active_account", true);
 					update_option("mtpc_email", $wp_user->user_email);
 					update_option("mtpc_access_token", $user["access_token"]["access_token"]);
 				}
 				else {
-					$this->setStatusMessage("User not found", "error");
+					$this->setStatusMessage(__("User not found", "metapic"), "error");
 				}
 			}
 		}
@@ -228,9 +221,16 @@ class WP_MTPC extends stdClass {
 
 	private function setupLang() {
 		add_action('plugins_loaded', function () {
-			load_plugin_textdomain('metapic', false, dirname(plugin_basename(__FILE__)) . '/lang/');
-		}
-		);
+			$langPath = basename($this->plugin_dir) . '/lang/';
+			load_plugin_textdomain('metapic', false, $langPath);
+		});
+
+		add_filter('mce_external_languages', function($locales) {
+			$ds = DIRECTORY_SEPARATOR;
+			$path = $this->plugin_dir . $ds . 'tinymce-lang' . $ds. 'metapic-langs.php';
+			$locales ['metapic'] = $path;
+			return $locales;
+		});
 	}
 
 	private function setupNetworkOptions() {
