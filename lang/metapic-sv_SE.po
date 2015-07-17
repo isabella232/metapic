@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Metapic WordPress Plugin\n"
-"POT-Creation-Date: 2015-07-17 14:24+0200\n"
-"PO-Revision-Date: 2015-07-17 14:25+0200\n"
+"POT-Creation-Date: 2015-07-17 15:09+0200\n"
+"PO-Revision-Date: 2015-07-17 15:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: Metapic <info@metapic.se>\n"
 "Language: sv\n"
@@ -93,8 +93,8 @@ msgstr ""
 "kvarstår var god kontakta supporten på info@metapic.se."
 
 #: classes/WP_MTPC.php:335
-msgid "Total clicks per day"
-msgstr "Totalt antal klick per dag"
+msgid "Metapic"
+msgstr ""
 
 #: templates/metapic-options-ms.php:11
 msgid "Deactivate account"
@@ -229,15 +229,19 @@ msgstr "Aktivera konto"
 msgid "You must select a user."
 msgstr "Du måste välja en användare"
 
-#: templates/widgets/dashboard.php:4
+#: templates/widgets/dashboard.php:1
+msgid "Total clicks per day"
+msgstr "Totalt antal klick per dag"
+
+#: templates/widgets/dashboard.php:5
 msgid "Date"
 msgstr "Datum"
 
-#: templates/widgets/dashboard.php:12
+#: templates/widgets/dashboard.php:13
 msgid "Clicks"
 msgstr "Klick"
 
-#: templates/widgets/dashboard.php:21
+#: templates/widgets/dashboard.php:22
 msgid "You have note received any clicks yet."
 msgstr "Du har inte fått några klick ännu."
 

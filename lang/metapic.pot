@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Metapic WordPress Plugin\n"
-"POT-Creation-Date: 2015-07-17 14:24+0200\n"
+"POT-Creation-Date: 2015-07-17 15:09+0200\n"
 "PO-Revision-Date: 2015-07-16 14:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: Metapic <info@metapic.se>\n"
@@ -90,7 +90,7 @@ msgid ""
 msgstr ""
 
 #: classes/WP_MTPC.php:335
-msgid "Total clicks per day"
+msgid "Metapic"
 msgstr ""
 
 #: templates/metapic-options-ms.php:11
@@ -209,15 +209,19 @@ msgstr ""
 msgid "You must select a user."
 msgstr ""
 
-#: templates/widgets/dashboard.php:4
+#: templates/widgets/dashboard.php:1
+msgid "Total clicks per day"
+msgstr ""
+
+#: templates/widgets/dashboard.php:5
 msgid "Date"
 msgstr ""
 
-#: templates/widgets/dashboard.php:12
+#: templates/widgets/dashboard.php:13
 msgid "Clicks"
 msgstr ""
 
-#: templates/widgets/dashboard.php:21
+#: templates/widgets/dashboard.php:22
 msgid "You have note received any clicks yet."
 msgstr ""
 
