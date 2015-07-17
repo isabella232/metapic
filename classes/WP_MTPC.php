@@ -343,7 +343,8 @@ class WP_MTPC extends stdClass {
 	private function updateClicksForMultiSite() {
 		global $wpdb;
 		$lastUpdate = get_site_option("mtpc_last_click_update");
-		if (($lastUpdate && Carbon::parse($lastUpdate)->diffInMinutes(Carbon::now()) > 0) || !$lastUpdate) {
+		if (($lastUpdate && Carbon::parse($lastUpdate)->diffInMinutes(Carbon::now()) >= 10) || !$lastUpdate) {
+			update_site_option("mtpc_last_click_update", Carbon::now()->toDateTimeString());
 			try {
 				$allClicks = $this->client->getClientClicksByDate(null, ["from" => date('Y-m-d', strtotime('-10 days')), "to" => date("Y-m-d")]);
 				$wpClicks = [];
@@ -363,7 +364,6 @@ class WP_MTPC extends stdClass {
 					}
 				}
 				switch_to_blog($orgBlog);
-				update_site_option("mtpc_last_click_update", Carbon::now()->toDateTimeString());
 			}
 			catch (Exception $e) {}
 		}
