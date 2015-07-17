@@ -332,7 +332,7 @@ class WP_MTPC extends stdClass {
 		add_action( 'wp_dashboard_setup', function() {
 			wp_add_dashboard_widget(
 				'metapic-dashboard-widget',         // Widget slug.
-				__("Total clicks per day", 'metapic'),         // Title.
+				__("Metapic", 'metapic'),         // Title.
 				function() {
 					$this->getTemplate('widgets/dashboard', ["clicks" => get_option("mtpc_clicks_by_date")]);
 				}

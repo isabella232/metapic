@@ -1,3 +1,4 @@
+<h3 style="padding: 0 0 8px;"><?= __("Total clicks per day", 'metapic') ?></h3>
 <?php if (is_array($clicks) && count($clicks) > 0): ?>
 	<div style="overflow:hidden;">
 		<div style="width:50%;float:left;">
