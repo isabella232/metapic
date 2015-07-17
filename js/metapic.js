@@ -46,7 +46,7 @@
 		var linkButton = pluginName + 'link';
 		editor.addButton(linkButton, {
 			title: editor.getLang('metapic.linkTitle'),
-			text: editor.getLang('metapic.linkText'),
+			image: editor.settings.mtpc_plugin_url + "/images/tag_text_color.svg",
 			icon: false,
 			onclick: function () {
 				currentMode = "text";
@@ -85,7 +85,7 @@
 		var imageButton = pluginName + 'img';
 		editor.addButton(imageButton, {
 			title: editor.getLang('metapic.imageTitle'),
-			icon: 'image',
+			image: editor.settings.mtpc_plugin_url + "/images/tag_image_color.svg",
 			onclick: function () {
 				currentMode = "image";
 				$.getJSON(editor.settings.mtpc_iframe_url, function (data) {
@@ -129,7 +129,7 @@
 		editor.addButton(collageButton, {
 			title: editor.getLang('metapic.collageTitle'),
 //			text: editor.getLang('metapic.collageText'),
-			image: editor.settings.mtpc_plugin_url + "/images/mtpc-collage.svg",
+			image: editor.settings.mtpc_plugin_url + "/images/create_collage_color.svg",
 			onclick: function () {
 				currentMode = "collage";
 				$.getJSON(editor.settings.mtpc_iframe_url, function (data) {
