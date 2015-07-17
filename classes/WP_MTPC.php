@@ -344,25 +344,28 @@ class WP_MTPC extends stdClass {
 		global $wpdb;
 		$lastUpdate = get_site_option("mtpc_last_click_update");
 		if (($lastUpdate && Carbon::parse($lastUpdate)->diffInMinutes(Carbon::now()) > 0) || !$lastUpdate) {
-			$allClicks = $this->client->getClientClicksByDate(null, ["from" => date('Y-m-d', strtotime('-10 days')), "to" => date("Y-m-d")]);
-			$wpClicks = [];
-			foreach ($allClicks as $click) {
-				if (isset($wpClicks[$click["email"]]))
-					$wpClicks[$click["email"]][] = $click;
-				else
-					$wpClicks[$click["email"]] = [$click];
-			}
-			$sites = wp_get_sites();
-			$orgBlog = get_current_blog_id();
-			foreach ($sites as $site) {
-				switch_to_blog($site["blog_id"]);
-				$mtpcEmail = get_option("mtpc_email");
-				if ($mtpcEmail && isset($wpClicks[$mtpcEmail])) {
-					update_option("mtpc_clicks_by_date", $wpClicks[$mtpcEmail]);
+			try {
+				$allClicks = $this->client->getClientClicksByDate(null, ["from" => date('Y-m-d', strtotime('-10 days')), "to" => date("Y-m-d")]);
+				$wpClicks = [];
+				foreach ($allClicks as $click) {
+					if (isset($wpClicks[$click["email"]]))
+						$wpClicks[$click["email"]][] = $click;
+					else
+						$wpClicks[$click["email"]] = [$click];
 				}
+				$sites = wp_get_sites();
+				$orgBlog = get_current_blog_id();
+				foreach ($sites as $site) {
+					switch_to_blog($site["blog_id"]);
+					$mtpcEmail = get_option("mtpc_email");
+					if ($mtpcEmail && isset($wpClicks[$mtpcEmail])) {
+						update_option("mtpc_clicks_by_date", $wpClicks[$mtpcEmail]);
+					}
+				}
+				switch_to_blog($orgBlog);
+				update_site_option("mtpc_last_click_update", Carbon::now()->toDateTimeString());
 			}
-			switch_to_blog($orgBlog);
-			update_site_option("mtpc_last_click_update", Carbon::now()->toDateTimeString());
+			catch (Exception $e) {}
 		}
 	}
 }
