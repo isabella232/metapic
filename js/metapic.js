@@ -18,6 +18,7 @@
 			var returnData = data.text,
 				selection = $(editor.selection.getNode());
 
+			console.log(returnData);
 			switch (currentMode) {
 				case "image":
 					returnData = $(returnData);
@@ -49,10 +50,12 @@
 			icon: false,
 			onclick: function () {
 				currentMode = "text";
+				var selection = $(editor.selection.getContent());
+				var contentConfig = (selection.is("img")) ? {} : {format : 'text'};
 				$.getJSON(editor.settings.mtpc_iframe_url, function (data) {
 					$.event.trigger({
 						type: "metapic",
-						text: editor.selection.getContent(),
+						text: editor.selection.getContent(contentConfig),
 						baseUrl: data['metapicApi'],
 						startPage: "find/default",
 						hideSidebar: true,

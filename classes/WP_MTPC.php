@@ -1,4 +1,5 @@
 <?php
+use Carbon\Carbon;
 use MetaPic\ApiClient;
 
 class WP_MTPC extends stdClass {
@@ -23,8 +24,10 @@ class WP_MTPC extends stdClass {
 		$this->setupLang();
 		$this->setupNetworkOptions();
 		$this->setupIframeRoutes();
-		if (get_option("mtpc_active_account") && get_option("mtpc_access_token"))
+		if (get_option("mtpc_active_account") && get_option("mtpc_access_token")) {
 			$this->setupJsOptions();
+			$this->setupDashboardWidget();
+		}
 
 		add_filter('wp_kses_allowed_html', function($tags, $context) {
 			foreach ($tags as $key => $value) {
@@ -181,6 +184,7 @@ class WP_MTPC extends stdClass {
 					if ($user) {
 						update_option("mtpc_active_account", true);
 						update_option("mtpc_email", $options['email_string']);
+						update_option("mtpc_id", $user["id"]);
 						update_option("mtpc_access_token", $user["access_token"]["access_token"]);
 						$this->setStatusMessage(__("Login successful", "metapic"));
 					}
@@ -191,6 +195,7 @@ class WP_MTPC extends stdClass {
 					delete_option("mtpc_active_account");
 					delete_option("mtpc_access_token");
 					delete_option("mtpc_email");
+					delete_option("mtpc_id");
 					$this->setStatusMessage(__("Invalid username or password", "metapic"), "error");
 				}
 			}
@@ -209,6 +214,7 @@ class WP_MTPC extends stdClass {
 					}
 					update_option("mtpc_active_account", true);
 					update_option("mtpc_email", $wp_user->user_email);
+					update_option("mtpc_id", $user["id"]);
 					update_option("mtpc_access_token", $user["access_token"]["access_token"]);
 				}
 				else {
@@ -267,7 +273,9 @@ class WP_MTPC extends stdClass {
 	}
 
 	private function getApiUrl() {
-		$url = (is_multisite()) ? get_site_option("mtpc_api_url") : @get_option('metapic_options')["uri_string"];
+		$url = false;
+		if ($this->debugMode)
+			$url = (is_multisite()) ? get_site_option("mtpc_api_url") : @get_option('metapic_options')["uri_string"];
 		return ($url) ? $url : $this->api_url;
 	}
 
@@ -313,5 +321,48 @@ class WP_MTPC extends stdClass {
 			return;
 		}
 		);
+	}
+
+	private function setupDashboardWidget() {
+		if (is_multisite()) {
+			$this->updateClicksForMultiSite();
+		}
+		else {
+		}
+		add_action( 'wp_dashboard_setup', function() {
+			wp_add_dashboard_widget(
+				'metapic-dashboard-widget',         // Widget slug.
+				__("Total clicks per day", 'metapic'),         // Title.
+				function() {
+					$this->getTemplate('widgets/dashboard', ["clicks" => get_option("mtpc_clicks_by_date")]);
+				}
+			);
+		} );
+	}
+
+	private function updateClicksForMultiSite() {
+		global $wpdb;
+		$lastUpdate = get_site_option("mtpc_last_click_update");
+		if (($lastUpdate && Carbon::parse($lastUpdate)->diffInMinutes(Carbon::now()) > 0) || !$lastUpdate) {
+			$allClicks = $this->client->getClientClicksByDate(null, ["from" => date('Y-m-d', strtotime('-10 days')), "to" => date("Y-m-d")]);
+			$wpClicks = [];
+			foreach ($allClicks as $click) {
+				if (isset($wpClicks[$click["email"]]))
+					$wpClicks[$click["email"]][] = $click;
+				else
+					$wpClicks[$click["email"]] = [$click];
+			}
+			$sites = wp_get_sites();
+			$orgBlog = get_current_blog_id();
+			foreach ($sites as $site) {
+				switch_to_blog($site["blog_id"]);
+				$mtpcEmail = get_option("mtpc_email");
+				if ($mtpcEmail && isset($wpClicks[$mtpcEmail])) {
+					update_option("mtpc_clicks_by_date", $wpClicks[$mtpcEmail]);
+				}
+			}
+			switch_to_blog($orgBlog);
+			update_site_option("mtpc_last_click_update", Carbon::now()->toDateTimeString());
+		}
 	}
 }
