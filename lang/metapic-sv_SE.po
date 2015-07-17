@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Metapic WordPress Plugin\n"
-"POT-Creation-Date: 2015-07-16 16:53+0200\n"
-"PO-Revision-Date: 2015-07-16 16:54+0200\n"
+"POT-Creation-Date: 2015-07-17 14:24+0200\n"
+"PO-Revision-Date: 2015-07-17 14:25+0200\n"
 "Last-Translator: \n"
 "Language-Team: Metapic <info@metapic.se>\n"
 "Language: sv\n"
@@ -17,80 +17,84 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: vendor\n"
 
-#: classes/WP_MTPC.php:118
+#: classes/WP_MTPC.php:113
 msgid "Account deactivated"
 msgstr "Kontot har deaktiverats"
 
-#: classes/WP_MTPC.php:129
+#: classes/WP_MTPC.php:124
 msgid "Login"
 msgstr "Inloggning"
 
-#: classes/WP_MTPC.php:130
+#: classes/WP_MTPC.php:125
 msgid "Please login to your Metapic account"
 msgstr "Var god logga in på ditt Metapic-konto"
 
-#: classes/WP_MTPC.php:133
+#: classes/WP_MTPC.php:128
 msgid "Email"
 msgstr "E-post"
 
-#: classes/WP_MTPC.php:138
+#: classes/WP_MTPC.php:133
 msgid "Password"
 msgstr "Lösenord"
 
-#: classes/WP_MTPC.php:144
+#: classes/WP_MTPC.php:139
 msgid "Your account"
 msgstr "Ditt konto"
 
-#: classes/WP_MTPC.php:145
+#: classes/WP_MTPC.php:140
 msgid "You are currently logged in"
 msgstr "Du är inloggad"
 
-#: classes/WP_MTPC.php:151
+#: classes/WP_MTPC.php:146
 msgid "Advanced"
 msgstr "Avancerat"
 
-#: classes/WP_MTPC.php:152
+#: classes/WP_MTPC.php:147
 msgid "Advanced settings"
 msgstr "Avancerade inställningar"
 
-#: classes/WP_MTPC.php:156
+#: classes/WP_MTPC.php:151
 msgid "Server address"
 msgstr "Serveradress"
 
-#: classes/WP_MTPC.php:193
+#: classes/WP_MTPC.php:189
 msgid "Login successful"
 msgstr "Du är nu inloggad"
 
-#: classes/WP_MTPC.php:202
+#: classes/WP_MTPC.php:199
 msgid "Invalid username or password"
 msgstr "Ogiltigt användarnamn eller lösenord"
 
-#: classes/WP_MTPC.php:213
+#: classes/WP_MTPC.php:210
 msgid "Account created"
 msgstr "Ditt konto har skapats"
 
-#: classes/WP_MTPC.php:216
+#: classes/WP_MTPC.php:213
 msgid "Account activated"
 msgstr "Ditt konto har aktiverats"
 
-#: classes/WP_MTPC.php:223
+#: classes/WP_MTPC.php:221
 msgid "User not found"
 msgstr "Användaren kunde inte hittas"
 
-#: classes/WP_MTPC.php:264
+#: classes/WP_MTPC.php:262
 msgid ""
 "Account activated. You can now activate individual blogs in the network."
 msgstr ""
 "Ert konto har aktiverats. Ni kan nu aktivera individuella bloggar i ert "
 "nätverk."
 
-#: classes/WP_MTPC.php:267
+#: classes/WP_MTPC.php:265
 msgid ""
 "Account not found. Please check your credentials. If the problem persists "
 "please contact support."
 msgstr ""
 "Kontot kunde inte hittas. Var god kontrollera dina uppgifter. Om problemet "
 "kvarstår var god kontakta supporten på info@metapic.se."
+
+#: classes/WP_MTPC.php:335
+msgid "Total clicks per day"
+msgstr "Totalt antal klick per dag"
 
 #: templates/metapic-options-ms.php:11
 msgid "Deactivate account"
@@ -224,6 +228,18 @@ msgstr "Aktivera konto"
 #: templates/ms-options/reactivate.php:43
 msgid "You must select a user."
 msgstr "Du måste välja en användare"
+
+#: templates/widgets/dashboard.php:4
+msgid "Date"
+msgstr "Datum"
+
+#: templates/widgets/dashboard.php:12
+msgid "Clicks"
+msgstr "Klick"
+
+#: templates/widgets/dashboard.php:21
+msgid "You have note received any clicks yet."
+msgstr "Du har inte fått några klick ännu."
 
 #: tinymce-lang/metapic-langs.php:5
 msgid "Link content"
