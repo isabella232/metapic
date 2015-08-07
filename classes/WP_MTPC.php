@@ -257,7 +257,7 @@ class WP_MTPC extends stdClass {
 						$apiUrl = $this->api_url;
 					}
 					update_site_option("mtpc_api_url", $apiUrl);
-					$this->client = new ApiClient($apiUrl, $_POST["api_key"], $_POST["secret_key"]);
+					$this->client = new ApiClient($this->getApiUrl(), $_POST["api_key"], $_POST["secret_key"]);
 					$isValid = $this->client->checkClient($_POST["api_key"]);
 					update_site_option("mtpc_valid_client", ($isValid["status"] == 200));
 					if ($isValid["status"] == 200) {
@@ -427,7 +427,6 @@ class WP_MTPC extends stdClass {
 		}
 		$clicks = array_merge($tempClicks, $clicks);
 
-		/*
 		while($tenDaysAgo->diffInDays($lastClickDate, false) > 0) {
 			$clicks[] = array_merge($firstClick, [
 				"date" => $tenDaysAgo->format("Y-m-d"),
@@ -435,7 +434,7 @@ class WP_MTPC extends stdClass {
 				"link_clicks" => 0
 			]);
 			$tenDaysAgo = $tenDaysAgo->addDay();
-		}*/
+		}
 
 		return $clicks;
 	}
