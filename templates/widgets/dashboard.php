@@ -1,15 +1,15 @@
-<h3 style="padding: 0 0 8px;"><?= __("Total clicks per day", 'metapic') ?></h3>
+<h3 class="sub-header"><?= __("Total clicks per day", 'metapic') ?></h3>
 <?php if (is_array($clicks) && count($clicks) > 0): ?>
-	<div style="overflow:hidden;">
-		<div style="width:50%;float:left;">
+	<div class="content">
+		<div>
 			<h4><?= __("Date", "metapic") ?></h4>
 			<ul>
 				<?php foreach ($clicks as $click): ?>
-					<li><?= $click["date"] ?></li>
+					<li class="click-date"><?=  mysql2date( get_option( 'date_format' ), $click["date"]) ?></li>
 				<?php endforeach; ?>
 			</ul>
 		</div>
-		<div style="width:50%;float:left;">
+		<div>
 			<h4><?= __("Clicks", "metapic") ?></h4>
 			<ul>
 				<?php foreach ($clicks as $click): ?>
@@ -17,7 +17,33 @@
 				<?php endforeach; ?>
 			</ul>
 		</div>
+		<a href="#" id="metapic-show-stats" class="button"><?= __('Show detailed statistics', 'metapic')?></a>
 	</div>
+	<footer>
+		<div class="clicks-month">
+			<h3>1 100</h3>
+			<p><?= __('Clicks this month', 'metapic') ?></p>
+		</div>
+
+		<div class="clicks-total">
+			<h3>5 896</h3>
+			<p><?= __('Clicks total', 'metapic') ?></p>
+		</div>
+	</footer>
 <?php else: ?>
 	<p><?= __("You have note received any clicks yet.", 'metapic'); ?></p>
 <?php endif; ?>
+<script type="text/javascript">
+	(function($) {
+		$("#metapic-show-stats").on("click", function(e) {
+			e.preventDefault();
+			$.event.trigger({
+				type: "metapic",
+				baseUrl: "<?= $this->getApiUrl() ?>",
+				startPage: "stats",
+				hideSidebar: true,
+				randomKey: "<?= get_option("mtpc_access_token") ?>"
+			});
+		});
+	})(jQuery);
+</script>

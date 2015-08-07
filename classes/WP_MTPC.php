@@ -24,6 +24,8 @@ class WP_MTPC extends stdClass {
 		$this->setupLang();
 		$this->setupNetworkOptions();
 		$this->setupIframeRoutes();
+		$this->setupNetworkDashboardWidget();
+
 		if (get_option("mtpc_active_account") && get_option("mtpc_access_token")) {
 			$this->setupJsOptions();
 			$this->setupDashboardWidget();
@@ -324,11 +326,7 @@ class WP_MTPC extends stdClass {
 	}
 
 	private function setupDashboardWidget() {
-		if (is_multisite()) {
-			$this->updateClicksForMultiSite();
-		}
-		else {
-		}
+		$this->updateClicks();
 		add_action( 'wp_dashboard_setup', function() {
 			wp_add_dashboard_widget(
 				'metapic-dashboard-widget',         // Widget slug.
@@ -337,23 +335,15 @@ class WP_MTPC extends stdClass {
 					$this->getTemplate('widgets/dashboard', ["clicks" => get_option("mtpc_clicks_by_date")]);
 				}
 			);
-		} );
+		});
 	}
 
 	private function updateClicksForMultiSite() {
-		global $wpdb;
 		$lastUpdate = get_site_option("mtpc_last_click_update");
 		if (($lastUpdate && Carbon::parse($lastUpdate)->diffInMinutes(Carbon::now()) >= 10) || !$lastUpdate) {
 			update_site_option("mtpc_last_click_update", Carbon::now()->toDateTimeString());
 			try {
-				$allClicks = $this->client->getClientClicksByDate(null, ["from" => date('Y-m-d', strtotime('-10 days')), "to" => date("Y-m-d")]);
-				$wpClicks = [];
-				foreach ($allClicks as $click) {
-					if (isset($wpClicks[$click["email"]]))
-						$wpClicks[$click["email"]][] = $click;
-					else
-						$wpClicks[$click["email"]] = [$click];
-				}
+				$wpClicks = $this->client->getClientClicksByDate(null, ["from" => date('Y-m-d', strtotime('-10 days')), "to" => date("Y-m-d")]);
 				$sites = wp_get_sites();
 				$orgBlog = get_current_blog_id();
 				foreach ($sites as $site) {
@@ -364,8 +354,31 @@ class WP_MTPC extends stdClass {
 					}
 				}
 				switch_to_blog($orgBlog);
+				update_site_option("mtpc_clicks_by_date", $wpClicks);
 			}
-			catch (Exception $e) {}
+			catch (Exception $e) {
+			}
+		}
+	}
+
+	private function setupNetworkDashboardWidget() {
+		$this->updateClicks();
+		add_action( 'wp_network_dashboard_setup', function() {
+			wp_add_dashboard_widget(
+				'metapic-network-dashboard-widget',         // Widget slug.
+				__("Metapic", 'metapic'),         // Title.
+				function() {
+					$this->getTemplate('widgets/dashboard-network', ["clicks" => get_site_option("mtpc_clicks_by_date")]);
+				}
+			);
+		});
+	}
+
+	private function updateClicks() {
+		if (is_multisite()) {
+			$this->updateClicksForMultiSite();
+		}
+		else {
 		}
 	}
 }
