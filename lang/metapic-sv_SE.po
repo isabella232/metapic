@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Metapic WordPress Plugin\n"
-"POT-Creation-Date: 2015-07-17 15:09+0200\n"
-"PO-Revision-Date: 2015-07-17 15:09+0200\n"
+"POT-Creation-Date: 2015-08-07 13:23+0200\n"
+"PO-Revision-Date: 2015-08-07 13:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: Metapic <info@metapic.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.2\n"
+"X-Generator: Poedit 1.8.4\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -17,74 +17,74 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: vendor\n"
 
-#: classes/WP_MTPC.php:113
+#: classes/WP_MTPC.php:115
 msgid "Account deactivated"
 msgstr "Kontot har deaktiverats"
 
-#: classes/WP_MTPC.php:124
+#: classes/WP_MTPC.php:126
 msgid "Login"
 msgstr "Inloggning"
 
-#: classes/WP_MTPC.php:125
+#: classes/WP_MTPC.php:127
 msgid "Please login to your Metapic account"
 msgstr "Var god logga in på ditt Metapic-konto"
 
-#: classes/WP_MTPC.php:128
+#: classes/WP_MTPC.php:130
 msgid "Email"
 msgstr "E-post"
 
-#: classes/WP_MTPC.php:133
+#: classes/WP_MTPC.php:135
 msgid "Password"
 msgstr "Lösenord"
 
-#: classes/WP_MTPC.php:139
+#: classes/WP_MTPC.php:141
 msgid "Your account"
 msgstr "Ditt konto"
 
-#: classes/WP_MTPC.php:140
+#: classes/WP_MTPC.php:142
 msgid "You are currently logged in"
 msgstr "Du är inloggad"
 
-#: classes/WP_MTPC.php:146
+#: classes/WP_MTPC.php:148
 msgid "Advanced"
 msgstr "Avancerat"
 
-#: classes/WP_MTPC.php:147
+#: classes/WP_MTPC.php:149
 msgid "Advanced settings"
 msgstr "Avancerade inställningar"
 
-#: classes/WP_MTPC.php:151
+#: classes/WP_MTPC.php:153
 msgid "Server address"
 msgstr "Serveradress"
 
-#: classes/WP_MTPC.php:189
+#: classes/WP_MTPC.php:191
 msgid "Login successful"
 msgstr "Du är nu inloggad"
 
-#: classes/WP_MTPC.php:199
+#: classes/WP_MTPC.php:201
 msgid "Invalid username or password"
 msgstr "Ogiltigt användarnamn eller lösenord"
 
-#: classes/WP_MTPC.php:210
+#: classes/WP_MTPC.php:212
 msgid "Account created"
 msgstr "Ditt konto har skapats"
 
-#: classes/WP_MTPC.php:213
+#: classes/WP_MTPC.php:215
 msgid "Account activated"
 msgstr "Ditt konto har aktiverats"
 
-#: classes/WP_MTPC.php:221
+#: classes/WP_MTPC.php:223
 msgid "User not found"
 msgstr "Användaren kunde inte hittas"
 
-#: classes/WP_MTPC.php:262
+#: classes/WP_MTPC.php:264
 msgid ""
 "Account activated. You can now activate individual blogs in the network."
 msgstr ""
 "Ert konto har aktiverats. Ni kan nu aktivera individuella bloggar i ert "
 "nätverk."
 
-#: classes/WP_MTPC.php:265
+#: classes/WP_MTPC.php:267
 msgid ""
 "Account not found. Please check your credentials. If the problem persists "
 "please contact support."
@@ -92,9 +92,9 @@ msgstr ""
 "Kontot kunde inte hittas. Var god kontrollera dina uppgifter. Om problemet "
 "kvarstår var god kontakta supporten på info@metapic.se."
 
-#: classes/WP_MTPC.php:335
+#: classes/WP_MTPC.php:333 classes/WP_MTPC.php:376
 msgid "Metapic"
-msgstr ""
+msgstr "Metapic"
 
 #: templates/metapic-options-ms.php:11
 msgid "Deactivate account"
@@ -229,9 +229,13 @@ msgstr "Aktivera konto"
 msgid "You must select a user."
 msgstr "Du måste välja en användare"
 
+#: templates/widgets/dashboard-network.php:1
+msgid "Network widget"
+msgstr "Nätverkswidget"
+
 #: templates/widgets/dashboard.php:1
-msgid "Total clicks per day"
-msgstr "Totalt antal klick per dag"
+msgid "Total clicks per day - last 10 days"
+msgstr "Totalt antal klick per dag - senaste 10 dagarna"
 
 #: templates/widgets/dashboard.php:5
 msgid "Date"
@@ -241,7 +245,19 @@ msgstr "Datum"
 msgid "Clicks"
 msgstr "Klick"
 
-#: templates/widgets/dashboard.php:22
+#: templates/widgets/dashboard.php:20
+msgid "Show detailed statistics"
+msgstr "Visa detaljerad statistik"
+
+#: templates/widgets/dashboard.php:25
+msgid "Clicks this month"
+msgstr "Klick den här månaden"
+
+#: templates/widgets/dashboard.php:30
+msgid "Clicks total"
+msgstr "Klick totalt"
+
+#: templates/widgets/dashboard.php:34
 msgid "You have note received any clicks yet."
 msgstr "Du har inte fått några klick ännu."
 
@@ -268,6 +284,9 @@ msgstr "Skapa kollage"
 #: tinymce-lang/metapic-langs.php:10
 msgid "Metapic collage"
 msgstr "Metapic kollage"
+
+#~ msgid "Total clicks per day"
+#~ msgstr "Totalt antal klick per dag"
 
 #~ msgid ""
 #~ "Metapic has been activated on your site by the network administrator.\n"

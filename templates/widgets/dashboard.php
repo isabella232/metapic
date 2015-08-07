@@ -1,4 +1,4 @@
-<h3 class="sub-header"><?= __("Total clicks per day", 'metapic') ?></h3>
+<h3 class="sub-header"><?= __("Total clicks per day - last 10 days", 'metapic') ?></h3>
 <?php if (is_array($clicks) && count($clicks) > 0): ?>
 	<div class="content">
 		<div>
@@ -21,12 +21,12 @@
 	</div>
 	<footer>
 		<div class="clicks-month">
-			<h3>1 100</h3>
+			<h3><?= $month ?></h3>
 			<p><?= __('Clicks this month', 'metapic') ?></p>
 		</div>
 
 		<div class="clicks-total">
-			<h3>5 896</h3>
+			<h3><?= $total ?></h3>
 			<p><?= __('Clicks total', 'metapic') ?></p>
 		</div>
 	</footer>

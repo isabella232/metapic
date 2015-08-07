@@ -332,7 +332,11 @@ class WP_MTPC extends stdClass {
 				'metapic-dashboard-widget',         // Widget slug.
 				__("Metapic", 'metapic'),         // Title.
 				function() {
-					$this->getTemplate('widgets/dashboard', ["clicks" => get_option("mtpc_clicks_by_date")]);
+					$this->getTemplate('widgets/dashboard', [
+						"clicks" => get_option("mtpc_clicks_by_date"),
+						"month" => get_option("mtpc_clicks_by_month"),
+						"total" => get_option("mtpc_clicks_total")
+					]);
 				}
 			);
 		});
@@ -350,11 +354,14 @@ class WP_MTPC extends stdClass {
 					switch_to_blog($site["blog_id"]);
 					$mtpcEmail = get_option("mtpc_email");
 					if ($mtpcEmail && isset($wpClicks[$mtpcEmail])) {
-						update_option("mtpc_clicks_by_date", $wpClicks[$mtpcEmail]);
+						$clicksToInsert = $this->insertMissingDates($wpClicks[$mtpcEmail]["day"]);
+						update_option("mtpc_clicks_by_date", $clicksToInsert);
+						update_option("mtpc_clicks_by_month", isset($wpClicks[$mtpcEmail]["month"]) ? $wpClicks[$mtpcEmail]["month"] : 0);
+						update_option("mtpc_clicks_total", isset($wpClicks[$mtpcEmail]["total"]) ? $wpClicks[$mtpcEmail]["total"] : 0);
 					}
 				}
 				switch_to_blog($orgBlog);
-				update_site_option("mtpc_clicks_by_date", $wpClicks);
+				update_site_option("mtpc_clicks", $wpClicks);
 			}
 			catch (Exception $e) {
 			}
@@ -380,5 +387,56 @@ class WP_MTPC extends stdClass {
 		}
 		else {
 		}
+	}
+
+	private function insertMissingDates($clicks) {
+		$today = Carbon::parse(date("Y-m-d"));
+		$tenDaysAgo = Carbon::parse(date("Y-m-d"))->subDays(10);
+		$firstClick = $clicks[0];
+		$lastClick = end($clicks);
+		reset($clicks);
+
+		$firstClickDate = Carbon::parse($firstClick["date"]);
+		$lastClickDate = Carbon::parse($lastClick["date"]);
+
+		$fillIn = [];
+		$fillStart = Carbon::parse($firstClick["date"]);
+
+		foreach($clicks as $click) {
+			while($fillStart->diffInDays(Carbon::parse($click["date"]), false) < 0) {
+				$fillIn[] = [
+					"date" => $fillStart->format("Y-m-d"),
+					"tag_clicks" => 0,
+					"link_clicks" => 0
+				];
+				$fillStart = $fillStart->subDay();
+			}
+			$fillIn[] = $click;
+			$fillStart = Carbon::parse($click["date"])->subDay();
+		}
+		$clicks = $fillIn;
+
+		$tempClicks = [];
+		while($today->diffInDays($firstClickDate) > 0) {
+			$tempClicks[] = array_merge($firstClick, [
+				"date" => $today->format("Y-m-d"),
+				"tag_clicks" => 0,
+				"link_clicks" => 0
+			]);
+			$today = $today->subDay();
+		}
+		$clicks = array_merge($tempClicks, $clicks);
+
+		/*
+		while($tenDaysAgo->diffInDays($lastClickDate, false) > 0) {
+			$clicks[] = array_merge($firstClick, [
+				"date" => $tenDaysAgo->format("Y-m-d"),
+				"tag_clicks" => 0,
+				"link_clicks" => 0
+			]);
+			$tenDaysAgo = $tenDaysAgo->addDay();
+		}*/
+
+		return $clicks;
 	}
 }
