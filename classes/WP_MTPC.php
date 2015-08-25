@@ -206,6 +206,7 @@ class WP_MTPC extends stdClass {
 				$wp_user = get_user_by("email", $user_email);
 				if ($wp_user) {
 					$user = $this->client->activateUser($wp_user->user_email);
+
 					if ($user["access_token"] == null) {
 						$this->client->createUser(array("email" => $wp_user->user_email, "username" => $wp_user->user_login));
 						$user = $this->client->activateUser($wp_user->user_email);
@@ -214,9 +215,14 @@ class WP_MTPC extends stdClass {
 					else {
 						$this->setStatusMessage(__("Account activated", "metapic"));
 					}
-					update_option("mtpc_active_account", true);
+//                    echo "test test";
+//					echo json_encode($user);
+ //                   die();
+
+                    update_option("mtpc_active_account", true);
 					update_option("mtpc_email", $wp_user->user_email);
 					update_option("mtpc_id", $user["id"]);
+
 					update_option("mtpc_access_token", $user["access_token"]["access_token"]);
 				}
 				else {

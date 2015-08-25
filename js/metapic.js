@@ -25,19 +25,38 @@
 					selection = $(editor.selection.getNode());
 					selection.attr("data-metapic-id", returnData.attr("data-metapic-id"));
 					selection.attr("data-metapic-tags", returnData.attr("data-metapic-tags"));
+                    var tags=json_parse(returnData.attr("data-metapic-tags"));
+                    for(var i=0;i>tags.length;i++){
+                        console.log(tags[i].text);
+                        editor.insertContent(tags[i].text);
+                    }
+
 					break;
 				default:
-					if (selection.is("img")) {
-						if (selection.parent().is("a")) {
-							selection.parent().replaceWith(returnData);
+                   if (selection.is("img")) {
+                       if (selection.parent().is("a")) {
+                       	selection.parent().replaceWith(returnData);
 						}
 						else {
-							selection.replaceWith(returnData);
+                    		selection.replaceWith(returnData);
 						}
 					}
-					else {
-						editor.insertContent(data.text);
-					}
+					else {//collage
+
+                       editor.insertContent(returnData);
+                       returnData = $(returnData);
+                       var tags = JSON.parse(returnData.attr("data-metapic-tags"));
+                       console.log(tags);
+                       for (var i = 0; i < tags.length; i++) {
+                           console.log(tags[i].text);
+                           editor.insertContent("<a href=http://mtpc.se/tags/Link/" + tags[i].id + ">" + tags[i].text + "</a>");
+
+                           if (i != tags.length - 1) {
+                               editor.insertContent("/");
+
+                           }
+                       }
+                   }
 					break;
 			}
 		});
