@@ -350,7 +350,6 @@ class WP_MTPC extends stdClass {
 
 	private function updateClicksForMultiSite() {
 		$lastUpdate = get_site_option("mtpc_last_click_update");
-		$lastUpdate = false;
 		if (($lastUpdate && Carbon::parse($lastUpdate)->diffInMinutes(Carbon::now()) >= 10) || !$lastUpdate) {
 			update_site_option("mtpc_last_click_update", Carbon::now()->toDateTimeString());
 			try {
@@ -399,10 +398,14 @@ class WP_MTPC extends stdClass {
 	private function insertMissingDates($clicks) {
 		$today = Carbon::parse(date("Y-m-d"));
 		$tenDaysAgo = Carbon::parse(date("Y-m-d"))->subDays(9);
+		if (!is_array($clicks)) {
+			$clicks = [["date" => $today->format("Y-m-d"),"tag_clicks" => 0,
+			            "link_clicks" => 0],["date" => $tenDaysAgo->format("Y-m-d"),"tag_clicks" => 0,
+			            "link_clicks" => 0]];
+		}
 		$firstClick = $clicks[0];
 		$lastClick = end($clicks);
 		reset($clicks);
-
 		$firstClickDate = Carbon::parse($firstClick["date"]);
 		$lastClickDate = Carbon::parse($lastClick["date"]);
 

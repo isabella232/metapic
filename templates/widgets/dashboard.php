@@ -5,7 +5,7 @@
 			<h4><?= __("Date", "metapic") ?></h4>
 			<ul>
 				<?php foreach ($clicks as $click): ?>
-					<li class="click-date"><?=  mysql2date( get_option( 'date_format' ), $click["date"]) ?></li>
+					<li class="click-date"><?= mysql2date( get_option( 'date_format' ), $click["date"]) ?></li>
 				<?php endforeach; ?>
 			</ul>
 		</div>
