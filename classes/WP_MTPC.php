@@ -31,21 +31,21 @@ class WP_MTPC extends stdClass {
 			$this->setupDashboardWidget();
 		}
 
-		add_filter('wp_kses_allowed_html', function($tags, $context) {
+		add_filter('wp_kses_allowed_html', function ($tags, $context) {
 			foreach ($tags as $key => $value) {
 				$tags[$key]["data-metapic-id"] = 1;
 				$tags[$key]["data-metapic-tags"] = 1;
 			}
 			return $tags;
-		},500, 2);
+		}, 500, 2);
 	}
 
 	private function setupJsOptions() {
-		add_filter('tiny_mce_before_init', function($mceInit, $editor_id) {
-			$mceInit["mtpc_iframe_url"] = rtrim(get_bloginfo("url"), "/")."/?".$this->accessKey;
+		add_filter('tiny_mce_before_init', function ($mceInit, $editor_id) {
+			$mceInit["mtpc_iframe_url"] = rtrim(get_bloginfo("url"), "/") . "/?" . $this->accessKey;
 			$mceInit["mtpc_plugin_url"] = $this->plugin_url;
 			return $mceInit;
-		},500,2);
+		}, 500, 2);
 
 		add_action('admin_head', function () {
 			$mce_plugin_name = "metapic";
@@ -65,9 +65,9 @@ class WP_MTPC extends stdClass {
 
 				// Register new button in the editor
 				add_filter('mce_buttons', function ($buttons) use ($mce_plugin_name) {
-					array_push($buttons, $mce_plugin_name."link");
-					array_push($buttons, $mce_plugin_name."img");
-					array_push($buttons, $mce_plugin_name."collage");
+					array_push($buttons, $mce_plugin_name . "link");
+					array_push($buttons, $mce_plugin_name . "img");
+					array_push($buttons, $mce_plugin_name . "collage");
 
 					return $buttons;
 				}
@@ -108,10 +108,10 @@ class WP_MTPC extends stdClass {
 			$options = get_option('metapic_options');
 			register_setting('metapic_options', 'metapic_options', function ($input) {
 				$options = get_option('metapic_options');
-				switch ($_POST["mtpc_action"]) {
+				$action = (isset($_POST["submit"])) ? "update" : "deactivate";
+				switch ($action) {
 					case "deactivate":
-						delete_option("mtpc_active_account");
-						delete_option("mtpc_access_token");
+						$this->deactivateAccount();
 						$this->setStatusMessage(__("Account deactivated", "metapic"));
 						break;
 					default:
@@ -124,7 +124,7 @@ class WP_MTPC extends stdClass {
 			$activeAccount = get_option("mtpc_active_account");
 			if (!$activeAccount) {
 				add_settings_section('plugin_main', __('Login', "metapic"), function () {
-					echo '<p>'.__('Please login to your Metapic account', 'metapic').'</p>';
+					echo '<p>' . __('Please login to your Metapic account', 'metapic') . '</p>';
 				}, 'plugin'
 				);
 				add_settings_field('email_field', __('Email', "metapic"), function () use ($options) {
@@ -136,17 +136,17 @@ class WP_MTPC extends stdClass {
 					echo "<input id='plugin_text_string' type='password' name='metapic_options[password_string]' size='40' type='text' value='{$options['password_string']}' />";
 				}, 'plugin', 'plugin_main'
 				);
-			}
-			else {
+			} else {
 				add_settings_section('plugin_main', __('Your account', "metapic"), function () {
-					echo '<p>'.__('You are currently logged in', 'metapic').'</p>';
-				}, 'plugin'
-				);
+					echo '<p>' . sprintf(__('You are currently logged in as: <strong>%s</strong>', 'metapic'), get_option("mtpc_email")) . '</p>';
+					echo '<p class="submit"><input type="submit" value="' . __('Log out', 'metapic') . '"
+	                         class="button" id="logout" name="logout"></p>';
+				}, 'plugin');
 			}
 
 			if ($this->debugMode) {
 				add_settings_section('plugin_advanced', __('Advanced', 'metapic'), function () {
-					echo '<p>'.__('Advanced settings', 'metapic').'</p>';
+					echo '<p>' . __('Advanced settings', 'metapic') . '</p>';
 				}, 'plugin'
 				);
 
@@ -189,19 +189,14 @@ class WP_MTPC extends stdClass {
 						update_option("mtpc_id", $user["id"]);
 						update_option("mtpc_access_token", $user["access_token"]["access_token"]);
 						$this->setStatusMessage(__("Login successful", "metapic"));
-					}
-					else {
+					} else {
 						throw new Exception;
 					}
 				} catch (Exception $e) {
-					delete_option("mtpc_active_account");
-					delete_option("mtpc_access_token");
-					delete_option("mtpc_email");
-					delete_option("mtpc_id");
+					$this->deactivateAccount();
 					$this->setStatusMessage(__("Invalid username or password", "metapic"), "error");
 				}
-			}
-			else {
+			} else {
 				$user_email = (isset($_POST["mtpc_email"])) ? $_POST["mtpc_email"] : wp_get_current_user()->user_email;
 				$wp_user = get_user_by("email", $user_email);
 				if ($wp_user) {
@@ -211,8 +206,7 @@ class WP_MTPC extends stdClass {
 						$this->client->createUser(array("email" => $wp_user->user_email, "username" => $wp_user->user_login));
 						$user = $this->client->activateUser($wp_user->user_email);
 						$this->setStatusMessage(__("Account created", "metapic"));
-					}
-					else {
+					} else {
 						$this->setStatusMessage(__("Account activated", "metapic"));
 					}
 //                    echo "test test";
@@ -224,8 +218,7 @@ class WP_MTPC extends stdClass {
 					update_option("mtpc_id", $user["id"]);
 
 					update_option("mtpc_access_token", $user["access_token"]["access_token"]);
-				}
-				else {
+				} else {
 					$this->setStatusMessage(__("User not found", "metapic"), "error");
 				}
 			}
@@ -239,9 +232,9 @@ class WP_MTPC extends stdClass {
 			load_plugin_textdomain('metapic', false, $langPath);
 		});
 
-		add_filter('mce_external_languages', function($locales) {
+		add_filter('mce_external_languages', function ($locales) {
 			$ds = DIRECTORY_SEPARATOR;
-			$path = $this->plugin_dir . $ds . 'tinymce-lang' . $ds. 'metapic-langs.php';
+			$path = $this->plugin_dir . $ds . 'tinymce-lang' . $ds . 'metapic-langs.php';
 			$locales ['metapic'] = $path;
 			return $locales;
 		});
@@ -258,8 +251,7 @@ class WP_MTPC extends stdClass {
 					//echo json_encode($_POST);
 					if (isset($_POST["API_url"])) {
 						$apiUrl = $_POST["API_url"];
-					}
-					else {
+					} else {
 						$apiUrl = $this->api_url;
 					}
 					update_site_option("mtpc_api_url", $apiUrl);
@@ -268,8 +260,7 @@ class WP_MTPC extends stdClass {
 					update_site_option("mtpc_valid_client", ($isValid["status"] == 200));
 					if ($isValid["status"] == 200) {
 						$this->setStatusMessage(__("Account activated. You can now activate individual blogs in the network.", "metapic"));
-					}
-					else {
+					} else {
 						$this->setStatusMessage(__("Account not found. Please check your credentials. If the problem persists please contact support.", "metapic"), "error");
 					}
 				}
@@ -307,7 +298,7 @@ class WP_MTPC extends stdClass {
 
 	private function setupIframeRoutes() {
 		add_action('init', function () {
-			add_rewrite_rule('hello.php$', 'index.php?'.$this->accessKey, 'top');
+			add_rewrite_rule('hello.php$', 'index.php?' . $this->accessKey, 'top');
 		}
 		);
 
@@ -321,9 +312,9 @@ class WP_MTPC extends stdClass {
 			if (array_key_exists($this->accessKey, $wp->query_vars)) {
 
 				wp_send_json([
-					"access_token" => ["access_token" => get_option("mtpc_access_token")],
-					"metapicApi" => $this->client->getBaseUrl()
-				]
+						"access_token" => ["access_token" => get_option("mtpc_access_token")],
+						"metapicApi" => $this->client->getBaseUrl()
+					]
 				);
 			}
 			return;
@@ -333,11 +324,11 @@ class WP_MTPC extends stdClass {
 
 	private function setupDashboardWidget() {
 		$this->updateClicks();
-		add_action( 'wp_dashboard_setup', function() {
+		add_action('wp_dashboard_setup', function () {
 			wp_add_dashboard_widget(
 				'metapic-dashboard-widget',         // Widget slug.
 				__("Metapic", 'metapic'),         // Title.
-				function() {
+				function () {
 					$this->getTemplate('widgets/dashboard', [
 						"clicks" => get_option("mtpc_clicks_by_date"),
 						"month" => get_option("mtpc_clicks_by_month"),
@@ -368,19 +359,18 @@ class WP_MTPC extends stdClass {
 				}
 				switch_to_blog($orgBlog);
 				update_site_option("mtpc_clicks", $wpClicks);
-			}
-			catch (Exception $e) {
+			} catch (Exception $e) {
 			}
 		}
 	}
 
 	private function setupNetworkDashboardWidget() {
 		$this->updateClicks();
-		add_action( 'wp_network_dashboard_setup', function() {
+		add_action('wp_network_dashboard_setup', function () {
 			wp_add_dashboard_widget(
 				'metapic-network-dashboard-widget',         // Widget slug.
 				__("Metapic", 'metapic'),         // Title.
-				function() {
+				function () {
 					$this->getTemplate('widgets/dashboard-network', ["clicks" => get_site_option("mtpc_clicks_by_date")]);
 				}
 			);
@@ -390,8 +380,7 @@ class WP_MTPC extends stdClass {
 	private function updateClicks() {
 		if (is_multisite()) {
 			$this->updateClicksForMultiSite();
-		}
-		else {
+		} else {
 		}
 	}
 
@@ -412,8 +401,8 @@ class WP_MTPC extends stdClass {
 		$fillIn = [];
 		$fillStart = Carbon::parse($firstClick["date"]);
 
-		foreach($clicks as $click) {
-			while($fillStart->diffInDays(Carbon::parse($click["date"]), false) < 0) {
+		foreach ($clicks as $click) {
+			while ($fillStart->diffInDays(Carbon::parse($click["date"]), false) < 0) {
 				$fillIn[] = [
 					"date" => $fillStart->format("Y-m-d"),
 					"tag_clicks" => 0,
@@ -427,7 +416,7 @@ class WP_MTPC extends stdClass {
 		$clicks = $fillIn;
 
 		$tempClicks = [];
-		while($today->diffInDays($firstClickDate, false) < 0) {
+		while ($today->diffInDays($firstClickDate, false) < 0) {
 			$tempClicks[] = array_merge($firstClick, [
 				"date" => $today->format("Y-m-d"),
 				"tag_clicks" => 0,
@@ -438,7 +427,7 @@ class WP_MTPC extends stdClass {
 		$clicks = array_merge($tempClicks, $clicks);
 
 		$tempClicks = [];
-		while($tenDaysAgo->diffInDays($lastClickDate, false) > 0) {
+		while ($tenDaysAgo->diffInDays($lastClickDate, false) > 0) {
 			$tempClicks[] = array_merge($firstClick, [
 				"date" => $tenDaysAgo->format("Y-m-d"),
 				"tag_clicks" => 0,
@@ -449,5 +438,12 @@ class WP_MTPC extends stdClass {
 		$clicks = array_merge($clicks, array_reverse($tempClicks));
 
 		return $clicks;
+	}
+
+	private function deactivateAccount() {
+		delete_option("mtpc_active_account");
+		delete_option("mtpc_access_token");
+		delete_option("mtpc_email");
+		delete_option("mtpc_id");
 	}
 }

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Metapic WordPress Plugin\n"
-"POT-Creation-Date: 2015-08-07 13:23+0200\n"
-"PO-Revision-Date: 2015-08-07 13:24+0200\n"
+"POT-Creation-Date: 2015-09-07 14:08+0200\n"
+"PO-Revision-Date: 2015-09-07 14:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: Metapic <info@metapic.se>\n"
 "Language: sv\n"
@@ -37,13 +37,18 @@ msgstr "E-post"
 msgid "Password"
 msgstr "Lösenord"
 
-#: classes/WP_MTPC.php:141
+#: classes/WP_MTPC.php:140
 msgid "Your account"
 msgstr "Ditt konto"
 
+#: classes/WP_MTPC.php:141
+#, php-format
+msgid "You are currently logged in as: <strong>%s</strong>"
+msgstr "Du är inloggad som: <strong>%s</strong>"
+
 #: classes/WP_MTPC.php:142
-msgid "You are currently logged in"
-msgstr "Du är inloggad"
+msgid "Log out"
+msgstr "Logga ut"
 
 #: classes/WP_MTPC.php:148
 msgid "Advanced"
@@ -61,30 +66,30 @@ msgstr "Serveradress"
 msgid "Login successful"
 msgstr "Du är nu inloggad"
 
-#: classes/WP_MTPC.php:201
+#: classes/WP_MTPC.php:197
 msgid "Invalid username or password"
 msgstr "Ogiltigt användarnamn eller lösenord"
 
-#: classes/WP_MTPC.php:212
+#: classes/WP_MTPC.php:208
 msgid "Account created"
 msgstr "Ditt konto har skapats"
 
-#: classes/WP_MTPC.php:215
+#: classes/WP_MTPC.php:210
 msgid "Account activated"
 msgstr "Ditt konto har aktiverats"
 
-#: classes/WP_MTPC.php:223
+#: classes/WP_MTPC.php:222
 msgid "User not found"
 msgstr "Användaren kunde inte hittas"
 
-#: classes/WP_MTPC.php:264
+#: classes/WP_MTPC.php:262
 msgid ""
 "Account activated. You can now activate individual blogs in the network."
 msgstr ""
 "Ert konto har aktiverats. Ni kan nu aktivera individuella bloggar i ert "
 "nätverk."
 
-#: classes/WP_MTPC.php:267
+#: classes/WP_MTPC.php:264
 msgid ""
 "Account not found. Please check your credentials. If the problem persists "
 "please contact support."
@@ -92,7 +97,7 @@ msgstr ""
 "Kontot kunde inte hittas. Var god kontrollera dina uppgifter. Om problemet "
 "kvarstår var god kontakta supporten på info@metapic.se."
 
-#: classes/WP_MTPC.php:333 classes/WP_MTPC.php:376
+#: classes/WP_MTPC.php:330 classes/WP_MTPC.php:373
 msgid "Metapic"
 msgstr "Metapic"
 
@@ -284,6 +289,9 @@ msgstr "Skapa kollage"
 #: tinymce-lang/metapic-langs.php:10
 msgid "Metapic collage"
 msgstr "Metapic kollage"
+
+#~ msgid "You are currently logged in"
+#~ msgstr "Du är inloggad"
 
 #~ msgid "Total clicks per day"
 #~ msgstr "Totalt antal klick per dag"

@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Metapic WordPress Plugin\n"
-"POT-Creation-Date: 2015-08-07 13:24+0200\n"
+"POT-Creation-Date: 2015-09-07 14:08+0200\n"
 "PO-Revision-Date: 2015-07-16 14:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: Metapic <info@metapic.se>\n"
@@ -38,12 +38,17 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: classes/WP_MTPC.php:141
+#: classes/WP_MTPC.php:140
 msgid "Your account"
 msgstr ""
 
+#: classes/WP_MTPC.php:141
+#, php-format
+msgid "You are currently logged in as: <strong>%s</strong>"
+msgstr ""
+
 #: classes/WP_MTPC.php:142
-msgid "You are currently logged in"
+msgid "Log out"
 msgstr ""
 
 #: classes/WP_MTPC.php:148
@@ -62,34 +67,34 @@ msgstr ""
 msgid "Login successful"
 msgstr ""
 
-#: classes/WP_MTPC.php:201
+#: classes/WP_MTPC.php:197
 msgid "Invalid username or password"
 msgstr ""
 
-#: classes/WP_MTPC.php:212
+#: classes/WP_MTPC.php:208
 msgid "Account created"
 msgstr ""
 
-#: classes/WP_MTPC.php:215
+#: classes/WP_MTPC.php:210
 msgid "Account activated"
 msgstr ""
 
-#: classes/WP_MTPC.php:223
+#: classes/WP_MTPC.php:222
 msgid "User not found"
 msgstr ""
 
-#: classes/WP_MTPC.php:264
+#: classes/WP_MTPC.php:262
 msgid ""
 "Account activated. You can now activate individual blogs in the network."
 msgstr ""
 
-#: classes/WP_MTPC.php:267
+#: classes/WP_MTPC.php:264
 msgid ""
 "Account not found. Please check your credentials. If the problem persists "
 "please contact support."
 msgstr ""
 
-#: classes/WP_MTPC.php:333 classes/WP_MTPC.php:376
+#: classes/WP_MTPC.php:330 classes/WP_MTPC.php:373
 msgid "Metapic"
 msgstr ""
 
