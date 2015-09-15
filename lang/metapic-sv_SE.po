@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Metapic WordPress Plugin\n"
-"POT-Creation-Date: 2015-09-07 14:08+0200\n"
-"PO-Revision-Date: 2015-09-07 14:08+0200\n"
+"POT-Creation-Date: 2015-09-15 15:33+0200\n"
+"PO-Revision-Date: 2015-09-15 15:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: Metapic <info@metapic.se>\n"
 "Language: sv\n"
@@ -17,79 +17,46 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: vendor\n"
 
-#: classes/WP_MTPC.php:115
+#: classes/WP_MTPC.php:117
 msgid "Account deactivated"
 msgstr "Kontot har deaktiverats"
 
-#: classes/WP_MTPC.php:126
-msgid "Login"
-msgstr "Inloggning"
-
-#: classes/WP_MTPC.php:127
-msgid "Please login to your Metapic account"
-msgstr "Var god logga in på ditt Metapic-konto"
-
-#: classes/WP_MTPC.php:130
-msgid "Email"
-msgstr "E-post"
-
-#: classes/WP_MTPC.php:135
-msgid "Password"
-msgstr "Lösenord"
-
-#: classes/WP_MTPC.php:140
-msgid "Your account"
-msgstr "Ditt konto"
-
-#: classes/WP_MTPC.php:141
-#, php-format
-msgid "You are currently logged in as: <strong>%s</strong>"
-msgstr "Du är inloggad som: <strong>%s</strong>"
-
-#: classes/WP_MTPC.php:142
-msgid "Log out"
-msgstr "Logga ut"
-
-#: classes/WP_MTPC.php:148
-msgid "Advanced"
-msgstr "Avancerat"
-
-#: classes/WP_MTPC.php:149
-msgid "Advanced settings"
-msgstr "Avancerade inställningar"
-
-#: classes/WP_MTPC.php:153
-msgid "Server address"
-msgstr "Serveradress"
-
-#: classes/WP_MTPC.php:191
-msgid "Login successful"
-msgstr "Du är nu inloggad"
-
-#: classes/WP_MTPC.php:197
-msgid "Invalid username or password"
-msgstr "Ogiltigt användarnamn eller lösenord"
-
-#: classes/WP_MTPC.php:208
+#: classes/WP_MTPC.php:130 classes/WP_MTPC.php:195
 msgid "Account created"
 msgstr "Ditt konto har skapats"
 
-#: classes/WP_MTPC.php:210
+#: classes/WP_MTPC.php:135
+msgid "Account already exists"
+msgstr "Det finns redan ett konto med dessa uppgifter"
+
+#: classes/WP_MTPC.php:159
+msgid "Register"
+msgstr "Registrera dig"
+
+#: classes/WP_MTPC.php:179
+msgid "Login successful"
+msgstr "Du är nu inloggad"
+
+#: classes/WP_MTPC.php:185
+msgid "Invalid username or password"
+msgstr "Ogiltigt användarnamn eller lösenord"
+
+#: classes/WP_MTPC.php:197
 msgid "Account activated"
 msgstr "Ditt konto har aktiverats"
 
-#: classes/WP_MTPC.php:222
+#: classes/WP_MTPC.php:201
 msgid "User not found"
 msgstr "Användaren kunde inte hittas"
 
-#: classes/WP_MTPC.php:262
+#: classes/WP_MTPC.php:241
 msgid ""
 "Account activated. You can now activate individual blogs in the network."
 msgstr ""
 "Ert konto har aktiverats. Ni kan nu aktivera individuella bloggar i ert "
 "nätverk."
 
-#: classes/WP_MTPC.php:264
+#: classes/WP_MTPC.php:243
 msgid ""
 "Account not found. Please check your credentials. If the problem persists "
 "please contact support."
@@ -97,22 +64,59 @@ msgstr ""
 "Kontot kunde inte hittas. Var god kontrollera dina uppgifter. Om problemet "
 "kvarstår var god kontakta supporten på info@metapic.se."
 
-#: classes/WP_MTPC.php:330 classes/WP_MTPC.php:373
+#: classes/WP_MTPC.php:309 classes/WP_MTPC.php:351
 msgid "Metapic"
 msgstr "Metapic"
+
+#: templates/login.php:1
+msgid "Login"
+msgstr "Inloggning"
+
+#: templates/login.php:3
+msgid "Please login to your Metapic account"
+msgstr "Var god logga in på ditt Metapic-konto"
+
+#: templates/login.php:7 templates/register.php:10
+msgid "Email"
+msgstr "E-post"
+
+#: templates/login.php:12 templates/register.php:15
+msgid "Password"
+msgstr "Lösenord"
+
+#: templates/login.php:20
+msgid "Log in"
+msgstr "Logga in"
+
+#: templates/login.php:21
+msgid "Don't have an account?"
+msgstr "Har du inget konto ännu?"
+
+#: templates/login.php:21
+msgid "Click here to register"
+msgstr "Tryck här för att registrera dig"
 
 #: templates/metapic-options-ms.php:11
 msgid "Deactivate account"
 msgstr "Deaktivera konto"
 
 #: templates/metapic-options-ms.php:11 templates/ms-options/new.php:4
+#: templates/register.php:23
 msgid "Create account"
 msgstr "Skapa konto"
 
-#: templates/metapic-options.php:5 templates/ms-options/my-account.php:1
+#: templates/metapic-options.php:10 templates/ms-options/my-account.php:1
 #: templates/ms-options/new.php:1
 msgid "Metapic settings page"
 msgstr "Metapic inställningssida"
+
+#: templates/metapic-options.php:22
+msgid "Advanced settings"
+msgstr "Avancerade inställningar"
+
+#: templates/metapic-options.php:26
+msgid "Server address"
+msgstr "Serveradress"
 
 #: templates/metapic-site-options.php:2
 msgid "Metapic site settings page"
@@ -234,6 +238,29 @@ msgstr "Aktivera konto"
 msgid "You must select a user."
 msgstr "Du måste välja en användare"
 
+#: templates/my-account.php:1
+msgid "Your account"
+msgstr "Ditt konto"
+
+#: templates/my-account.php:2
+#, php-format
+msgid "You are currently logged in as: <strong>%s</strong>"
+msgstr "Du är inloggad som: <strong>%s</strong>"
+
+#: templates/my-account.php:3
+msgid "Log out"
+msgstr "Logga ut"
+
+#: templates/register.php:2
+msgid "Metapic registration"
+msgstr "Metapic registrering"
+
+#: templates/register.php:6
+msgid "Enter your email address and your password to start using Metapic!"
+msgstr ""
+"Fyll i din e-postadress och ditt önskade lösenord för att börja använda "
+"Metapic!"
+
 #: templates/widgets/dashboard-network.php:1
 msgid "Network widget"
 msgstr "Nätverkswidget"
@@ -289,6 +316,9 @@ msgstr "Skapa kollage"
 #: tinymce-lang/metapic-langs.php:10
 msgid "Metapic collage"
 msgstr "Metapic kollage"
+
+#~ msgid "Advanced"
+#~ msgstr "Avancerat"
 
 #~ msgid "You are currently logged in"
 #~ msgstr "Du är inloggad"

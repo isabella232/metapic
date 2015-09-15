@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Metapic WordPress Plugin\n"
-"POT-Creation-Date: 2015-09-07 14:08+0200\n"
+"POT-Creation-Date: 2015-09-15 15:33+0200\n"
 "PO-Revision-Date: 2015-07-16 14:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: Metapic <info@metapic.se>\n"
@@ -18,84 +18,79 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: vendor\n"
 
-#: classes/WP_MTPC.php:115
+#: classes/WP_MTPC.php:117
 msgid "Account deactivated"
 msgstr ""
 
-#: classes/WP_MTPC.php:126
-msgid "Login"
-msgstr ""
-
-#: classes/WP_MTPC.php:127
-msgid "Please login to your Metapic account"
-msgstr ""
-
-#: classes/WP_MTPC.php:130
-msgid "Email"
-msgstr ""
-
-#: classes/WP_MTPC.php:135
-msgid "Password"
-msgstr ""
-
-#: classes/WP_MTPC.php:140
-msgid "Your account"
-msgstr ""
-
-#: classes/WP_MTPC.php:141
-#, php-format
-msgid "You are currently logged in as: <strong>%s</strong>"
-msgstr ""
-
-#: classes/WP_MTPC.php:142
-msgid "Log out"
-msgstr ""
-
-#: classes/WP_MTPC.php:148
-msgid "Advanced"
-msgstr ""
-
-#: classes/WP_MTPC.php:149
-msgid "Advanced settings"
-msgstr ""
-
-#: classes/WP_MTPC.php:153
-msgid "Server address"
-msgstr ""
-
-#: classes/WP_MTPC.php:191
-msgid "Login successful"
-msgstr ""
-
-#: classes/WP_MTPC.php:197
-msgid "Invalid username or password"
-msgstr ""
-
-#: classes/WP_MTPC.php:208
+#: classes/WP_MTPC.php:130 classes/WP_MTPC.php:195
 msgid "Account created"
 msgstr ""
 
-#: classes/WP_MTPC.php:210
+#: classes/WP_MTPC.php:135
+msgid "Account already exists"
+msgstr ""
+
+#: classes/WP_MTPC.php:159
+msgid "Register"
+msgstr ""
+
+#: classes/WP_MTPC.php:179
+msgid "Login successful"
+msgstr ""
+
+#: classes/WP_MTPC.php:185
+msgid "Invalid username or password"
+msgstr ""
+
+#: classes/WP_MTPC.php:197
 msgid "Account activated"
 msgstr ""
 
-#: classes/WP_MTPC.php:222
+#: classes/WP_MTPC.php:201
 msgid "User not found"
 msgstr ""
 
-#: classes/WP_MTPC.php:262
+#: classes/WP_MTPC.php:241
 msgid ""
 "Account activated. You can now activate individual blogs in the network."
 msgstr ""
 
-#: classes/WP_MTPC.php:264
+#: classes/WP_MTPC.php:243
 msgid ""
 "Account not found. Please check your credentials. If the problem persists "
 "please contact support."
 msgstr ""
 
-#: classes/WP_MTPC.php:330 classes/WP_MTPC.php:373
+#: classes/WP_MTPC.php:309 classes/WP_MTPC.php:351
 msgid "Metapic"
+msgstr ""
+
+#: templates/login.php:1
+msgid "Login"
+msgstr ""
+
+#: templates/login.php:3
+msgid "Please login to your Metapic account"
+msgstr ""
+
+#: templates/login.php:7 templates/register.php:10
+msgid "Email"
+msgstr ""
+
+#: templates/login.php:12 templates/register.php:15
+msgid "Password"
+msgstr ""
+
+#: templates/login.php:20
+msgid "Log in"
+msgstr ""
+
+#: templates/login.php:21
+msgid "Don't have an account?"
+msgstr ""
+
+#: templates/login.php:21
+msgid "Click here to register"
 msgstr ""
 
 #: templates/metapic-options-ms.php:11
@@ -103,12 +98,21 @@ msgid "Deactivate account"
 msgstr ""
 
 #: templates/metapic-options-ms.php:11 templates/ms-options/new.php:4
+#: templates/register.php:23
 msgid "Create account"
 msgstr ""
 
-#: templates/metapic-options.php:5 templates/ms-options/my-account.php:1
+#: templates/metapic-options.php:10 templates/ms-options/my-account.php:1
 #: templates/ms-options/new.php:1
 msgid "Metapic settings page"
+msgstr ""
+
+#: templates/metapic-options.php:22
+msgid "Advanced settings"
+msgstr ""
+
+#: templates/metapic-options.php:26
+msgid "Server address"
 msgstr ""
 
 #: templates/metapic-site-options.php:2
@@ -212,6 +216,27 @@ msgstr ""
 
 #: templates/ms-options/reactivate.php:43
 msgid "You must select a user."
+msgstr ""
+
+#: templates/my-account.php:1
+msgid "Your account"
+msgstr ""
+
+#: templates/my-account.php:2
+#, php-format
+msgid "You are currently logged in as: <strong>%s</strong>"
+msgstr ""
+
+#: templates/my-account.php:3
+msgid "Log out"
+msgstr ""
+
+#: templates/register.php:2
+msgid "Metapic registration"
+msgstr ""
+
+#: templates/register.php:6
+msgid "Enter your email address and your password to start using Metapic!"
 msgstr ""
 
 #: templates/widgets/dashboard-network.php:1

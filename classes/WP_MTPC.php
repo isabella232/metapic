@@ -108,7 +108,9 @@ class WP_MTPC extends stdClass {
 			$options = get_option('metapic_options');
 			register_setting('metapic_options', 'metapic_options', function ($input) {
 				$options = get_option('metapic_options');
-				$action = (isset($_POST["submit"])) ? "update" : "deactivate";
+				$updateActions = array_flip(["submit", "login"]);
+				$inArray = (count(array_intersect_key($_POST, $updateActions)) > 0);
+				$action = ($inArray) ? "update" : "deactivate";
 				switch ($action) {
 					case "deactivate":
 						$this->deactivateAccount();
@@ -121,42 +123,28 @@ class WP_MTPC extends stdClass {
 				return $options;
 			});
 
-			$activeAccount = get_option("mtpc_active_account");
-			if (!$activeAccount) {
-				add_settings_section('plugin_main', __('Login', "metapic"), function () {
-					echo '<p>' . __('Please login to your Metapic account', 'metapic') . '</p>';
-				}, 'plugin'
-				);
-				add_settings_field('email_field', __('Email', "metapic"), function () use ($options) {
-					echo "<input id='plugin_text_string' name='metapic_options[email_string]' size='40' type='text' value='{$options['email_string']}' />";
-				}, 'plugin', 'plugin_main'
-				);
+			register_setting('metapic_register_options', 'metapic_register_options', function ($input) {
+				$options = get_option('metapic_register_options');
+				$user = $this->client->register($input["email_string"], $input["password_string"]);
+				if ($user) {
+					$this->activateAccount($user["id"], $user["email"], $user["access_token"]["access_token"]);
+					$this->setStatusMessage(__("Account created", "metapic"));
+					wp_redirect(admin_url('options-general.php?page=metapic_settings'));
+					die();
+				}
+				else {
+					$this->setStatusMessage(__("Account already exists", "metapic"), "error");
 
-				add_settings_field('password_field', __('Password', "metapic"), function () use ($options) {
-					echo "<input id='plugin_text_string' type='password' name='metapic_options[password_string]' size='40' type='text' value='{$options['password_string']}' />";
-				}, 'plugin', 'plugin_main'
-				);
-			} else {
-				add_settings_section('plugin_main', __('Your account', "metapic"), function () {
-					echo '<p>' . sprintf(__('You are currently logged in as: <strong>%s</strong>', 'metapic'), get_option("mtpc_email")) . '</p>';
-					echo '<p class="submit"><input type="submit" value="' . __('Log out', 'metapic') . '"
-	                         class="button" id="logout" name="logout"></p>';
-				}, 'plugin');
-			}
+				}
+				return $options;
+			});
+		});
 
-			if ($this->debugMode) {
-				add_settings_section('plugin_advanced', __('Advanced', 'metapic'), function () {
-					echo '<p>' . __('Advanced settings', 'metapic') . '</p>';
-				}, 'plugin'
-				);
-
-				add_settings_field('uri_field', __('Server address', 'metapic'), function () use ($options) {
-					echo "<input id='plugin_text_string' name='metapic_options[uri_string]' size='40' type='text' value='{$options['uri_string']}' />";
-				}, 'plugin', 'plugin_advanced'
-				);
-			}
-		}
-		);
+		add_action('admin_init', function() {
+			register_setting('metapic_register_options', 'metapic_register_options', function ($input) {
+				return $input;
+			});
+		});
 
 		add_action('admin_menu', function () {
 			$isValidClient = get_site_option("mtpc_valid_client");
@@ -168,6 +156,10 @@ class WP_MTPC extends stdClass {
 						$this->getTemplate("metapic-options");
 				}
 				);
+				if (!is_multisite())
+					add_submenu_page(null, __('Register', 'metapic'), "Register", "manage_options", "metapic_register", function() {
+						$this->getTemplate("register");
+					});
 			}
 		}
 		);
@@ -184,10 +176,7 @@ class WP_MTPC extends stdClass {
 				try {
 					$user = $this->client->login($options['email_string'], $options['password_string']);
 					if ($user) {
-						update_option("mtpc_active_account", true);
-						update_option("mtpc_email", $options['email_string']);
-						update_option("mtpc_id", $user["id"]);
-						update_option("mtpc_access_token", $user["access_token"]["access_token"]);
+						$this->activateAccount($user["id"], $options['email_string'], $user["access_token"]["access_token"]);
 						$this->setStatusMessage(__("Login successful", "metapic"));
 					} else {
 						throw new Exception;
@@ -209,15 +198,7 @@ class WP_MTPC extends stdClass {
 					} else {
 						$this->setStatusMessage(__("Account activated", "metapic"));
 					}
-//                    echo "test test";
-//					echo json_encode($user);
- //                   die();
-
-                    update_option("mtpc_active_account", true);
-					update_option("mtpc_email", $wp_user->user_email);
-					update_option("mtpc_id", $user["id"]);
-
-					update_option("mtpc_access_token", $user["access_token"]["access_token"]);
+					$this->activateAccount($user["id"], $wp_user->user_email, $user["access_token"]["access_token"]);
 				} else {
 					$this->setStatusMessage(__("User not found", "metapic"), "error");
 				}
@@ -439,6 +420,14 @@ class WP_MTPC extends stdClass {
 
 		return $clicks;
 	}
+
+	private function activateAccount($id, $email, $token) {
+		update_option("mtpc_active_account", true);
+		update_option("mtpc_id", $id);
+		update_option("mtpc_email", $email);
+		update_option("mtpc_access_token", $token);
+	}
+
 
 	private function deactivateAccount() {
 		delete_option("mtpc_active_account");

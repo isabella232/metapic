@@ -1,13 +1,36 @@
 <?php
+
+/* @var WP_MTPC $this */
 $activeAccount = get_option("mtpc_active_account");
+$options = get_option('metapic_options');
+$loginPrimary = ($this->debugMode) ? "" : "button-primary";
+
 ?>
 <div class="wrap">
-	<h2><?= __('Metapic settings page', 'metapic')?></h2>
+	<h2><?= __('Metapic settings page', 'metapic') ?></h2>
+
 	<form action="options.php" method="post">
 		<?php settings_fields('metapic_options'); ?>
-		<?php do_settings_sections('plugin'); ?>
-		<input type="hidden" name="mtpc_action" value="login"/>
+		<?php if ($activeAccount) {
+			$this->getTemplate("my-account", ["loginPrimary" => $loginPrimary]);
+		}
+		else {
+			$this->getTemplate("login", ["loginPrimary" => $loginPrimary]);
+		} ?>
 
-		<p class="submit"><input type="submit" value="<?php esc_attr_e('Save Changes'); ?>" class="button button-primary" id="submit" name="submit"></p>
+		<?php if ($this->debugMode): ?>
+		<h3><?= __('Advanced settings', 'metapic') ?></h3>
+		<table class="form-table">
+			<tbody>
+			<tr>
+				<th scope="row"><?= __('Server address', 'metapic') ?></th>
+				<td><input type="text" value="<?= $options["uri_string"] ?>" size="40" name="metapic_options[uri_string]"
+				           id="plugin_text_string"></td>
+			</tr>
+			</tbody>
+		</table>
+		<p class="submit"><input type="submit" value="<?php esc_attr_e('Save Changes'); ?>"
+		                         class="button button-primary" id="submit" name="submit"></p>
+		<?php endif; ?>
 	</form>
 </div>
