@@ -29,7 +29,8 @@ If you have a multi site installation please contact us and we will help you set
 == Installation ==
 
 Upload the Metapic plugin to your blog, Activate it, then enter your Metapic account credentials in Settings -> Metapic.
-Once you have linked your account to your blog the new buttons should show up in TinyMCE and you're ready to start tagging!
+If you don't already have an account you can register through a link on the settings page.
+Once you have linked your account to your blog the new buttons should show up in TinyMCE and you're ready to start tagging and linking!
 
 == Screenshots ==
 
