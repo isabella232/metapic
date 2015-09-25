@@ -473,8 +473,6 @@ class WP_MTPC extends stdClass {
 			if ($deepLinkContent) {
 				$userId = get_option("mtpc_id");
 				$newContent = $this->client->deepLinkBlogPost($userId, $filtered_data['post_content'], get_option("mtpc_access_token"));
-				var_dump($newContent);
-				die();
 				if (is_array($newContent) && isset($newContent["newHtml"]) && $newContent["isUpdated"]) {
 					$filtered_data['post_content'] = $newContent["newHtml"];
 				}
