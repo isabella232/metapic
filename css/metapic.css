@@ -62,3 +62,17 @@ html body.metapic-iframe-open {
 #metapic-dashboard-widget * {
 	box-sizing: border-box;
 }
+
+.mtpc-deeplink-text {
+	background: url("../images/logo/metapic-symbol-32.png") left center no-repeat;
+	background-size: 18px 18px;
+	display:inline-block;
+	padding-left:26px;
+}
+
+#deeplink-status-display {
+	font-weight:600;
+}
+.deeplink-status-edit {
+	margin:10px 2px 0;
+}

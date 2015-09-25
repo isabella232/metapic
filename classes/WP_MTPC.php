@@ -25,6 +25,7 @@ class WP_MTPC extends stdClass {
 		$this->setupNetworkOptions();
 		$this->setupIframeRoutes();
 		$this->setupNetworkDashboardWidget();
+		$this->setupDeeplinkPublishing();
 
 		if (get_option("mtpc_active_account") && get_option("mtpc_access_token")) {
 			$this->setupJsOptions();
@@ -56,6 +57,7 @@ class WP_MTPC extends stdClass {
 				//wp_enqueue_script( 'iframeScript',  , array());
 				//$options['uri_string']="http://metapic-api.localhost";
 				wp_enqueue_script('iframeScript', $this->getApiUrl() . '/javascript/iframeScript.js', array(), '1.0.0', true);
+				wp_enqueue_script('metapicAdmin', $this->plugin_url . '/js/metapic-admin.js', ['jquery'], '1.0.0', true);
 				// Declare script for new button
 				add_filter('mce_external_plugins', function ($plugin_array) use ($mce_plugin_name) {
 					$plugin_array[$mce_plugin_name] = $this->plugin_url . '/js/metapic.js';
@@ -455,5 +457,29 @@ class WP_MTPC extends stdClass {
 		delete_option("mtpc_access_token");
 		delete_option("mtpc_email");
 		delete_option("mtpc_id");
+	}
+
+	private function setupDeeplinkPublishing() {
+		add_action( 'post_submitbox_misc_actions', function() {
+			$this->getTemplate('deeplink-publish');
+		});
+
+		add_action( 'save_post', function($postId) {
+			update_post_meta($postId, "mtpc_deeplink_auto", (int)$_POST["mtpc_deeplink_auto"]);
+		});
+
+		add_filter('wp_insert_post_data', function($filtered_data, $raw_data) {
+			$deepLinkContent = (bool)$raw_data["mtpc_deeplink_auto"];
+			if ($deepLinkContent) {
+				$userId = get_option("mtpc_id");
+				$newContent = $this->client->deepLinkBlogPost($userId, $filtered_data['post_content'], get_option("mtpc_access_token"));
+				var_dump($newContent);
+				die();
+				if (is_array($newContent) && isset($newContent["newHtml"]) && $newContent["isUpdated"]) {
+					$filtered_data['post_content'] = $newContent["newHtml"];
+				}
+			}
+			return $filtered_data;
+		}, 10, 2);
 	}
 }

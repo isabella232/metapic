@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a8cfe418565721354b70b385ce4bb0b1",
+    "hash": "fdc4f765f60870997a257ad63008cd42",
     "packages": [
         {
             "name": "guzzle/guzzle",
@@ -107,12 +107,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/raket/metapic-api-client.git",
-                "reference": "25701773b9f8e2a166958a1cc80ee6ae1765681b"
+                "reference": "4fc38e95b33e382ebce47ef2ee52d7db8d26eac3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/raket/metapic-api-client/zipball/25701773b9f8e2a166958a1cc80ee6ae1765681b",
-                "reference": "25701773b9f8e2a166958a1cc80ee6ae1765681b",
+                "url": "https://api.github.com/repos/raket/metapic-api-client/zipball/4fc38e95b33e382ebce47ef2ee52d7db8d26eac3",
+                "reference": "4fc38e95b33e382ebce47ef2ee52d7db8d26eac3",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                 "source": "https://github.com/raket/metapic-api-client/tree/master",
                 "issues": "https://github.com/raket/metapic-api-client/issues"
             },
-            "time": "2015-07-17 12:22:47"
+            "time": "2015-09-15 13:47:16"
         },
         {
             "name": "nesbot/carbon",
@@ -194,13 +194,13 @@
             "version": "2.8.x-dev",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "d7246885b7fe4cb5a2786bda34362d2f0e40b730"
+                "url": "https://github.com/symfony/event-dispatcher.git",
+                "reference": "0ef7669c0af9f62752a96a5d43c1b13c5c2e70e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/d7246885b7fe4cb5a2786bda34362d2f0e40b730",
-                "reference": "d7246885b7fe4cb5a2786bda34362d2f0e40b730",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/0ef7669c0af9f62752a96a5d43c1b13c5c2e70e9",
+                "reference": "0ef7669c0af9f62752a96a5d43c1b13c5c2e70e9",
                 "shasum": ""
             },
             "require": {
@@ -245,20 +245,20 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2015-06-24 15:32:32"
+            "time": "2015-09-22 13:49:41"
         },
         {
             "name": "symfony/translation",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Translation.git",
-                "reference": "d049b8bb7085f2d8b413be00336acba3ceceadd4"
+                "url": "https://github.com/symfony/translation.git",
+                "reference": "352bdcb721bdc261c346acd14841594f77434dcd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Translation/zipball/d049b8bb7085f2d8b413be00336acba3ceceadd4",
-                "reference": "d049b8bb7085f2d8b413be00336acba3ceceadd4",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/352bdcb721bdc261c346acd14841594f77434dcd",
+                "reference": "352bdcb721bdc261c346acd14841594f77434dcd",
                 "shasum": ""
             },
             "require": {
@@ -306,7 +306,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2015-07-10 04:29:01"
+            "time": "2015-09-25 10:59:21"
         }
     ],
     "packages-dev": [],
