@@ -3,7 +3,7 @@ use Carbon\Carbon;
 use MetaPic\ApiClient;
 
 class WP_MTPC extends stdClass {
-	private $api_url = "http://metapic-testapi.herokuapp.com";
+	private $api_url = "http://api.metapic.se";
 	private $plugin_dir;
 	private $plugin_url;
 	/* @var ApiClient $client */
