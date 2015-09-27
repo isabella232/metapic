@@ -76,3 +76,11 @@ html body.metapic-iframe-open {
 .deeplink-status-edit {
 	margin:10px 2px 0;
 }
+
+.mtpc-link:after {
+	content: "";
+	display: inline-block;
+	background: url("../images/logo/metapic-symbol-16.png") no-repeat top right;
+	width: 16px;
+	height: 16px;
+}

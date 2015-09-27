@@ -12,13 +12,19 @@
 
 		editor.on("init", function () {
 			dom = editor.dom;
+			var links = dom.select('a');
+			$.each(links, function(index, el) {
+				console.log("Found link", el);
+				if (el.href.indexOf('mtpc') !== -1) {
+					console.log("Found a metapic link");
+					$(el).addClass("mtpc-link");
+				}
+			});
 		});
 
-		// Register a command so that it can be invoked by using tinyMCE.activeEditor.execCommand( 'WP_Link' );
-		editor.addCommand('Metapic', function () {
-			editor.insertContent('<strong>Metapic is awesome!</strong>');
+		editor.on('SaveContent', function(e) {
+			console.log('SaveContent event', e);
 		});
-		editor.addShortcut('ctrl+m', '', 'Metapic');
 
 		$(document).on("metapicClose", function() {
 			editor.focus();

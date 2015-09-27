@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fdc4f765f60870997a257ad63008cd42",
+    "hash": "a8cfe418565721354b70b385ce4bb0b1",
     "packages": [
         {
             "name": "guzzle/guzzle",
@@ -107,12 +107,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/raket/metapic-api-client.git",
-                "reference": "4fc38e95b33e382ebce47ef2ee52d7db8d26eac3"
+                "reference": "dadbba496a81ec2f6dcc08d472c880d545e27836"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/raket/metapic-api-client/zipball/4fc38e95b33e382ebce47ef2ee52d7db8d26eac3",
-                "reference": "4fc38e95b33e382ebce47ef2ee52d7db8d26eac3",
+                "url": "https://api.github.com/repos/raket/metapic-api-client/zipball/dadbba496a81ec2f6dcc08d472c880d545e27836",
+                "reference": "dadbba496a81ec2f6dcc08d472c880d545e27836",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                 "source": "https://github.com/raket/metapic-api-client/tree/master",
                 "issues": "https://github.com/raket/metapic-api-client/issues"
             },
-            "time": "2015-09-15 13:47:16"
+            "time": "2015-09-25 17:27:11"
         },
         {
             "name": "nesbot/carbon",
