@@ -12,10 +12,10 @@ $loginPrimary = ($this->debugMode) ? "" : "button-primary";
 	<form action="options.php" method="post">
 		<?php settings_fields('metapic_options'); ?>
 		<?php if ($activeAccount) {
-			$this->getTemplate("my-account", ["loginPrimary" => $loginPrimary]);
+			$this->getTemplate("my-account", ["loginPrimary" => $loginPrimary, 'options' => $options]);
 		}
 		else {
-			$this->getTemplate("login", ["loginPrimary" => $loginPrimary]);
+			$this->getTemplate("login", ["loginPrimary" => $loginPrimary, 'options' => $options]);
 		} ?>
 
 		<?php if ($this->debugMode): ?>

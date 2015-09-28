@@ -41,6 +41,15 @@ class WP_MTPC extends stdClass {
 		}, 500, 2);
 	}
 
+	public function activate() {
+		if (is_multisite()) {
+			add_site_option('mtpc_deeplink_auto_default', true);
+		}
+		else {
+			add_option('mtpc_deeplink_auto_default', true);
+		}
+	}
+
 	private function setupJsOptions() {
 		add_filter('tiny_mce_before_init', function ($mceInit, $editor_id) {
 			$mceInit["mtpc_iframe_url"] = rtrim(get_bloginfo("url"), "/") . "/?" . $this->accessKey;
@@ -169,14 +178,16 @@ class WP_MTPC extends stdClass {
 
 	private function updateOptions($options, $input) {
 		$options['uri_string'] = trim($input['uri_string'], "/");
+		$options['mtpc_deeplink_auto_default'] = (bool)$input['mtpc_deeplink_auto_default'];
+		update_option('mtpc_deeplink_auto_default', $options['mtpc_deeplink_auto_default']);
 
 		if (!get_option("mtpc_active_account") && !get_option("mtpc_access_token")) {
 
 			if (!is_multisite()) {
 				$options['email_string'] = trim($input['email_string']);
-				$options['password_string'] = trim($input['password_string']);
+				$password = trim($input['password_string']);
 				try {
-					$user = $this->client->login($options['email_string'], $options['password_string']);
+					$user = $this->client->login($options['email_string'], $password);
 					if ($user) {
 						$this->activateAccount($user["id"], $options['email_string'], $user["access_token"]["access_token"]);
 						$this->setStatusMessage(__("Login successful", "metapic"));
@@ -206,6 +217,8 @@ class WP_MTPC extends stdClass {
 				}
 			}
 		}
+		if (isset($options["password_string"]))
+			unset($options["password_string"]);
 		return $options;
 	}
 
@@ -479,5 +492,19 @@ class WP_MTPC extends stdClass {
 			}
 			return $filtered_data;
 		}, 10, 2);
+	}
+
+	private function isEditPage($new_edit = null){
+		global $pagenow;
+		//make sure we are on the backend
+		if (!is_admin()) return false;
+
+
+		if($new_edit == "edit")
+			return in_array( $pagenow, array( 'post.php',  ) );
+		elseif($new_edit == "new") //check for new post page
+			return in_array( $pagenow, array( 'post-new.php' ) );
+		else //check for either new or edit
+			return in_array( $pagenow, array( 'post.php', 'post-new.php' ) );
 	}
 }
