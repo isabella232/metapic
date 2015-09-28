@@ -1,3 +1,6 @@
+<?php
+$autoLinkDefault = get_site_option('mtpc_deeplink_auto_default');
+?>
 <div class="wrap">
 	<h2><?= __('Metapic site settings page', 'metapic')?></h2>
 
@@ -24,7 +27,17 @@
 
 
 			</tr>
+			<tr>
+				<th scope="row"><label for="secret_key"><?php _e('Automatic linking', 'metapic') ?></label></th>
+				<td>
+					<label for="mtpc-autolink-default">
+							<input type="hidden" name="mtpc_deeplink_auto_default" value="0">
+							<input type="checkbox" <?php checked($autoLinkDefault) ?> value="1" id="mtpc-autolink-default" name="mtpc_deeplink_auto_default">
+							<?= __('Activate auto linking by default', 'metapic') ?></label>
+				</td>
 
+
+			</tr>
 			<?php if ($debugMode) { ?>
 				<tr>
 					<th scope="row"><label for="api_url"><?php _e('Api url', 'metapic') ?></label></th>

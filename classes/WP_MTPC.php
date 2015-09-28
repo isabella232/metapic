@@ -244,6 +244,7 @@ class WP_MTPC extends stdClass {
 					$_GET['updated'] = true;
 					update_site_option("mtpc_api_key", $_POST["api_key"]);
 					update_site_option("mtpc_secret_key", $_POST["secret_key"]);
+					update_site_option("mtpc_deeplink_auto_default", (bool)$_POST["mtpc_deeplink_auto_default"]);
 					//echo json_encode($_POST);
 					if (isset($_POST["API_url"])) {
 						$apiUrl = $_POST["API_url"];
@@ -261,10 +262,8 @@ class WP_MTPC extends stdClass {
 					}
 				}
 				$this->getTemplate("metapic-site-options", array("debugMode" => $this->debugMode));
-			}
-			);
-		}
-		);
+			});
+		});
 	}
 
 	private function getApiUrl() {
@@ -462,6 +461,10 @@ class WP_MTPC extends stdClass {
 		update_option("mtpc_id", $id);
 		update_option("mtpc_email", $email);
 		update_option("mtpc_access_token", $token);
+
+		if (is_multisite()) {
+			add_option('mtpc_deeplink_auto_default', get_site_option('mtpc_deeplink_auto_default'));
+		}
 	}
 
 
