@@ -40,10 +40,13 @@
 			editor.focus();
 			console.log(returnData);
 			function getTagLink(tag) {
-				return "<a href=http://mtpc.se/tags/Link/" + tag.id + ">" + tag.text + "</a>";
+				return "<a class='mtpc-link' href=http://mtpc.se/tags/Link/" + tag.id + ">" + tag.text + "</a>";
 
 			}
 			var i, tags;
+			var list = $("<ul></ul>");
+			list.addClass("mtpc-product-list");
+			list.css("display", "none");
 			switch (currentMode) {
 				case "image":
 					returnData = $(returnData);
@@ -51,11 +54,13 @@
 					selection.attr("data-metapic-id", returnData.attr("data-metapic-id"));
 					selection.attr("data-metapic-tags", returnData.attr("data-metapic-tags"));
 					selection.addClass("mtpc-img");
-					/*
+					selection.next(".mtpc-product-list-img").remove();
 					tags = JSON.parse(returnData.attr("data-metapic-tags"));
 					for (i = 0; i < tags.length; i++) {
-						selection.after(getTagLink(tags[i]));
-					}*/
+						list.append("<li>"+ getTagLink(tags[i])+ "</li>");
+					}
+					list.addClass("mtpc-product-list-img");
+					selection.after(list);
 					break;
 
 				default:
@@ -71,16 +76,12 @@
 
 						editor.insertContent(returnData);
 						returnData = $(returnData);
-						/*
-						 tags = JSON.parse(returnData.attr("data-metapic-tags"));
+						tags = JSON.parse(returnData.attr("data-metapic-tags"));
 						for (i = 0; i < tags.length; i++) {
-							editor.insertContent(getTagLink(tags[i]));
-
-							if (i != tags.length - 1) {
-								editor.insertContent("/");
-
-							}
-						}*/
+							list.append(getTagLink(tags[i]));
+						}
+						list.addClass("mtpc-product-list-collage");
+						returnData.after(list);
 					}
 					break;
 			}

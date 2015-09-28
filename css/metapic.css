@@ -84,3 +84,6 @@ html body.metapic-iframe-open {
 	width: 16px;
 	height: 16px;
 }
+.mtpc-product-list {
+	display:block !important;
+}
