@@ -1,0 +1,3 @@
+[submodule "js/tinymce"]
+	path = js/tinymce
+	url = https://filipaskviken:Jr7IFTjjBjU582ZBPCiU27caVEJZwB7lpzamToNT@bitbucket.org/metapic/tinymce-plugin.git
