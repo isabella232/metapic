@@ -87,3 +87,10 @@ html body.metapic-iframe-open {
 .mtpc-product-list {
 	display:block !important;
 }
+
+#metapic-help-button {
+    background: url("../images/logo/metapic-symbol-32.png") 5px center no-repeat;
+    background-size: 18px 18px;
+    display:inline-block;
+    padding-left:25px;
+}

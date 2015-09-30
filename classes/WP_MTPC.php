@@ -21,6 +21,7 @@ class WP_MTPC extends stdClass {
 
 		// echo json_encode($this->client->getUsers());
 		$this->setupOptionsPage();
+		$this->setupHelpButton();
 		$this->setupLang();
 		$this->setupNetworkOptions();
 		$this->setupIframeRoutes();
@@ -112,6 +113,28 @@ class WP_MTPC extends stdClass {
 	 */
 	private function setStatusMessage($message, $class = "updated") {
 		add_settings_error('general', 'settings_updated', $message, $class);
+	}
+
+	private function setupHelpButton() {
+		add_action('media_buttons', function(){
+			echo '
+				<a href="#" id="metapic-help-button" class="button">'.__("How to earn money", "metapic").'</a>
+				<script type="text/javascript">
+					(function($) {
+						$("#metapic-help-button").on("click", function(e) {
+							e.preventDefault();
+							$.event.trigger({
+								type: "metapic",
+								baseUrl: "' . $this->getApiUrl() .'",
+								startPage: "guide",
+								hideSidebar: true,
+								randomKey: "' . get_option("mtpc_access_token") . '"
+							});
+						});
+					})(jQuery);
+				</script>
+			';
+		});
 	}
 
 	private function setupOptionsPage() {
