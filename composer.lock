@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a8cfe418565721354b70b385ce4bb0b1",
+    "hash": "fdc4f765f60870997a257ad63008cd42",
+    "content-hash": "4c0173562baf0893b4dab24d437c5024",
     "packages": [
         {
             "name": "guzzle/guzzle",
@@ -195,12 +196,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "0ef7669c0af9f62752a96a5d43c1b13c5c2e70e9"
+                "reference": "1834bd8ece4da49a4135264044b9ac31fdebdc72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/0ef7669c0af9f62752a96a5d43c1b13c5c2e70e9",
-                "reference": "0ef7669c0af9f62752a96a5d43c1b13c5c2e70e9",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/1834bd8ece4da49a4135264044b9ac31fdebdc72",
+                "reference": "1834bd8ece4da49a4135264044b9ac31fdebdc72",
                 "shasum": ""
             },
             "require": {
@@ -245,7 +246,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2015-09-22 13:49:41"
+            "time": "2015-09-29 12:32:55"
         },
         {
             "name": "symfony/translation",
@@ -253,12 +254,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "352bdcb721bdc261c346acd14841594f77434dcd"
+                "reference": "d3926d01dd4d9c0468fef65ba90c244a28e8ac1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/352bdcb721bdc261c346acd14841594f77434dcd",
-                "reference": "352bdcb721bdc261c346acd14841594f77434dcd",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/d3926d01dd4d9c0468fef65ba90c244a28e8ac1a",
+                "reference": "d3926d01dd4d9c0468fef65ba90c244a28e8ac1a",
                 "shasum": ""
             },
             "require": {
@@ -306,7 +307,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2015-09-25 10:59:21"
+            "time": "2015-09-29 14:08:28"
         }
     ],
     "packages-dev": [],
