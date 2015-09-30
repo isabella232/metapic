@@ -512,7 +512,7 @@ class WP_MTPC extends stdClass {
 			if ($deepLinkContent) {
 				$userId = get_option("mtpc_id");
 				$accessToken = (is_multisite()) ? null : get_option("mtpc_access_token");
-				$newContent = $this->client->deepLinkBlogPost($userId, $filtered_data['post_content']);
+				$newContent = $this->client->deepLinkBlogPost($userId, $filtered_data['post_content'], $accessToken);
 				if (is_array($newContent) && isset($newContent["newHtml"]) && $newContent["isUpdated"]) {
 					$filtered_data['post_content'] = $newContent["newHtml"];
 				}
