@@ -129,6 +129,9 @@
 			if (editor.selection.getNode().nodeName == "A") {
 				editor.controlManager.setActive(linkButton, true);
 			}
+			else {
+				editor.controlManager.setActive(linkButton, false);
+			}
 		}
 
 		var imageButton = pluginName + 'img';
