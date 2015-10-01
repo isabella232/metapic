@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Metapic WordPress Plugin\n"
-"POT-Creation-Date: 2015-10-01 14:51+0200\n"
-"PO-Revision-Date: 2015-10-01 14:53+0200\n"
+"POT-Creation-Date: 2015-10-01 16:17+0200\n"
+"PO-Revision-Date: 2015-10-01 16:18+0200\n"
 "Last-Translator: \n"
 "Language-Team: Metapic <info@metapic.se>\n"
 "Language: sv\n"
@@ -50,18 +50,18 @@ msgstr "Ogiltigt användarnamn eller lösenord"
 msgid "Account activated"
 msgstr "Ditt konto har aktiverats"
 
-#: classes/WP_MTPC.php:239
+#: classes/WP_MTPC.php:241
 msgid "User not found"
 msgstr "Användaren kunde inte hittas"
 
-#: classes/WP_MTPC.php:282
+#: classes/WP_MTPC.php:284
 msgid ""
 "Account activated. You can now activate individual blogs in the network."
 msgstr ""
 "Ert konto har aktiverats. Ni kan nu aktivera individuella bloggar i ert "
 "nätverk."
 
-#: classes/WP_MTPC.php:284
+#: classes/WP_MTPC.php:286
 msgid ""
 "Account not found. Please check your credentials. If the problem persists "
 "please contact support."
@@ -69,7 +69,7 @@ msgstr ""
 "Kontot kunde inte hittas. Var god kontrollera dina uppgifter. Om problemet "
 "kvarstår var god kontakta supporten på info@metapic.se."
 
-#: classes/WP_MTPC.php:348 classes/WP_MTPC.php:410
+#: classes/WP_MTPC.php:350 classes/WP_MTPC.php:412
 msgid "Metapic"
 msgstr "Metapic"
 
@@ -232,22 +232,23 @@ msgstr "Välj användare"
 msgid "&mdash; Select &mdash;"
 msgstr ""
 
-#: templates/ms-options/new.php:33
+#: templates/ms-options/new.php:34
 #, php-format
 msgid ""
 "In order to start using Metapic to link content, tag images and make "
-"collages you first have to accept our terms of use.<br/>An account will be "
-"created connected to the email address: <strong>%s</strong>."
+"collages to earn money just click on the button below.<br/>An account will "
+"be created connected to the email address: <strong>%s</strong>."
 msgstr ""
-"För att börja använda Metapic för att länka innehåll, tagga bilder och göra "
-"kollage så måste du först acceptera medlemsvillkoren.<br/>Ett konto kommer "
-"att skapas kopplat till e-postadressen: <strong>%s</strong>."
+"För att börja använda Metapic för att länka innehåll, tagga bilder och skapa "
+"kollage för att tjäna pengar så är det bara att klicka på knappen nedan.<br/"
+">Ett konto kommer att skapas kopplat till e-post-adressen: <strong>%s</"
+"strong>."
 
-#: templates/ms-options/new.php:40
+#: templates/ms-options/new.php:41
 msgid "I accept the terms."
 msgstr "Jag accepterar användarvillkoren"
 
-#: templates/ms-options/new.php:56
+#: templates/ms-options/new.php:57
 msgid "You must accept the terms."
 msgstr "Du måste acceptera användarvillkoren"
 
@@ -362,6 +363,15 @@ msgstr "Skapa kollage"
 #: tinymce-lang/metapic-langs.php:10
 msgid "Metapic collage"
 msgstr "Metapic kollage"
+
+#~ msgid ""
+#~ "In order to start using Metapic to link content, tag images and make "
+#~ "collages you first have to accept our terms of use.<br/>An account will "
+#~ "be created connected to the email address: <strong>%s</strong>."
+#~ msgstr ""
+#~ "För att börja använda Metapic för att länka innehåll, tagga bilder och "
+#~ "göra kollage så måste du först acceptera medlemsvillkoren.<br/>Ett konto "
+#~ "kommer att skapas kopplat till e-postadressen: <strong>%s</strong>."
 
 #~ msgid "Advanced"
 #~ msgstr "Avancerat"

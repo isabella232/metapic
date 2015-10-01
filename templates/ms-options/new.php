@@ -30,9 +30,10 @@
 		</table>
 		<?php else: ?>
 		<p>
-			<?php printf(__("In order to start using Metapic to link content, tag images and make collages you first have to accept our terms of use.<br/>An account will be created connected to the email address: <strong>%s</strong>.", 'metapic'), $wp_user->user_email) ?>
+			<?php //printf(__("In order to start using Metapic to link content, tag images and make collages you first have to accept our terms of use.<br/>An account will be created connected to the email address: <strong>%s</strong>.", 'metapic'), $wp_user->user_email) ?>
+			<?php printf(__("In order to start using Metapic to link content, tag images and make collages to earn money just click on the button below.<br/>An account will be created connected to the email address: <strong>%s</strong>.", 'metapic'), $wp_user->user_email) ?>
 		</p>
-		<table class="form-table">
+		<!--table class="form-table">
 			<tbody>
 			<tr>
 				<th scope="row"><label for="accept_terms">
@@ -40,10 +41,10 @@
 						       name="accept_terms"> <?= __('I accept the terms.', 'metapic') ?>
 					</label>
 				</th>
-				<td></td>
+
 			</tr>
 			</tbody>
-		</table>
+		</table-->
 	<?php endif; ?>
 	<p class="submit"><input type="submit" value="<?php esc_attr_e($submitText, 'metapic'); ?>"
 	                         class="button button-primary" id="submit" name="submit"></p>

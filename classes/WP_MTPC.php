@@ -235,6 +235,8 @@ class WP_MTPC extends stdClass {
 						$this->setStatusMessage(__("Account activated", "metapic"));
 					}
 					$this->activateAccount($user["id"], $wp_user->user_email, $user["access_token"]["access_token"]);
+					add_option('mtpc_deeplink_auto_default', get_site_option('mtpc_deeplink_auto_default'));
+
 				} else {
 					$this->setStatusMessage(__("User not found", "metapic"), "error");
 				}
