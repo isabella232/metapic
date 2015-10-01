@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Metapic WordPress Plugin\n"
-"POT-Creation-Date: 2015-09-28 11:50+0200\n"
-"PO-Revision-Date: 2015-09-28 11:52+0200\n"
+"POT-Creation-Date: 2015-10-01 14:51+0200\n"
+"PO-Revision-Date: 2015-10-01 14:53+0200\n"
 "Last-Translator: \n"
 "Language-Team: Metapic <info@metapic.se>\n"
 "Language: sv\n"
@@ -16,47 +16,52 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: vendor\n"
+"X-Poedit-SearchPathExcluded-1: js/tinymce\n"
 
-#: classes/WP_MTPC.php:128
+#: classes/WP_MTPC.php:121
+msgid "How to earn money"
+msgstr "Hur du tjänar pengar"
+
+#: classes/WP_MTPC.php:151
 msgid "Account deactivated"
 msgstr "Kontot har deaktiverats"
 
-#: classes/WP_MTPC.php:142 classes/WP_MTPC.php:210
+#: classes/WP_MTPC.php:165 classes/WP_MTPC.php:233
 msgid "Account created"
 msgstr "Ditt konto har skapats"
 
-#: classes/WP_MTPC.php:147
+#: classes/WP_MTPC.php:170
 msgid "Account already exists"
 msgstr "Det finns redan ett konto med dessa uppgifter"
 
-#: classes/WP_MTPC.php:171
+#: classes/WP_MTPC.php:194
 msgid "Register"
 msgstr "Registrera dig"
 
-#: classes/WP_MTPC.php:193
+#: classes/WP_MTPC.php:216
 msgid "Login successful"
 msgstr "Du är nu inloggad"
 
-#: classes/WP_MTPC.php:199
+#: classes/WP_MTPC.php:222
 msgid "Invalid username or password"
 msgstr "Ogiltigt användarnamn eller lösenord"
 
-#: classes/WP_MTPC.php:212
+#: classes/WP_MTPC.php:235
 msgid "Account activated"
 msgstr "Ditt konto har aktiverats"
 
-#: classes/WP_MTPC.php:216
+#: classes/WP_MTPC.php:239
 msgid "User not found"
 msgstr "Användaren kunde inte hittas"
 
-#: classes/WP_MTPC.php:258
+#: classes/WP_MTPC.php:282
 msgid ""
 "Account activated. You can now activate individual blogs in the network."
 msgstr ""
 "Ert konto har aktiverats. Ni kan nu aktivera individuella bloggar i ert "
 "nätverk."
 
-#: classes/WP_MTPC.php:260
+#: classes/WP_MTPC.php:284
 msgid ""
 "Account not found. Please check your credentials. If the problem persists "
 "please contact support."
@@ -64,7 +69,7 @@ msgstr ""
 "Kontot kunde inte hittas. Var god kontrollera dina uppgifter. Om problemet "
 "kvarstår var god kontakta supporten på info@metapic.se."
 
-#: classes/WP_MTPC.php:326 classes/WP_MTPC.php:388
+#: classes/WP_MTPC.php:348 classes/WP_MTPC.php:410
 msgid "Metapic"
 msgstr "Metapic"
 
@@ -150,15 +155,15 @@ msgstr "Avancerade inställningar"
 msgid "Server address"
 msgstr "Serveradress"
 
-#: templates/metapic-site-options.php:2
+#: templates/metapic-site-options.php:5
 msgid "Metapic site settings page"
 msgstr "Metapic nätverksinställningar"
 
-#: templates/metapic-site-options.php:6
+#: templates/metapic-site-options.php:9
 msgid "API Settings"
 msgstr "API-inställningar"
 
-#: templates/metapic-site-options.php:8
+#: templates/metapic-site-options.php:11
 msgid ""
 "Please enter your credentials below. You should have already received your "
 "client credentials from Metapic.<br/>If you haven't received your "
@@ -168,15 +173,24 @@ msgstr ""
 "din portal från Metapic.<br/> Om du inte har fått dessa uppgifter så "
 "kontakta Metapics tekniska support på info@metapic.se."
 
-#: templates/metapic-site-options.php:11
+#: templates/metapic-site-options.php:14
 msgid "API Key"
 msgstr "API-nyckel"
 
-#: templates/metapic-site-options.php:19
+#: templates/metapic-site-options.php:22
 msgid "Secret Key"
 msgstr "Hemlig nyckel"
 
-#: templates/metapic-site-options.php:30
+#: templates/metapic-site-options.php:31
+msgid "Automatic linking"
+msgstr "Automatisk länkning"
+
+#: templates/metapic-site-options.php:36 templates/ms-options/my-account.php:11
+#: templates/my-account.php:6
+msgid "Activate auto linking by default"
+msgstr "Aktivera automatisk länkning som standard för alla inlägg"
+
+#: templates/metapic-site-options.php:43
 msgid "Api url"
 msgstr "API-url"
 
@@ -278,10 +292,6 @@ msgstr "Ditt konto"
 #, php-format
 msgid "You are currently logged in as: <strong>%s</strong>"
 msgstr "Du är inloggad som: <strong>%s</strong>"
-
-#: templates/my-account.php:6
-msgid "Activate auto linking by default"
-msgstr "Aktivera automatisk länkning som standard för alla inlägg"
 
 #: templates/my-account.php:10
 msgid "Log out"
