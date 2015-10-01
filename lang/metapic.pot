@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Metapic WordPress Plugin\n"
-"POT-Creation-Date: 2015-09-28 11:52+0200\n"
+"POT-Creation-Date: 2015-10-01 15:59+0200\n"
 "PO-Revision-Date: 2015-07-16 14:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: Metapic <info@metapic.se>\n"
@@ -17,51 +17,56 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: vendor\n"
+"X-Poedit-SearchPathExcluded-1: js/tinymce\n"
 
-#: classes/WP_MTPC.php:128
+#: classes/WP_MTPC.php:121
+msgid "How to earn money"
+msgstr ""
+
+#: classes/WP_MTPC.php:151
 msgid "Account deactivated"
 msgstr ""
 
-#: classes/WP_MTPC.php:142 classes/WP_MTPC.php:210
+#: classes/WP_MTPC.php:165 classes/WP_MTPC.php:233
 msgid "Account created"
 msgstr ""
 
-#: classes/WP_MTPC.php:147
+#: classes/WP_MTPC.php:170
 msgid "Account already exists"
 msgstr ""
 
-#: classes/WP_MTPC.php:171
+#: classes/WP_MTPC.php:194
 msgid "Register"
 msgstr ""
 
-#: classes/WP_MTPC.php:193
+#: classes/WP_MTPC.php:216
 msgid "Login successful"
 msgstr ""
 
-#: classes/WP_MTPC.php:199
+#: classes/WP_MTPC.php:222
 msgid "Invalid username or password"
 msgstr ""
 
-#: classes/WP_MTPC.php:212
+#: classes/WP_MTPC.php:235
 msgid "Account activated"
 msgstr ""
 
-#: classes/WP_MTPC.php:216
+#: classes/WP_MTPC.php:239
 msgid "User not found"
 msgstr ""
 
-#: classes/WP_MTPC.php:258
+#: classes/WP_MTPC.php:282
 msgid ""
 "Account activated. You can now activate individual blogs in the network."
 msgstr ""
 
-#: classes/WP_MTPC.php:260
+#: classes/WP_MTPC.php:284
 msgid ""
 "Account not found. Please check your credentials. If the problem persists "
 "please contact support."
 msgstr ""
 
-#: classes/WP_MTPC.php:326 classes/WP_MTPC.php:388
+#: classes/WP_MTPC.php:348 classes/WP_MTPC.php:410
 msgid "Metapic"
 msgstr ""
 
@@ -147,30 +152,39 @@ msgstr ""
 msgid "Server address"
 msgstr ""
 
-#: templates/metapic-site-options.php:2
+#: templates/metapic-site-options.php:5
 msgid "Metapic site settings page"
 msgstr ""
 
-#: templates/metapic-site-options.php:6
+#: templates/metapic-site-options.php:9
 msgid "API Settings"
 msgstr ""
 
-#: templates/metapic-site-options.php:8
+#: templates/metapic-site-options.php:11
 msgid ""
 "Please enter your credentials below. You should have already received your "
 "client credentials from Metapic.<br/>If you haven't received your "
 "credentials please contact Metapic technical support."
 msgstr ""
 
-#: templates/metapic-site-options.php:11
+#: templates/metapic-site-options.php:14
 msgid "API Key"
 msgstr ""
 
-#: templates/metapic-site-options.php:19
+#: templates/metapic-site-options.php:22
 msgid "Secret Key"
 msgstr ""
 
-#: templates/metapic-site-options.php:30
+#: templates/metapic-site-options.php:31
+msgid "Automatic linking"
+msgstr ""
+
+#: templates/metapic-site-options.php:36
+#: templates/ms-options/my-account.php:11 templates/my-account.php:6
+msgid "Activate auto linking by default"
+msgstr ""
+
+#: templates/metapic-site-options.php:43
 msgid "Api url"
 msgstr ""
 
@@ -257,10 +271,6 @@ msgstr ""
 #: templates/my-account.php:2
 #, php-format
 msgid "You are currently logged in as: <strong>%s</strong>"
-msgstr ""
-
-#: templates/my-account.php:6
-msgid "Activate auto linking by default"
 msgstr ""
 
 #: templates/my-account.php:10
