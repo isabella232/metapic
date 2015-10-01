@@ -98,7 +98,7 @@
 				var selection = $(editor.selection.getContent());
 				var contentConfig = (selection.is("img")) ? {} : {format: 'text'};
 
-				tinyMCE.get("content").iframeElement.blur();
+				editor.iframeElement.blur();
 				$.getJSON(editor.settings.mtpc_iframe_url, function (data) {
 					$.event.trigger({
 						type: "metapic",
