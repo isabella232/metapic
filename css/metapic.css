@@ -81,11 +81,37 @@ html body.metapic-iframe-open {
 	content: "";
 	display: inline-block;
 	background: url("../images/logo/metapic-symbol-16.png") no-repeat top right;
-	width: 16px;
-	height: 16px;
+    background-size: 10px 10px;
+	width: 10px;
+	height: 10px;
 }
 .mtpc-product-list {
 	display:block !important;
+    list-style-type: none;
+    font-size: 13px;
+    color: #666;
+    width: 100%;
+}
+
+.mtpc-product-list li {
+    display: inline-block;
+    padding: 5px 0px;
+}
+.mtpc-product-list li:first-child {
+    margin-left:0px;
+}
+.mtpc-product-list li a {
+    border-bottom: 1px solid #999;
+}
+
+.mtpc-product-list li a:before {
+    content: '     //     ';
+    margin: 0px 7px;
+}
+.mtpc-product-list li:first-child a:before {
+    content: '';
+    margin:0px;
+    display:none;
 }
 
 #metapic-help-button {
