@@ -11,6 +11,7 @@ class WP_MTPC extends stdClass {
 	private $templateVars = [];
 	private $debugMode = false;
 	private $accessKey = "metapic_access_token";
+	private $iframeUrl = "";
 	private $autoRegister = false;
 	private $activeAccount = false;
 
@@ -22,6 +23,7 @@ class WP_MTPC extends stdClass {
 		$this->client = new ApiClient($this->getApiUrl(), get_site_option("mtpc_api_key"), get_site_option("mtpc_secret_key"));
 		//$clientInfo = $this->client->getC
 		// echo json_encode($this->client->getUsers());
+		$this->iframeUrl = rtrim(get_bloginfo("url"), "/") . "/?" . $this->accessKey;
 		$this->setupOptionsPage();
 		$this->setupLang();
 		$this->setupNetworkOptions();
@@ -61,7 +63,7 @@ class WP_MTPC extends stdClass {
 
 	private function setupJsOptions() {
 		add_filter('tiny_mce_before_init', function ($mceInit, $editor_id) {
-			$mceInit["mtpc_iframe_url"] = rtrim(get_bloginfo("url"), "/") . "/?" . $this->accessKey;
+			$mceInit["mtpc_iframe_url"] = $this->iframeUrl;
 			$mceInit["mtpc_plugin_url"] = $this->plugin_url;
 			return $mceInit;
 		}, 500, 2);
@@ -325,16 +327,25 @@ class WP_MTPC extends stdClass {
 
 		add_action('parse_request', function ($wp) {
 			if (array_key_exists($this->accessKey, $wp->query_vars)) {
-
+				$accessToken = get_option("mtpc_access_token");
+				if ($this->autoRegister && !$this->activeAccount) {
+					$wp_user = wp_get_current_user();
+					$user = $this->client->activateUser($wp_user->user_email);
+					if ($user["access_token"] == null) {
+						$this->client->createUser(array("email" => $wp_user->user_email, "username" => $wp_user->user_login));
+						$user = $this->client->activateUser($wp_user->user_email);
+					}
+					$this->activateAccount($user["id"], $wp_user->user_email, $user["access_token"]["access_token"]);
+					$accessToken = $user["access_token"]["access_token"];
+					update_option('mtpc_deeplink_auto_default', get_site_option('mtpc_deeplink_auto_default'));
+				}
 				wp_send_json([
-						"access_token" => ["access_token" => get_option("mtpc_access_token")],
-						"metapicApi" => $this->client->getBaseUrl()
-					]
-				);
+					"access_token" => ["access_token" => $accessToken],
+					"metapicApi" => $this->client->getBaseUrl()
+				]);
 			}
 			return;
-		}
-		);
+		});
 	}
 
 	private function setupDashboardWidget() {
