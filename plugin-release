@@ -3,6 +3,17 @@ echo "Creating Metapic WordPress plugin release..."
 GitFolder="metapic"
 regex="Version:([\s]+)?([\d\.]+)"
 
+while getopts ":d:" opt; do
+  case $opt in
+    d)
+      GitFolder=$OPTARG
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      ;;
+  esac
+done
+
 git clone --depth=1 --branch=master git@bitbucket.org:metapic/wordpress-plugin.git ${GitFolder}
 cd ${GitFolder}
 
