@@ -3,7 +3,7 @@
 Plugin Name: Metapic
 Plugin URI: http://metapic.se/
 Description: Metapic image tagging
-Version: 1.0
+Version: 1.1
 Author: Metapic
 Author URI: http://metapic.se/
 License: GPL v2
