@@ -1,5 +1,6 @@
 (function ($) {
 	var pluginName = 'metapic';
+	var dom, tinyDoc, currentImage, currentMode;
 
 	function mobilecheck() {
 		return true;
@@ -9,24 +10,33 @@
 		return check;
 	}
 
-	tinymce.PluginManager.add(pluginName, function (editor, url) {
-		var dom, currentImage, currentMode;
+	var getTagLink = function(tag) {
+		return "<a class='mtpc-link' href='http://mtpc.se/tags/Link/" + tag.id + "'>" + tag.text + "</a>";
+	};
 
+	var getTagsAsList = function(id, tags) {
+		var list = $("<ul></ul>");
+		list.addClass("mtpc-product-list");
+		list.css("display", "none");
+		tinyDoc.find("ul[data-metapic-id='" + id + "']").remove();
+		list.attr("data-metapic-id", id);
+		for (i = 0; i < tags.length; i++) {
+			list.append("<li>"+ getTagLink(tags[i])+ "</li>");
+		}
+		return list;
+	};
+
+	tinymce.PluginManager.add(pluginName, function (editor, url) {
 
 		editor.on("init", function () {
 			dom = editor.dom;
+			tinyDoc = $(dom.doc);
 			var links = dom.select('a');
 			$.each(links, function (index, el) {
-				console.log("Found link", el);
 				if (el.href.indexOf('mtpc') !== -1) {
-					console.log("Found a metapic link");
 					$(el).addClass("mtpc-link");
 				}
 			});
-		});
-
-		editor.on('SaveContent', function (e) {
-			console.log('SaveContent event', e);
 		});
 
 		$(document).on("metapicClose", function () {
@@ -37,16 +47,7 @@
 			var returnData = data.text,
 				selection = $(editor.selection.getNode());
 
-			editor.focus();
-			console.log(returnData);
-			function getTagLink(tag) {
-				return "<a class='mtpc-link' href=http://mtpc.se/tags/Link/" + tag.id + ">" + tag.text + "</a>";
-
-			}
-			var i, tags;
-			var list = $("<ul></ul>");
-			list.addClass("mtpc-product-list");
-			list.css("display", "none");
+			var tags, tagList;
 			switch (currentMode) {
 				case "image":
 					returnData = $(returnData);
@@ -54,37 +55,29 @@
 					selection.attr("data-metapic-id", returnData.attr("data-metapic-id"));
 					selection.attr("data-metapic-tags", returnData.attr("data-metapic-tags"));
 					selection.addClass("mtpc-img");
-					selection.next(".mtpc-product-list-img").remove();
-					tags = JSON.parse(returnData.attr("data-metapic-tags"));
-					for (i = 0; i < tags.length; i++) {
-						list.append("<li>"+ getTagLink(tags[i])+ "</li>");
-					}
-					list.addClass("mtpc-product-list-img");
-					selection.after(list);
+					tagList = getTagsAsList(returnData.attr("data-metapic-id"), JSON.parse(returnData.attr("data-metapic-tags")));
+					tagList.addClass("mtpc-product-list-img");
+					selection.after(tagList);
 					break;
-
 				default:
-					if (selection.is("img")) {
+					if (selection.is("img")) {//image tag
 						if (selection.parent().is("a")) {
 							selection.parent().replaceWith(returnData);
 						}
-						else {
+						else {//text link
 							selection.replaceWith(returnData);
 						}
 					}
 					else {//collage
-
 						editor.insertContent(returnData);
-						returnData = $(returnData);
-						tags = JSON.parse(returnData.attr("data-metapic-tags"));
-						for (i = 0; i < tags.length; i++) {
-							list.append(getTagLink(tags[i]));
-						}
-						list.addClass("mtpc-product-list-collage");
-						returnData.after(list);
+						tagList = getTagsAsList($(returnData).attr("data-metapic-id"), JSON.parse($(returnData).attr("data-metapic-tags")));
+						returnData = tinyDoc.find("img[data-metapic-id='"+$(returnData).attr("data-metapic-id")+"']");
+						tagList.addClass("mtpc-product-list-collage");
+						returnData.after(tagList);
 					}
 					break;
 			}
+			editor.focus();
 		});
 
 		var metapicButton;
@@ -98,7 +91,7 @@
 				var selection = $(editor.selection.getContent());
 				var contentConfig = (selection.is("img")) ? {} : {format: 'text'};
 
-				tinyMCE.get("content").iframeElement.blur();
+				editor.iframeElement.blur();
 				$.getJSON(editor.settings.mtpc_iframe_url, function (data) {
 					$.event.trigger({
 						type: "metapic",
@@ -128,6 +121,9 @@
 			}
 			if (editor.selection.getNode().nodeName == "A") {
 				editor.controlManager.setActive(linkButton, true);
+			}
+			else {
+				editor.controlManager.setActive(linkButton, false);
 			}
 		}
 

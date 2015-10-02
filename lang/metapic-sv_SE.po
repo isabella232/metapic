@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Metapic WordPress Plugin\n"
-"POT-Creation-Date: 2015-09-28 11:50+0200\n"
-"PO-Revision-Date: 2015-09-28 11:52+0200\n"
+"POT-Creation-Date: 2015-10-02 10:16+0200\n"
+"PO-Revision-Date: 2015-10-02 10:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: Metapic <info@metapic.se>\n"
 "Language: sv\n"
@@ -16,47 +16,52 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: vendor\n"
+"X-Poedit-SearchPathExcluded-1: js/tinymce\n"
 
-#: classes/WP_MTPC.php:128
+#: classes/WP_MTPC.php:121
+msgid "How to earn money"
+msgstr "Hur du tjänar pengar"
+
+#: classes/WP_MTPC.php:151
 msgid "Account deactivated"
 msgstr "Kontot har deaktiverats"
 
-#: classes/WP_MTPC.php:142 classes/WP_MTPC.php:210
+#: classes/WP_MTPC.php:165 classes/WP_MTPC.php:233
 msgid "Account created"
 msgstr "Ditt konto har skapats"
 
-#: classes/WP_MTPC.php:147
+#: classes/WP_MTPC.php:170
 msgid "Account already exists"
 msgstr "Det finns redan ett konto med dessa uppgifter"
 
-#: classes/WP_MTPC.php:171
+#: classes/WP_MTPC.php:194
 msgid "Register"
 msgstr "Registrera dig"
 
-#: classes/WP_MTPC.php:193
+#: classes/WP_MTPC.php:216
 msgid "Login successful"
 msgstr "Du är nu inloggad"
 
-#: classes/WP_MTPC.php:199
+#: classes/WP_MTPC.php:222
 msgid "Invalid username or password"
 msgstr "Ogiltigt användarnamn eller lösenord"
 
-#: classes/WP_MTPC.php:212
+#: classes/WP_MTPC.php:235
 msgid "Account activated"
 msgstr "Ditt konto har aktiverats"
 
-#: classes/WP_MTPC.php:216
+#: classes/WP_MTPC.php:241
 msgid "User not found"
 msgstr "Användaren kunde inte hittas"
 
-#: classes/WP_MTPC.php:258
+#: classes/WP_MTPC.php:286
 msgid ""
 "Account activated. You can now activate individual blogs in the network."
 msgstr ""
 "Ert konto har aktiverats. Ni kan nu aktivera individuella bloggar i ert "
 "nätverk."
 
-#: classes/WP_MTPC.php:260
+#: classes/WP_MTPC.php:288
 msgid ""
 "Account not found. Please check your credentials. If the problem persists "
 "please contact support."
@@ -64,7 +69,7 @@ msgstr ""
 "Kontot kunde inte hittas. Var god kontrollera dina uppgifter. Om problemet "
 "kvarstår var god kontakta supporten på info@metapic.se."
 
-#: classes/WP_MTPC.php:326 classes/WP_MTPC.php:388
+#: classes/WP_MTPC.php:352 classes/WP_MTPC.php:414
 msgid "Metapic"
 msgstr "Metapic"
 
@@ -150,15 +155,19 @@ msgstr "Avancerade inställningar"
 msgid "Server address"
 msgstr "Serveradress"
 
-#: templates/metapic-site-options.php:2
+#: templates/metapic-site-options.php:5
 msgid "Metapic site settings page"
 msgstr "Metapic nätverksinställningar"
 
-#: templates/metapic-site-options.php:6
+#: templates/metapic-site-options.php:9
 msgid "API Settings"
 msgstr "API-inställningar"
 
-#: templates/metapic-site-options.php:8
+#: templates/metapic-site-options.php:12
+msgid "Welcome,"
+msgstr "Välkommen,"
+
+#: templates/metapic-site-options.php:14
 msgid ""
 "Please enter your credentials below. You should have already received your "
 "client credentials from Metapic.<br/>If you haven't received your "
@@ -168,15 +177,24 @@ msgstr ""
 "din portal från Metapic.<br/> Om du inte har fått dessa uppgifter så "
 "kontakta Metapics tekniska support på info@metapic.se."
 
-#: templates/metapic-site-options.php:11
+#: templates/metapic-site-options.php:18
 msgid "API Key"
 msgstr "API-nyckel"
 
-#: templates/metapic-site-options.php:19
+#: templates/metapic-site-options.php:26
 msgid "Secret Key"
 msgstr "Hemlig nyckel"
 
-#: templates/metapic-site-options.php:30
+#: templates/metapic-site-options.php:35
+msgid "Automatic linking"
+msgstr "Automatisk länkning"
+
+#: templates/metapic-site-options.php:40 templates/ms-options/my-account.php:11
+#: templates/my-account.php:6
+msgid "Activate auto linking by default"
+msgstr "Aktivera automatisk länkning som standard för alla inlägg"
+
+#: templates/metapic-site-options.php:47
 msgid "Api url"
 msgstr "API-url"
 
@@ -218,22 +236,23 @@ msgstr "Välj användare"
 msgid "&mdash; Select &mdash;"
 msgstr ""
 
-#: templates/ms-options/new.php:33
+#: templates/ms-options/new.php:34
 #, php-format
 msgid ""
 "In order to start using Metapic to link content, tag images and make "
-"collages you first have to accept our terms of use.<br/>An account will be "
-"created connected to the email address: <strong>%s</strong>."
+"collages to earn money just click on the button below.<br/>An account will "
+"be created connected to the email address: <strong>%s</strong>."
 msgstr ""
-"För att börja använda Metapic för att länka innehåll, tagga bilder och göra "
-"kollage så måste du först acceptera medlemsvillkoren.<br/>Ett konto kommer "
-"att skapas kopplat till e-postadressen: <strong>%s</strong>."
+"För att börja använda Metapic för att länka innehåll, tagga bilder och skapa "
+"kollage för att tjäna pengar så är det bara att klicka på knappen nedan.<br/"
+">Ett konto kommer att skapas kopplat till e-post-adressen: <strong>%s</"
+"strong>."
 
-#: templates/ms-options/new.php:40
+#: templates/ms-options/new.php:41
 msgid "I accept the terms."
 msgstr "Jag accepterar användarvillkoren"
 
-#: templates/ms-options/new.php:56
+#: templates/ms-options/new.php:57
 msgid "You must accept the terms."
 msgstr "Du måste acceptera användarvillkoren"
 
@@ -278,10 +297,6 @@ msgstr "Ditt konto"
 #, php-format
 msgid "You are currently logged in as: <strong>%s</strong>"
 msgstr "Du är inloggad som: <strong>%s</strong>"
-
-#: templates/my-account.php:6
-msgid "Activate auto linking by default"
-msgstr "Aktivera automatisk länkning som standard för alla inlägg"
 
 #: templates/my-account.php:10
 msgid "Log out"
@@ -352,6 +367,15 @@ msgstr "Skapa kollage"
 #: tinymce-lang/metapic-langs.php:10
 msgid "Metapic collage"
 msgstr "Metapic kollage"
+
+#~ msgid ""
+#~ "In order to start using Metapic to link content, tag images and make "
+#~ "collages you first have to accept our terms of use.<br/>An account will "
+#~ "be created connected to the email address: <strong>%s</strong>."
+#~ msgstr ""
+#~ "För att börja använda Metapic för att länka innehåll, tagga bilder och "
+#~ "göra kollage så måste du först acceptera medlemsvillkoren.<br/>Ett konto "
+#~ "kommer att skapas kopplat till e-postadressen: <strong>%s</strong>."
 
 #~ msgid "Advanced"
 #~ msgstr "Avancerat"

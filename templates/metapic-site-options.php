@@ -8,7 +8,11 @@ $autoLinkDefault = get_site_option('mtpc_deeplink_auto_default');
 		<?php settings_fields('metapic_site_options'); ?>
 		<h3><?php _e('API Settings', 'metapic'); ?></h3>
 
-		<p><?php _e('Please enter your credentials below. You should have already received your client credentials from Metapic.<br/>If you haven\'t received your credentials please contact Metapic technical support.', 'metapic'); ?></p>
+		<?php if (get_site_option("mtpc_valid_client")): ?>
+			<p><?php _e('Welcome,', 'metapic'); ?> <strong><?= get_site_option("mtpc_client_name") ?></strong></p>
+		<?php else: ?>
+			<p><?php _e('Please enter your credentials below. You should have already received your client credentials from Metapic.<br/>If you haven\'t received your credentials please contact Metapic technical support.', 'metapic'); ?></p>
+		<?php endif; ?>
 		<table class="form-table">
 			<tr>
 				<th scope="row"><label for="api_key"><?php _e('API Key', 'metapic') ?></label></th>

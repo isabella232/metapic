@@ -114,6 +114,10 @@ html body.metapic-iframe-open {
     display:none;
 }
 
+.mtpc-collage {
+	max-width: 100%;
+}
+
 #metapic-help-button {
     background: url("../images/logo/metapic-symbol-32.png") 5px center no-repeat;
     background-size: 18px 18px;

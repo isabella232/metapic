@@ -18,7 +18,7 @@ class WP_MTPC extends stdClass {
 		$this->plugin_dir = $plugin_dir;
 		$this->plugin_url = $plugin_url;
 		$this->client = new ApiClient($this->getApiUrl(), get_site_option("mtpc_api_key"), get_site_option("mtpc_secret_key"));
-
+		//$clientInfo = $this->client->getC
 		// echo json_encode($this->client->getUsers());
 		$this->setupOptionsPage();
 		$this->setupHelpButton();
@@ -235,6 +235,8 @@ class WP_MTPC extends stdClass {
 						$this->setStatusMessage(__("Account activated", "metapic"));
 					}
 					$this->activateAccount($user["id"], $wp_user->user_email, $user["access_token"]["access_token"]);
+					add_option('mtpc_deeplink_auto_default', get_site_option('mtpc_deeplink_auto_default'));
+
 				} else {
 					$this->setStatusMessage(__("User not found", "metapic"), "error");
 				}
@@ -278,7 +280,9 @@ class WP_MTPC extends stdClass {
 					$this->client = new ApiClient($this->getApiUrl(), $_POST["api_key"], $_POST["secret_key"]);
 					$isValid = $this->client->checkClient($_POST["api_key"]);
 					update_site_option("mtpc_valid_client", ($isValid["status"] == 200));
+
 					if ($isValid["status"] == 200) {
+						update_site_option("mtpc_client_name", $isValid["name"]);
 						$this->setStatusMessage(__("Account activated. You can now activate individual blogs in the network.", "metapic"));
 					} else {
 						$this->setStatusMessage(__("Account not found. Please check your credentials. If the problem persists please contact support.", "metapic"), "error");
@@ -512,7 +516,8 @@ class WP_MTPC extends stdClass {
 			if ($deepLinkContent) {
 				$userId = get_option("mtpc_id");
 				$accessToken = (is_multisite()) ? null : get_option("mtpc_access_token");
-				$newContent = $this->client->deepLinkBlogPost($userId, $filtered_data['post_content']);
+				$newContent = $this->client->deepLinkBlogPost($userId, $filtered_data['post_content'], $accessToken);
+
 				if (is_array($newContent) && isset($newContent["newHtml"]) && $newContent["isUpdated"]) {
 					$filtered_data['post_content'] = $newContent["newHtml"];
 				}
