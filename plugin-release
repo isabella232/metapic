@@ -1,0 +1,32 @@
+#!/bin/bash
+echo "Creating Metapic WordPress plugin release..."
+GitFolder="metapic"
+regex="Version:([\s]+)?([\d\.]+)"
+
+git clone --depth=1 --branch=master git@bitbucket.org:metapic/wordpress-plugin.git ${GitFolder}
+cd ${GitFolder}
+
+echo "Running composer..."
+composer install --no-ansi --no-dev --no-interaction --no-progress --no-scripts --optimize-autoloader --prefer-dist
+
+echo "Removing git folders..."
+find . -name .git -type d -exec rm -rf {} \;
+find . -name .gitignore -type d -exec rm -rf {} \;
+find . -name .gitmodules -type d -exec rm -rf {} \;
+
+echo "Removing tests and docs..."
+cd vendor
+find . -name docs -type d -exec rm -rf {} \;
+find . -name tests -type d -exec rm -rf {} \;
+find . -name Tests -type d -exec rm -rf {} \;
+cd ..
+cd ..
+
+Version=$(grep -i "version:" index.php)
+[[ ${Version} =~ [0-9\.]+ ]] && PluginVersion=${BASH_REMATCH}
+ZipFile="${GitFolder}-${PluginVersion}.zip"
+echo "Zipping files..."
+rm -f ${ZipFile}
+zip -r ${ZipFile} ./${GitFolder}/*
+rm -rf ${GitFolder}
+#echo $Version

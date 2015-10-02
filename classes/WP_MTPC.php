@@ -45,6 +45,7 @@ class WP_MTPC extends stdClass {
 	public function activate() {
 		if (is_multisite()) {
 			add_site_option('mtpc_deeplink_auto_default', true);
+			add_site_option('mtpc_registration_auto', false);
 		}
 		else {
 			add_option('mtpc_deeplink_auto_default', true);
