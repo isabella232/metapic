@@ -11,6 +11,8 @@ class WP_MTPC extends stdClass {
 	private $templateVars = [];
 	private $debugMode = false;
 	private $accessKey = "metapic_access_token";
+	private $autoRegister = false;
+	private $activeAccount = false;
 
 	public function __construct($plugin_dir, $plugin_url) {
 		$options = get_option('metapic_options');
@@ -25,12 +27,17 @@ class WP_MTPC extends stdClass {
 		$this->setupNetworkOptions();
 		$this->setupIframeRoutes();
 		$this->setupNetworkDashboardWidget();
-		$this->setupDeeplinkPublishing();
 
-		if (get_option("mtpc_active_account") && get_option("mtpc_access_token")) {
+		if (is_multisite()) {
+			$this->autoRegister = (bool)get_site_option("mtpc_registration_auto");
+		}
+		$this->activeAccount = (get_option("mtpc_active_account") && get_option("mtpc_access_token"));
+
+		if ($this->activeAccount || $this->autoRegister) {
 			$this->setupJsOptions();
 			$this->setupHelpButton();
 			$this->setupDashboardWidget();
+			$this->setupDeeplinkPublishing();
 		}
 
 		add_filter('wp_kses_allowed_html', function ($tags, $context) {
@@ -255,6 +262,7 @@ class WP_MTPC extends stdClass {
 					update_site_option("mtpc_api_key", $_POST["api_key"]);
 					update_site_option("mtpc_secret_key", $_POST["secret_key"]);
 					update_site_option("mtpc_deeplink_auto_default", (bool)$_POST["mtpc_deeplink_auto_default"]);
+					update_site_option("mtpc_registration_auto", (bool)$_POST["mtpc_registration_auto"]);
 					//echo json_encode($_POST);
 					if (isset($_POST["API_url"])) {
 						$apiUrl = $_POST["API_url"];

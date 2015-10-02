@@ -1,5 +1,6 @@
 <?php
 $autoLinkDefault = get_site_option('mtpc_deeplink_auto_default');
+$autoRegDefault = get_site_option('mtpc_registration_auto');
 ?>
 <div class="wrap">
 	<h2><?= __('Metapic site settings page', 'metapic')?></h2>
@@ -32,7 +33,7 @@ $autoLinkDefault = get_site_option('mtpc_deeplink_auto_default');
 
 			</tr>
 			<tr>
-				<th scope="row"><label for="secret_key"><?php _e('Automatic linking', 'metapic') ?></label></th>
+				<th scope="row"><label for="mtpc-autolink-default"><?php _e('Automatic linking', 'metapic') ?></label></th>
 				<td>
 					<label for="mtpc-autolink-default">
 							<input type="hidden" name="mtpc_deeplink_auto_default" value="0">
@@ -41,6 +42,15 @@ $autoLinkDefault = get_site_option('mtpc_deeplink_auto_default');
 				</td>
 
 
+			</tr>
+			<tr>
+				<th scope="row"><label for="mtpc-registration-auto"><?php _e('Automatic registration', 'metapic') ?></label></th>
+				<td>
+					<label for="mtpc-registration-auto">
+						<input type="hidden" name="mtpc_registration_auto" value="0">
+						<input type="checkbox" <?php checked($autoRegDefault) ?> value="1" id="mtpc-registration-auto" name="mtpc_registration_auto">
+						<?= __('Activate automatic registration', 'metapic') ?></label>
+				</td>
 			</tr>
 			<?php if ($debugMode) { ?>
 				<tr>
