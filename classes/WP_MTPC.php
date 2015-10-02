@@ -21,7 +21,6 @@ class WP_MTPC extends stdClass {
 		//$clientInfo = $this->client->getC
 		// echo json_encode($this->client->getUsers());
 		$this->setupOptionsPage();
-		$this->setupHelpButton();
 		$this->setupLang();
 		$this->setupNetworkOptions();
 		$this->setupIframeRoutes();
@@ -30,6 +29,7 @@ class WP_MTPC extends stdClass {
 
 		if (get_option("mtpc_active_account") && get_option("mtpc_access_token")) {
 			$this->setupJsOptions();
+			$this->setupHelpButton();
 			$this->setupDashboardWidget();
 		}
 
@@ -117,23 +117,7 @@ class WP_MTPC extends stdClass {
 
 	private function setupHelpButton() {
 		add_action('media_buttons', function(){
-			echo '
-				<a href="#" id="metapic-help-button" class="button">'.__("How to earn money", "metapic").'</a>
-				<script type="text/javascript">
-					(function($) {
-						$("#metapic-help-button").on("click", function(e) {
-							e.preventDefault();
-							$.event.trigger({
-								type: "metapic",
-								baseUrl: "' . $this->getApiUrl() .'",
-								startPage: "guide",
-								hideSidebar: true,
-								randomKey: "' . get_option("mtpc_access_token") . '"
-							});
-						});
-					})(jQuery);
-				</script>
-			';
+			$this->getTemplate("help-button");
 		});
 	}
 
@@ -492,6 +476,9 @@ class WP_MTPC extends stdClass {
 		if (is_multisite()) {
 			add_option('mtpc_deeplink_auto_default', get_site_option('mtpc_deeplink_auto_default'));
 		}
+		else {
+			add_option('mtpc_deeplink_auto_default', true);
+		}
 	}
 
 
@@ -500,6 +487,7 @@ class WP_MTPC extends stdClass {
 		delete_option("mtpc_access_token");
 		delete_option("mtpc_email");
 		delete_option("mtpc_id");
+		delete_option('mtpc_deeplink_auto_default');
 	}
 
 	private function setupDeeplinkPublishing() {
