@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Metapic WordPress Plugin\n"
-"POT-Creation-Date: 2015-10-01 16:17+0200\n"
-"PO-Revision-Date: 2015-10-01 16:18+0200\n"
+"POT-Creation-Date: 2015-10-02 10:16+0200\n"
+"PO-Revision-Date: 2015-10-02 10:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: Metapic <info@metapic.se>\n"
 "Language: sv\n"
@@ -54,14 +54,14 @@ msgstr "Ditt konto har aktiverats"
 msgid "User not found"
 msgstr "Användaren kunde inte hittas"
 
-#: classes/WP_MTPC.php:284
+#: classes/WP_MTPC.php:286
 msgid ""
 "Account activated. You can now activate individual blogs in the network."
 msgstr ""
 "Ert konto har aktiverats. Ni kan nu aktivera individuella bloggar i ert "
 "nätverk."
 
-#: classes/WP_MTPC.php:286
+#: classes/WP_MTPC.php:288
 msgid ""
 "Account not found. Please check your credentials. If the problem persists "
 "please contact support."
@@ -69,7 +69,7 @@ msgstr ""
 "Kontot kunde inte hittas. Var god kontrollera dina uppgifter. Om problemet "
 "kvarstår var god kontakta supporten på info@metapic.se."
 
-#: classes/WP_MTPC.php:350 classes/WP_MTPC.php:412
+#: classes/WP_MTPC.php:352 classes/WP_MTPC.php:414
 msgid "Metapic"
 msgstr "Metapic"
 
@@ -163,7 +163,11 @@ msgstr "Metapic nätverksinställningar"
 msgid "API Settings"
 msgstr "API-inställningar"
 
-#: templates/metapic-site-options.php:11
+#: templates/metapic-site-options.php:12
+msgid "Welcome,"
+msgstr "Välkommen,"
+
+#: templates/metapic-site-options.php:14
 msgid ""
 "Please enter your credentials below. You should have already received your "
 "client credentials from Metapic.<br/>If you haven't received your "
@@ -173,24 +177,24 @@ msgstr ""
 "din portal från Metapic.<br/> Om du inte har fått dessa uppgifter så "
 "kontakta Metapics tekniska support på info@metapic.se."
 
-#: templates/metapic-site-options.php:14
+#: templates/metapic-site-options.php:18
 msgid "API Key"
 msgstr "API-nyckel"
 
-#: templates/metapic-site-options.php:22
+#: templates/metapic-site-options.php:26
 msgid "Secret Key"
 msgstr "Hemlig nyckel"
 
-#: templates/metapic-site-options.php:31
+#: templates/metapic-site-options.php:35
 msgid "Automatic linking"
 msgstr "Automatisk länkning"
 
-#: templates/metapic-site-options.php:36 templates/ms-options/my-account.php:11
+#: templates/metapic-site-options.php:40 templates/ms-options/my-account.php:11
 #: templates/my-account.php:6
 msgid "Activate auto linking by default"
 msgstr "Aktivera automatisk länkning som standard för alla inlägg"
 
-#: templates/metapic-site-options.php:43
+#: templates/metapic-site-options.php:47
 msgid "Api url"
 msgstr "API-url"
 

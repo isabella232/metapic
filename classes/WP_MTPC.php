@@ -18,7 +18,7 @@ class WP_MTPC extends stdClass {
 		$this->plugin_dir = $plugin_dir;
 		$this->plugin_url = $plugin_url;
 		$this->client = new ApiClient($this->getApiUrl(), get_site_option("mtpc_api_key"), get_site_option("mtpc_secret_key"));
-
+		//$clientInfo = $this->client->getC
 		// echo json_encode($this->client->getUsers());
 		$this->setupOptionsPage();
 		$this->setupHelpButton();
@@ -280,7 +280,9 @@ class WP_MTPC extends stdClass {
 					$this->client = new ApiClient($this->getApiUrl(), $_POST["api_key"], $_POST["secret_key"]);
 					$isValid = $this->client->checkClient($_POST["api_key"]);
 					update_site_option("mtpc_valid_client", ($isValid["status"] == 200));
+
 					if ($isValid["status"] == 200) {
+						update_site_option("mtpc_client_name", $isValid["name"]);
 						$this->setStatusMessage(__("Account activated. You can now activate individual blogs in the network.", "metapic"));
 					} else {
 						$this->setStatusMessage(__("Account not found. Please check your credentials. If the problem persists please contact support.", "metapic"), "error");
