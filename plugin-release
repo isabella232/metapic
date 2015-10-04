@@ -40,4 +40,6 @@ echo "Zipping files..."
 rm -f ${ZipFile}
 zip -r ${ZipFile} ./${GitFolder}/*
 rm -rf ${GitFolder}
+WorkingDir=$(pwd)
+echo "New release available at ${WorkingDir}/${ZipFile}"
 #echo $Version
