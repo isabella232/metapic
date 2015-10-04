@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Metapic WordPress Plugin\n"
-"POT-Creation-Date: 2015-10-01 15:59+0200\n"
+"POT-Creation-Date: 2015-10-04 21:26+0200\n"
 "PO-Revision-Date: 2015-07-16 14:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: Metapic <info@metapic.se>\n"
@@ -19,87 +19,87 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: vendor\n"
 "X-Poedit-SearchPathExcluded-1: js/tinymce\n"
 
-#: classes/WP_MTPC.php:121
-msgid "How to earn money"
-msgstr ""
-
-#: classes/WP_MTPC.php:151
+#: classes/WP_MTPC.php:153
 msgid "Account deactivated"
 msgstr ""
 
-#: classes/WP_MTPC.php:165 classes/WP_MTPC.php:233
+#: classes/WP_MTPC.php:167 classes/WP_MTPC.php:237
 msgid "Account created"
 msgstr ""
 
-#: classes/WP_MTPC.php:170
+#: classes/WP_MTPC.php:172
 msgid "Account already exists"
 msgstr ""
 
-#: classes/WP_MTPC.php:194
+#: classes/WP_MTPC.php:196
 msgid "Register"
 msgstr ""
 
-#: classes/WP_MTPC.php:216
+#: classes/WP_MTPC.php:218
 msgid "Login successful"
 msgstr ""
 
-#: classes/WP_MTPC.php:222
+#: classes/WP_MTPC.php:225
 msgid "Invalid username or password"
 msgstr ""
 
-#: classes/WP_MTPC.php:235
+#: classes/WP_MTPC.php:240
 msgid "Account activated"
 msgstr ""
 
-#: classes/WP_MTPC.php:239
+#: classes/WP_MTPC.php:247
 msgid "User not found"
 msgstr ""
 
-#: classes/WP_MTPC.php:282
+#: classes/WP_MTPC.php:294
 msgid ""
 "Account activated. You can now activate individual blogs in the network."
 msgstr ""
 
-#: classes/WP_MTPC.php:284
+#: classes/WP_MTPC.php:297
 msgid ""
 "Account not found. Please check your credentials. If the problem persists "
 "please contact support."
 msgstr ""
 
-#: classes/WP_MTPC.php:348 classes/WP_MTPC.php:410
+#: classes/WP_MTPC.php:370 classes/WP_MTPC.php:432
 msgid "Metapic"
 msgstr ""
 
-#: templates/deeplink-publish.php:6 templates/deeplink-publish.php:12
+#: templates/deeplink-publish.php:7 templates/deeplink-publish.php:13
 msgid "Active"
 msgstr ""
 
-#: templates/deeplink-publish.php:6 templates/deeplink-publish.php:11
+#: templates/deeplink-publish.php:7 templates/deeplink-publish.php:12
 msgid "Inactive"
 msgstr ""
 
-#: templates/deeplink-publish.php:9
+#: templates/deeplink-publish.php:10
 msgid "Auto link content:"
 msgstr ""
 
-#: templates/deeplink-publish.php:15
+#: templates/deeplink-publish.php:16
 msgid "Edit"
 msgstr ""
 
-#: templates/deeplink-publish.php:16
+#: templates/deeplink-publish.php:17
 msgid "Edit auto linking"
 msgstr ""
 
-#: templates/deeplink-publish.php:22
+#: templates/deeplink-publish.php:23
 msgid "Activate auto linking"
 msgstr ""
 
-#: templates/deeplink-publish.php:25
+#: templates/deeplink-publish.php:26
 msgid "OK"
 msgstr ""
 
-#: templates/deeplink-publish.php:26
+#: templates/deeplink-publish.php:27
 msgid "Cancel"
+msgstr ""
+
+#: templates/help-button.php:1
+msgid "How to earn money"
 msgstr ""
 
 #: templates/login.php:1
@@ -152,39 +152,51 @@ msgstr ""
 msgid "Server address"
 msgstr ""
 
-#: templates/metapic-site-options.php:5
+#: templates/metapic-site-options.php:6
 msgid "Metapic site settings page"
 msgstr ""
 
-#: templates/metapic-site-options.php:9
+#: templates/metapic-site-options.php:10
 msgid "API Settings"
 msgstr ""
 
-#: templates/metapic-site-options.php:11
+#: templates/metapic-site-options.php:13
+msgid "Welcome,"
+msgstr ""
+
+#: templates/metapic-site-options.php:15
 msgid ""
 "Please enter your credentials below. You should have already received your "
 "client credentials from Metapic.<br/>If you haven't received your "
 "credentials please contact Metapic technical support."
 msgstr ""
 
-#: templates/metapic-site-options.php:14
+#: templates/metapic-site-options.php:19
 msgid "API Key"
 msgstr ""
 
-#: templates/metapic-site-options.php:22
+#: templates/metapic-site-options.php:27
 msgid "Secret Key"
 msgstr ""
 
-#: templates/metapic-site-options.php:31
+#: templates/metapic-site-options.php:36
 msgid "Automatic linking"
 msgstr ""
 
-#: templates/metapic-site-options.php:36
+#: templates/metapic-site-options.php:41
 #: templates/ms-options/my-account.php:11 templates/my-account.php:6
 msgid "Activate auto linking by default"
 msgstr ""
 
-#: templates/metapic-site-options.php:43
+#: templates/metapic-site-options.php:47
+msgid "Automatic registration"
+msgstr ""
+
+#: templates/metapic-site-options.php:52
+msgid "Activate automatic registration"
+msgstr ""
+
+#: templates/metapic-site-options.php:57
 msgid "Api url"
 msgstr ""
 
@@ -221,19 +233,19 @@ msgstr ""
 msgid "&mdash; Select &mdash;"
 msgstr ""
 
-#: templates/ms-options/new.php:33
+#: templates/ms-options/new.php:34
 #, php-format
 msgid ""
 "In order to start using Metapic to link content, tag images and make "
-"collages you first have to accept our terms of use.<br/>An account will be "
-"created connected to the email address: <strong>%s</strong>."
+"collages to earn money just click on the button below.<br/>An account will "
+"be created connected to the email address: <strong>%s</strong>."
 msgstr ""
 
-#: templates/ms-options/new.php:40
+#: templates/ms-options/new.php:41
 msgid "I accept the terms."
 msgstr ""
 
-#: templates/ms-options/new.php:56
+#: templates/ms-options/new.php:57
 msgid "You must accept the terms."
 msgstr ""
 
