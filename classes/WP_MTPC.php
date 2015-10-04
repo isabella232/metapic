@@ -111,8 +111,12 @@ class WP_MTPC extends stdClass {
 
 		add_action("wp_footer", function () {
 			require($this->plugin_dir . "/templates/frontend-js.php");
-		}, 100
-		);
+		}, 100);
+
+		add_action("wp_head", function() {
+			wp_enqueue_style('mtpc_frontend_css', '//s3-eu-west-1.amazonaws.com/metapic-cdn/site/css/remote/metapic.min.css');
+			//wp_enqueue_script()
+		}, 100);
 
 	}
 
