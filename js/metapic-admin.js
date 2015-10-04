@@ -35,5 +35,19 @@
 				}
 			}
 		});
+
+		$("#metapic-help-button").on("click", function(e) {
+			e.preventDefault();
+			var tokenUrl = $(this).data("tokenUrl");
+			$.getJSON(tokenUrl, function (data) {
+				$.event.trigger({
+					type: "metapic",
+					baseUrl: data['metapicApi'],
+					startPage: "guide",
+					hideSidebar: true,
+					randomKey: data['access_token']['access_token']
+				});
+			});
+		});
 	});
 })(jQuery);

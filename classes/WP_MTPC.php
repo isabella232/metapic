@@ -11,7 +11,7 @@ class WP_MTPC extends stdClass {
 	private $templateVars = [];
 	private $debugMode = false;
 	private $accessKey = "metapic_access_token";
-	private $iframeUrl = "";
+	private $tokenUrl = "";
 	private $autoRegister = false;
 	private $activeAccount = false;
 
@@ -21,9 +21,8 @@ class WP_MTPC extends stdClass {
 		$this->plugin_dir = $plugin_dir;
 		$this->plugin_url = $plugin_url;
 		$this->client = new ApiClient($this->getApiUrl(), get_site_option("mtpc_api_key"), get_site_option("mtpc_secret_key"));
-		//$clientInfo = $this->client->getC
-		// echo json_encode($this->client->getUsers());
-		$this->iframeUrl = rtrim(get_bloginfo("url"), "/") . "/?" . $this->accessKey;
+
+		$this->tokenUrl = rtrim(get_bloginfo("url"), "/") . "/?" . $this->accessKey;
 		$this->setupOptionsPage();
 		$this->setupLang();
 		$this->setupNetworkOptions();
@@ -63,7 +62,7 @@ class WP_MTPC extends stdClass {
 
 	private function setupJsOptions() {
 		add_filter('tiny_mce_before_init', function ($mceInit, $editor_id) {
-			$mceInit["mtpc_iframe_url"] = $this->iframeUrl;
+			$mceInit["mtpc_iframe_url"] = $this->tokenUrl;
 			$mceInit["mtpc_plugin_url"] = $this->plugin_url;
 			return $mceInit;
 		}, 500, 2);
@@ -82,8 +81,7 @@ class WP_MTPC extends stdClass {
 				add_filter('mce_external_plugins', function ($plugin_array) use ($mce_plugin_name) {
 					$plugin_array[$mce_plugin_name] = $this->plugin_url . '/js/metapic.js';
 					return $plugin_array;
-				}
-				);
+				});
 
 				// Register new button in the editor
 				add_filter('mce_buttons', function ($buttons) use ($mce_plugin_name) {
@@ -92,32 +90,38 @@ class WP_MTPC extends stdClass {
 					array_push($buttons, $mce_plugin_name . "collage");
 
 					return $buttons;
-				}
-				);
+				});
 			}
-		}
-		);
+		});
 
 		add_action('admin_enqueue_scripts', function ($styles) {
 			wp_enqueue_style('metapic_admin_css', $this->plugin_url . '/css/metapic.css');
-		}
-		);
+		});
 
 		add_filter('mce_css', function ($styles) {
 			$styles .= ',' . $this->plugin_url . '/css/metapic.css';
 			return $styles;
-		}
-		);
+		});
 
-		add_action("wp_footer", function () {
-			require($this->plugin_dir . "/templates/frontend-js.php");
-		}, 100);
-
-		add_action("wp_head", function() {
+		$jsHandle = 'mtpc_frontend_js';
+		add_action("wp_head", function () use ($jsHandle) {
+			wp_enqueue_script($jsHandle, '//s3-eu-west-1.amazonaws.com/metapic-cdn/dev/metapic.preLoginNoLogin.min.js', ['jquery'], false, true);
 			wp_enqueue_style('mtpc_frontend_css', '//s3-eu-west-1.amazonaws.com/metapic-cdn/site/css/remote/metapic.min.css');
-			//wp_enqueue_script()
-		}, 100);
+		}, 10);
 
+		add_filter('script_loader_tag', function ($tag, $handle, $src) use ($jsHandle) {
+			if ($handle == $jsHandle) {
+				$dom = new DOMDocument();
+				@$dom->loadHTML($tag);
+				$x = new DOMXPath($dom);
+				foreach ($x->query("//script") as $node) {
+					$node->setAttribute("id", "metapic-load");
+					$node->setAttribute("data-metapic-user-id", get_option("mtpc_id"));
+					$tag = $node->c14n();
+				}
+			}
+			return $tag;
+		}, 100, 3);
 	}
 
 	/**
@@ -130,7 +134,7 @@ class WP_MTPC extends stdClass {
 	}
 
 	private function setupHelpButton() {
-		add_action('media_buttons', function(){
+		add_action('media_buttons', function () {
 			$this->getTemplate("help-button");
 		});
 	}
@@ -172,7 +176,7 @@ class WP_MTPC extends stdClass {
 			});
 		});
 
-		add_action('admin_init', function() {
+		add_action('admin_init', function () {
 			register_setting('metapic_register_options', 'metapic_register_options', function ($input) {
 				return $input;
 			});
@@ -189,7 +193,7 @@ class WP_MTPC extends stdClass {
 				}
 				);
 				if (!is_multisite())
-					add_submenu_page(null, __('Register', 'metapic'), "Register", "manage_options", "metapic_register", function() {
+					add_submenu_page(null, __('Register', 'metapic'), "Register", "manage_options", "metapic_register", function () {
 						$this->getTemplate("register");
 					});
 			}
@@ -212,14 +216,16 @@ class WP_MTPC extends stdClass {
 					if ($user) {
 						$this->activateAccount($user["id"], $options['email_string'], $user["access_token"]["access_token"]);
 						$this->setStatusMessage(__("Login successful", "metapic"));
-					} else {
+					}
+					else {
 						throw new Exception;
 					}
 				} catch (Exception $e) {
 					$this->deactivateAccount();
 					$this->setStatusMessage(__("Invalid username or password", "metapic"), "error");
 				}
-			} else {
+			}
+			else {
 				$user_email = (isset($_POST["mtpc_email"])) ? $_POST["mtpc_email"] : wp_get_current_user()->user_email;
 				$wp_user = get_user_by("email", $user_email);
 				if ($wp_user) {
@@ -229,13 +235,15 @@ class WP_MTPC extends stdClass {
 						$this->client->createUser(array("email" => $wp_user->user_email, "username" => $wp_user->user_login));
 						$user = $this->client->activateUser($wp_user->user_email);
 						$this->setStatusMessage(__("Account created", "metapic"));
-					} else {
+					}
+					else {
 						$this->setStatusMessage(__("Account activated", "metapic"));
 					}
 					$this->activateAccount($user["id"], $wp_user->user_email, $user["access_token"]["access_token"]);
 					add_option('mtpc_deeplink_auto_default', get_site_option('mtpc_deeplink_auto_default'));
 
-				} else {
+				}
+				else {
 					$this->setStatusMessage(__("User not found", "metapic"), "error");
 				}
 			}
@@ -272,7 +280,8 @@ class WP_MTPC extends stdClass {
 					//echo json_encode($_POST);
 					if (isset($_POST["API_url"])) {
 						$apiUrl = $_POST["API_url"];
-					} else {
+					}
+					else {
 						$apiUrl = $this->api_url;
 					}
 					update_site_option("mtpc_api_url", $apiUrl);
@@ -283,7 +292,8 @@ class WP_MTPC extends stdClass {
 					if ($isValid["status"] == 200) {
 						update_site_option("mtpc_client_name", $isValid["name"]);
 						$this->setStatusMessage(__("Account activated. You can now activate individual blogs in the network.", "metapic"));
-					} else {
+					}
+					else {
 						$this->setStatusMessage(__("Account not found. Please check your credentials. If the problem persists please contact support.", "metapic"), "error");
 					}
 				}
@@ -430,7 +440,8 @@ class WP_MTPC extends stdClass {
 	private function updateClicks() {
 		if (is_multisite()) {
 			$this->updateClicksForMultiSite();
-		} else {
+		}
+		else {
 			$this->updateClicksForSingleSite();
 		}
 	}
@@ -439,9 +450,9 @@ class WP_MTPC extends stdClass {
 		$today = Carbon::parse(date("Y-m-d"));
 		$tenDaysAgo = Carbon::parse(date("Y-m-d"))->subDays(9);
 		if (!is_array($clicks)) {
-			$clicks = [["date" => $today->format("Y-m-d"),"tag_clicks" => 0,
-			            "link_clicks" => 0],["date" => $tenDaysAgo->format("Y-m-d"),"tag_clicks" => 0,
-			            "link_clicks" => 0]];
+			$clicks = [["date" => $today->format("Y-m-d"), "tag_clicks" => 0,
+				"link_clicks" => 0], ["date" => $tenDaysAgo->format("Y-m-d"), "tag_clicks" => 0,
+				"link_clicks" => 0]];
 		}
 		$firstClick = $clicks[0];
 		$lastClick = end($clicks);
@@ -515,15 +526,15 @@ class WP_MTPC extends stdClass {
 	}
 
 	private function setupDeeplinkPublishing() {
-		add_action( 'post_submitbox_misc_actions', function() {
+		add_action('post_submitbox_misc_actions', function () {
 			$this->getTemplate('deeplink-publish');
 		});
 
-		add_action( 'save_post', function($postId) {
+		add_action('save_post', function ($postId) {
 			update_post_meta($postId, "mtpc_deeplink_auto", (int)$_POST["mtpc_deeplink_auto"]);
 		});
 
-		add_filter('wp_insert_post_data', function($filtered_data, $raw_data) {
+		add_filter('wp_insert_post_data', function ($filtered_data, $raw_data) {
 			$deepLinkContent = (bool)$raw_data["mtpc_deeplink_auto"];
 			if ($deepLinkContent) {
 				$userId = get_option("mtpc_id");
@@ -538,17 +549,17 @@ class WP_MTPC extends stdClass {
 		}, 10, 2);
 	}
 
-	private function isEditPage($new_edit = null){
+	private function isEditPage($new_edit = null) {
 		global $pagenow;
 		//make sure we are on the backend
 		if (!is_admin()) return false;
 
 
-		if($new_edit == "edit")
-			return in_array( $pagenow, array( 'post.php',  ) );
-		elseif($new_edit == "new") //check for new post page
-			return in_array( $pagenow, array( 'post-new.php' ) );
+		if ($new_edit == "edit")
+			return in_array($pagenow, array('post.php',));
+		elseif ($new_edit == "new") //check for new post page
+			return in_array($pagenow, array('post-new.php'));
 		else //check for either new or edit
-			return in_array( $pagenow, array( 'post.php', 'post-new.php' ) );
+			return in_array($pagenow, array('post.php', 'post-new.php'));
 	}
 }
