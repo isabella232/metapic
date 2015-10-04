@@ -343,15 +343,8 @@ class WP_MTPC extends stdClass {
 			if (array_key_exists($this->accessKey, $wp->query_vars)) {
 				$accessToken = get_option("mtpc_access_token");
 				if ($this->autoRegister && !$this->activeAccount) {
-					$wp_user = wp_get_current_user();
-					$user = $this->client->activateUser($wp_user->user_email);
-					if ($user["access_token"] == null) {
-						$this->client->createUser(array("email" => $wp_user->user_email, "username" => $wp_user->user_login));
-						$user = $this->client->activateUser($wp_user->user_email);
-					}
-					$this->activateAccount($user["id"], $wp_user->user_email, $user["access_token"]["access_token"]);
+					$user = $this->registerCurrentUser();
 					$accessToken = $user["access_token"]["access_token"];
-					update_option('mtpc_deeplink_auto_default', get_site_option('mtpc_deeplink_auto_default'));
 				}
 				wp_send_json([
 					"access_token" => ["access_token" => $accessToken],
@@ -360,6 +353,17 @@ class WP_MTPC extends stdClass {
 			}
 			return;
 		});
+	}
+
+	private function registerCurrentUser() {
+		$wp_user = wp_get_current_user();
+		$user = $this->client->activateUser($wp_user->user_email);
+		if ($user["access_token"] == null) {
+			$this->client->createUser(array("email" => $wp_user->user_email, "username" => $wp_user->user_login));
+			$user = $this->client->activateUser($wp_user->user_email);
+		}
+		$this->activateAccount($user["id"], $wp_user->user_email, $user["access_token"]["access_token"]);
+		return $user;
 	}
 
 	private function setupDashboardWidget() {
@@ -509,7 +513,7 @@ class WP_MTPC extends stdClass {
 		update_option("mtpc_access_token", $token);
 
 		if (is_multisite()) {
-			add_option('mtpc_deeplink_auto_default', get_site_option('mtpc_deeplink_auto_default'));
+			update_option('mtpc_deeplink_auto_default', get_site_option('mtpc_deeplink_auto_default'));
 		}
 		else {
 			add_option('mtpc_deeplink_auto_default', true);
@@ -537,6 +541,9 @@ class WP_MTPC extends stdClass {
 		add_filter('wp_insert_post_data', function ($filtered_data, $raw_data) {
 			$deepLinkContent = (bool)$raw_data["mtpc_deeplink_auto"];
 			if ($deepLinkContent) {
+				if (!$this->hasActiveAccount() && $this->autoRegister) {
+					$this->registerCurrentUser();
+				}
 				$userId = get_option("mtpc_id");
 				$accessToken = (is_multisite()) ? null : get_option("mtpc_access_token");
 				$newContent = $this->client->deepLinkBlogPost($userId, $filtered_data['post_content'], $accessToken);
