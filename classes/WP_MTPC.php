@@ -32,7 +32,7 @@ class WP_MTPC extends stdClass {
 		if (is_multisite()) {
 			$this->autoRegister = (bool)get_site_option("mtpc_registration_auto");
 		}
-		$this->activeAccount = (get_option("mtpc_active_account") && get_option("mtpc_access_token"));
+		$this->activeAccount = $this->hasActiveAccount();
 
 		if ($this->activeAccount || $this->autoRegister) {
 			$this->setupJsOptions();
@@ -48,6 +48,10 @@ class WP_MTPC extends stdClass {
 			}
 			return $tags;
 		}, 500, 2);
+	}
+
+	public function hasActiveAccount() {
+		return (get_option("mtpc_active_account") && get_option("mtpc_access_token"));
 	}
 
 	public function activate() {
@@ -543,6 +547,14 @@ class WP_MTPC extends stdClass {
 			}
 			return $filtered_data;
 		}, 10, 2);
+	}
+
+	private function optionExists($optionName) {
+		return (get_option($optionName) === false);
+	}
+
+	private function siteOptionExists($optionName) {
+		return (get_site_option($optionName) === false);
 	}
 
 	private function isEditPage($new_edit = null) {

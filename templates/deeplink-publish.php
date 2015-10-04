@@ -1,7 +1,8 @@
 <?php
 /* @var $this WP_MTPC */
 global $post;
-$deepLinkActive = get_option( "mtpc_deeplink_auto_default", null );
+$autoName = "mtpc_deeplink_auto_default";
+$deepLinkActive = ($this->hasActiveAccount()) ? get_option( $autoName ) : get_site_option( $autoName );
 $deepLinkPost = ($this->isEditPage("new")) ? $deepLinkActive : get_post_meta($post->ID, "mtpc_deeplink_auto", true);
 $deepLinkStatus = ($deepLinkPost) ? __( "Active", "metapic" ) : __( "Inactive", "metapic" );
 ?>
