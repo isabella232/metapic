@@ -111,14 +111,10 @@ class WP_MTPC extends stdClass {
 
 		add_filter('script_loader_tag', function ($tag, $handle, $src) use ($jsHandle) {
 			if ($handle == $jsHandle) {
-				$dom = new DOMDocument();
-				@$dom->loadHTML($tag);
-				$x = new DOMXPath($dom);
-				foreach ($x->query("//script") as $node) {
-					$node->setAttribute("id", "metapic-load");
-					$node->setAttribute("data-metapic-user-id", get_option("mtpc_id"));
-					$tag = $node->c14n();
-				}
+				return str_replace(
+					'<script ',
+					'<script id="metapic-load" data-metapic-user-id="'.get_option("mtpc_id").'" ',
+					$tag );
 			}
 			return $tag;
 		}, 100, 3);
