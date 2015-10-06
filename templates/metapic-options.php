@@ -26,7 +26,22 @@ $loginPrimary = ($this->debugMode) ? "" : "button-primary";
 				<th scope="row"><?= __('Server address', 'metapic') ?></th>
 				<td><input type="text" value="<?= $options["uri_string"] ?>" size="40" name="metapic_options[uri_string]"
 				           id="plugin_text_string"></td>
+
 			</tr>
+            <tr>
+                <th scope="row"><?= __('Userserver address', 'metapic') ?></th>
+                <td><input type="text" value="<?= $options["user_api_uri_string"] ?>" size="40" name="metapic_options[user_api_uri_string]"
+                           id="plugin_text_string"></td>
+
+            </tr>
+            <tr>
+                <th scope="row"><?= __('CDN address', 'metapic') ?></th>
+                <td><input type="text" value="<?= $options["cdn_uri_string"] ?>" size="40" name="metapic_options[cdn_uri_string]"
+                           id="plugin_text_string"></td>
+
+            </tr>
+
+
 			</tbody>
 		</table>
 		<p class="submit"><input type="submit" value="<?php esc_attr_e('Save Changes'); ?>"

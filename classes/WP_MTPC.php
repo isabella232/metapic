@@ -4,6 +4,8 @@ use MetaPic\ApiClient;
 
 class WP_MTPC extends stdClass {
 	private $api_url = "http://api.metapic.se";
+    private $userapi_url = "http://mtpc.se";
+    private $cdn_url = "http://api.metapic.se";
 	private $plugin_dir;
 	private $plugin_url;
 	/* @var ApiClient $client */
@@ -109,9 +111,15 @@ class WP_MTPC extends stdClass {
 
 		$jsHandle = 'mtpc_frontend_js';
 		add_action("wp_head", function () use ($jsHandle) {
-			wp_enqueue_script($jsHandle, '//s3-eu-west-1.amazonaws.com/metapic-cdn/dev/metapic.preLoginNoLogin.min.js', ['jquery'], false, true);
-			wp_enqueue_style('mtpc_frontend_css', '//s3-eu-west-1.amazonaws.com/metapic-cdn/site/css/remote/metapic.min.css');
-		}, 10);
+            if(MTPC_DEBUG){
+                wp_enqueue_script($jsHandle,get_option('metapic_options')["cdn_uri_string"] .'/metapic.preLoginNoLogin.min.js', ['jquery'], false, true);
+                wp_enqueue_style('mtpc_frontend_css', get_option('metapic_options')["cdn_uri_string"].'/metapic.preLogin.css');
+
+            }else {
+                wp_enqueue_script($jsHandle, '//s3-eu-west-1.amazonaws.com/metapic-cdn/dev/metapic.preLoginNoLogin.min.js', ['jquery'], false, true);
+                wp_enqueue_style('mtpc_frontend_css', '//s3-eu-west-1.amazonaws.com/metapic-cdn/site/css/remote/metapic.min.css');
+            }
+        }, 10);
 
 		add_filter('script_loader_tag', function ($tag, $handle, $src) use ($jsHandle) {
 			if ($handle == $jsHandle) {
@@ -203,6 +211,10 @@ class WP_MTPC extends stdClass {
 
 	private function updateOptions($options, $input) {
 		$options['uri_string'] = trim($input['uri_string'], "/");
+        $options['cdn_uri_string'] = trim($input['cdn_uri_string'], "/");
+        $options['user_api_uri_string'] = trim($input['user_api_uri_string'], "/");
+
+
 		$options['mtpc_deeplink_auto_default'] = (bool)$input['mtpc_deeplink_auto_default'];
 		update_option('mtpc_deeplink_auto_default', $options['mtpc_deeplink_auto_default']);
 
