@@ -254,12 +254,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "d3926d01dd4d9c0468fef65ba90c244a28e8ac1a"
+                "reference": "724ed32e326ed46160c97acf9fb5cb2b6322a234"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/d3926d01dd4d9c0468fef65ba90c244a28e8ac1a",
-                "reference": "d3926d01dd4d9c0468fef65ba90c244a28e8ac1a",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/724ed32e326ed46160c97acf9fb5cb2b6322a234",
+                "reference": "724ed32e326ed46160c97acf9fb5cb2b6322a234",
                 "shasum": ""
             },
             "require": {
@@ -307,7 +307,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2015-09-29 14:08:28"
+            "time": "2015-10-07 10:38:49"
         }
     ],
     "packages-dev": [],

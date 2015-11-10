@@ -260,8 +260,9 @@ class WP_MTPC extends stdClass {
 				}
 			}
 		}
-		if (isset($options["password_string"]))
+		if (isset($options["password_string"])) {
 			unset($options["password_string"]);
+		}
 		return $options;
 	}
 
@@ -316,16 +317,18 @@ class WP_MTPC extends stdClass {
 
 	private function getApiUrl() {
 		$url = false;
-		if ($this->debugMode)
+		if ($this->debugMode) {
 			$url = (is_multisite()) ? get_site_option("mtpc_api_url") : @get_option('metapic_options')["uri_string"];
+		}
 		return ($url) ? $url : $this->api_url;
 	}
 
 	private function getTemplate($templateName, array $templateVars = []) {
 		global $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
 
-		if (is_array($wp_query->query_vars))
+		if (is_array($wp_query->query_vars)) {
 			extract($wp_query->query_vars, EXTR_SKIP);
+		}
 		extract($this->templateVars);
 		extract($templateVars);
 		require($this->plugin_dir . "/templates/{$templateName}.php");
@@ -578,15 +581,19 @@ class WP_MTPC extends stdClass {
 
 	private function isEditPage($new_edit = null) {
 		global $pagenow;
-		//make sure we are on the backend
-		if (!is_admin()) return false;
 
+		if (!is_admin()) {
+			return false;
+		}
 
-		if ($new_edit == "edit")
+		if ($new_edit == "edit") {
 			return in_array($pagenow, array('post.php',));
-		elseif ($new_edit == "new") //check for new post page
+		}
+		elseif ($new_edit == "new") {
 			return in_array($pagenow, array('post-new.php'));
-		else //check for either new or edit
+		}
+		else {
 			return in_array($pagenow, array('post.php', 'post-new.php'));
+		}
 	}
 }

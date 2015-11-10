@@ -43,7 +43,7 @@
 				$.event.trigger({
 					type: "metapic",
 					baseUrl: data['metapicApi'],
-					startPage: "guide",
+					startPage: "dashboard",
 					hideSidebar: true,
 					randomKey: data['access_token']['access_token']
 				});
