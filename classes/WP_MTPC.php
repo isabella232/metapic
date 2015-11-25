@@ -79,12 +79,9 @@ class WP_MTPC extends stdClass {
 
 		add_action( 'admin_head', function () {
 			$mce_plugin_name = "metapic";
-			$options         = get_option( 'metapic_options' );
 			// check if WYSIWYG is enabled
 			if ( 'true' == get_user_option( 'rich_editing' ) ) {
 
-				//wp_enqueue_script( 'iframeScript',  , array());
-				//$options['uri_string']="http://metapic-api.localhost";
 				wp_enqueue_script( 'iframeScript', $this->getApiUrl() . '/javascript/iframeScript.js', array(), '1.0.0', true );
 				wp_enqueue_script( 'metapicAdmin', $this->plugin_url . '/js/metapic-admin.js', [ 'jquery' ], '1.0.0', true );
 				// Declare script for new button
@@ -115,7 +112,7 @@ class WP_MTPC extends stdClass {
 
 		$jsHandle = 'mtpc_frontend_js';
 		add_action( "wp_head", function () use ( $jsHandle ) {
-			if ( MTPC_DEBUG ) {
+			if ( defined( 'MTPC_DEBUG' ) && MTPC_DEBUG ) {
 				wp_enqueue_script( $jsHandle, get_option( 'metapic_options' )["cdn_uri_string"] . '/metapic.preLoginNoLogin.min.js', [ 'jquery' ], false, true );
 				wp_enqueue_style( 'mtpc_frontend_css', get_option( 'metapic_options' )["cdn_uri_string"] . '/metapic.preLogin.css' );
 
@@ -180,7 +177,6 @@ class WP_MTPC extends stdClass {
 					die();
 				} else {
 					$this->setStatusMessage( __( "Account already exists", "metapic" ), "error" );
-
 				}
 				return $input;
 			} );
@@ -203,8 +199,7 @@ class WP_MTPC extends stdClass {
 					} );
 				}
 			}
-		}
-		);
+		} );
 	}
 
 	private function updateOptions( $options, $input ) {
@@ -280,19 +275,26 @@ class WP_MTPC extends stdClass {
 
 				if ( $_POST ) {
 					$_GET['updated'] = true;
-					update_site_option( "mtpc_api_key", $_POST["api_key"] );
-					update_site_option( "mtpc_secret_key", $_POST["secret_key"] );
+
+					$api_key        = sanitize_text_field( $_POST["api_key"] );
+					$api_secret_key = sanitize_text_field( $_POST["secret_key"] );
+
+					update_site_option( "mtpc_api_key", $api_key );
+					update_site_option( "mtpc_secret_key", $api_secret_key );
 					update_site_option( "mtpc_deeplink_auto_default", (bool) $_POST["mtpc_deeplink_auto_default"] );
 					update_site_option( "mtpc_registration_auto", (bool) $_POST["mtpc_registration_auto"] );
-					//echo json_encode($_POST);
+
 					if ( isset( $_POST["API_url"] ) ) {
-						$apiUrl = $_POST["API_url"];
+						$api_url = esc_url( $_POST["API_url"] );
 					} else {
-						$apiUrl = $this->api_url;
+						$api_url = $this->api_url;
 					}
-					update_site_option( "mtpc_api_url", $apiUrl );
-					$this->client = new ApiClient( $this->getApiUrl(), $_POST["api_key"], $_POST["secret_key"] );
-					$isValid      = $this->client->checkClient( $_POST["api_key"] );
+
+					update_site_option( "mtpc_api_url", $api_url );
+
+					$this->client = new ApiClient( $this->getApiUrl(), $api_key, $api_secret_key );
+					$isValid      = $this->client->checkClient( $api_key );
+
 					update_site_option( "mtpc_valid_client", ( $isValid["status"] == 200 ) );
 
 					if ( $isValid["status"] == 200 ) {
