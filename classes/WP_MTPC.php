@@ -172,8 +172,7 @@ class WP_MTPC extends stdClass {
 			} );
 
 			register_setting( 'metapic_register_options', 'metapic_register_options', function ( $input ) {
-				$options = get_option( 'metapic_register_options' );
-				$user    = $this->client->register( $input["email_string"], $input["password_string"] );
+				$user = $this->client->register( $input["email_string"], $input["password_string"] );
 				if ( $user ) {
 					$this->activateAccount( $user["id"], $user["email"], $user["access_token"]["access_token"] );
 					$this->setStatusMessage( __( "Account created", "metapic" ) );
@@ -183,12 +182,6 @@ class WP_MTPC extends stdClass {
 					$this->setStatusMessage( __( "Account already exists", "metapic" ), "error" );
 
 				}
-				return $options;
-			} );
-		} );
-
-		add_action( 'admin_init', function () {
-			register_setting( 'metapic_register_options', 'metapic_register_options', function ( $input ) {
 				return $input;
 			} );
 		} );
