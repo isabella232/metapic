@@ -397,7 +397,11 @@ class WP_MTPC extends stdClass {
 		if ( ( $lastUpdate && Carbon::parse( $lastUpdate )->diffInMinutes( Carbon::now() ) >= 10 ) || ! $lastUpdate ) {
 			update_site_option( "mtpc_last_click_update", Carbon::now()->toDateTimeString() );
 			try {
-				$wpClicks = $this->client->getClientClicksByDate( get_option( "mtpc_id" ), [ "from" => date( 'Y-m-d', strtotime( '-10 days' ) ), "to" => date( "Y-m-d" ), "user_access_token" => get_option( "mtpc_access_token" ) ] );
+				$wpClicks = $this->client->getClientClicksByDate( get_option( "mtpc_id" ), [
+					"from"              => date( 'Y-m-d', strtotime( '-10 days' ) ),
+					"to"                => date( "Y-m-d" ),
+					"user_access_token" => get_option( "mtpc_access_token" ),
+				] );
 
 				$mtpcEmail = get_option( "mtpc_email" );
 				if ( $mtpcEmail && isset( $wpClicks[ $mtpcEmail ] ) ) {
@@ -425,9 +429,9 @@ class WP_MTPC extends stdClass {
 					$mtpcEmail = get_option( "mtpc_email" );
 					if ( $mtpcEmail && isset( $wpClicks[ $mtpcEmail ] ) ) {
 						$clicksToInsert = $this->insertMissingDates( $wpClicks[ $mtpcEmail ]["day"] );
-						update_option( "mtpc_clicks_by_date", $clicksToInsert );
-						update_option( "mtpc_clicks_by_month", isset( $wpClicks[ $mtpcEmail ]["month"] ) ? $wpClicks[ $mtpcEmail ]["month"] : 0 );
-						update_option( "mtpc_clicks_total", isset( $wpClicks[ $mtpcEmail ]["total"] ) ? $wpClicks[ $mtpcEmail ]["total"] : 0 );
+						update_option( "mtpc_clicks_by_date", (int) $clicksToInsert );
+						update_option( "mtpc_clicks_by_month", isset( $wpClicks[ $mtpcEmail ]["month"] ) ? (int) $wpClicks[ $mtpcEmail ]["month"] : 0 );
+						update_option( "mtpc_clicks_total", isset( $wpClicks[ $mtpcEmail ]["total"] ) ? (int) $wpClicks[ $mtpcEmail ]["total"] : 0 );
 					}
 				}
 				switch_to_blog( $orgBlog );
