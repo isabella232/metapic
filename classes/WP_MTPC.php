@@ -102,7 +102,7 @@ class WP_MTPC extends stdClass {
 			}
 		} );
 
-		add_action( 'admin_enqueue_scripts', function ( $styles ) {
+		add_action( 'admin_enqueue_scripts', function () {
 			wp_enqueue_style( 'metapic_admin_css', $this->plugin_url . '/css/metapic.css' );
 		} );
 
@@ -111,23 +111,21 @@ class WP_MTPC extends stdClass {
 			return $styles;
 		} );
 
-		$jsHandle = 'mtpc_frontend_js';
-		add_action( "wp_head", function () use ( $jsHandle ) {
+		add_action( "wp_enqueue_scripts", function () {
 			if ( defined( 'MTPC_DEBUG' ) && MTPC_DEBUG ) {
-				wp_enqueue_script( $jsHandle, get_option( 'metapic_options' )["cdn_uri_string"] . '/metapic.preLoginNoLogin.min.js', [ 'jquery' ], false, true );
+				wp_enqueue_script( 'mtpc_frontend_js', get_option( 'metapic_options' )["cdn_uri_string"] . '/metapic.preLoginNoLogin.min.js', [ 'jquery' ], false, true );
 				wp_enqueue_style( 'mtpc_frontend_css', get_option( 'metapic_options' )["cdn_uri_string"] . '/metapic.preLogin.css' );
-
 			} else {
-				wp_enqueue_script( $jsHandle, '//s3-eu-west-1.amazonaws.com/metapic-cdn/dev/metapic.preLoginNoLogin.min.js', [ 'jquery' ], false, true );
+				wp_enqueue_script( 'mtpc_frontend_js', '//s3-eu-west-1.amazonaws.com/metapic-cdn/dev/metapic.preLoginNoLogin.min.js', [ 'jquery' ], false, true );
 				wp_enqueue_style( 'mtpc_frontend_css', '//s3-eu-west-1.amazonaws.com/metapic-cdn/site/css/remote/metapic.min.css' );
 			}
 		}, 10 );
 
-		add_filter( 'script_loader_tag', function ( $tag, $handle, $src ) use ( $jsHandle ) {
-			if ( $handle == $jsHandle ) {
+		add_filter( 'script_loader_tag', function ( $tag, $handle, $src ) {
+			if ( $handle == 'mtpc_frontend_js' ) {
 				return str_replace(
 					'<script ',
-					'<script id="metapic-load" data-metapic-user-id="' . get_option( "mtpc_id" ) . '" ',
+					'<script id="metapic-load" data-metapic-user-id="' . esc_attr( get_option( "mtpc_id" ) ) . '" ',
 					$tag );
 			}
 			return $tag;
