@@ -11,18 +11,18 @@ Text Domain: metapic
 Network: true
 */
 
-add_action( 'plugins_loaded', function () {
-	global $wp_mtpc;
+namespace MetaPic;
 
-	$plugin_dir = dirname( __FILE__ );
-	$plugin_url = plugins_url() . '/' . basename( __DIR__ );
+global $wp_mtpc;
 
-	require_once( $plugin_dir . '/vendor/autoload.php' );
-	require_once( $plugin_dir . '/classes/WP_MTPC.php' );
+$plugin_dir = dirname( __FILE__ );
+$plugin_url = plugins_url() . '/' . basename( __DIR__ );
 
-	$wp_mtpc = new WP_MTPC( $plugin_dir, $plugin_url );
+require_once( $plugin_dir . '/vendor/autoload.php' );
+require_once( $plugin_dir . '/classes/WP_MTPC.php' );
 
-	register_activation_hook( __FILE__, function () use ( $wp_mtpc ) {
-		$wp_mtpc->activate();
-	} );
+$wp_mtpc = new WP_MTPC( $plugin_dir, $plugin_url );
+
+register_activation_hook( __FILE__, function () use ( $wp_mtpc ) {
+	$wp_mtpc->activate();
 } );

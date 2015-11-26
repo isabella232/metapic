@@ -35,18 +35,6 @@
 		<p>
 			<?php printf( esc_html__( "In order to start using Metapic to link content, tag images and make collages to earn money just click on the button below. An account will be created connected to the email address: %s.", 'metapic' ), '<strong>' . $wp_user->user_email . '</strong>' ) ?>
 		</p>
-		<!--table class="form-table">
-			<tbody>
-			<tr>
-				<th scope="row"><label for="accept_terms">
-						<input type="checkbox" value="1" id="accept_terms"
-						       name="accept_terms"> <?php esc_html_e( 'I accept the terms.', 'metapic' ) ?>
-					</label>
-				</th>
-
-			</tr>
-			</tbody>
-		</table-->
 	<?php endif; ?>
 	<?php submit_button( $submitText ); ?>
 </form>

@@ -1,8 +1,10 @@
 <?php
-use Carbon\Carbon;
-use MetaPic\ApiClient;
 
-class WP_MTPC extends stdClass {
+namespace MetaPic;
+
+use \Carbon\Carbon;
+
+class WP_MTPC {
 
 	private $api_url     = "http://api.metapic.se";
 	private $userapi_url = "http://mtpc.se";
