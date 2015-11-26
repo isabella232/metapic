@@ -421,7 +421,7 @@ class WP_MTPC {
 
 	}
 
-	public function updateClicksForMultiSite() {
+	public function updateClicksForMultiSite( $blog_id ) {
 
 		try {
 
