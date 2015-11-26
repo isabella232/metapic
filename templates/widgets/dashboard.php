@@ -31,7 +31,7 @@
 		</div>
 	</footer>
 <?php else: ?>
-	<p><?php esc_html_e( "You have note received any clicks yet.", 'metapic' ); ?></p>
+	<p><?php esc_html_e( "You have not received any clicks yet.", 'metapic' ); ?></p>
 <?php endif; ?>
 <script type="text/javascript">
 	(function( $ ) {
