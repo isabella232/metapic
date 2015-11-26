@@ -7,7 +7,7 @@
 	</p>
 
 	<p>
-		<?php esc_html_e( "This could mean that you're either already using Metapic on a blog in the network or that you have used Metapic before.<br/>Total clicks will be pooled from all blogs using your account in the network", 'metapic' ) ?>
+		<?php esc_html_e( "This could mean that you're either already using Metapic on a blog in the network or that you have used Metapic before. Total clicks will be pooled from all blogs using your account in the network", 'metapic' ) ?>
 	</p>
 	<?php if ( is_super_admin() ):
 		/* @var WPDB $wpdb */

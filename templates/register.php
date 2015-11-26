@@ -19,7 +19,6 @@
 			</tr>
 			</tbody>
 		</table>
-		<p class="submit"><input type="submit" name="register" id="register" class="button button-primary"
-		                         value="<?php esc_html_e( 'Create account', "metapic" ); ?>"></p>
+		<?php submit_button( __( 'Create account', "metapic" ), 'primary', 'register' ); ?>
 	</form>
 </div>
