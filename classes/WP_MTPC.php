@@ -23,7 +23,7 @@ class WP_MTPC extends stdClass {
 	private $activeAccount = false;
 
 	public function __construct( $plugin_dir, $plugin_url ) {
-		$options          = get_option( 'metapic_options' );
+
 		$this->debugMode  = ( defined( "MTPC_DEBUG" ) && MTPC_DEBUG === true );
 		$this->plugin_dir = $plugin_dir;
 		$this->plugin_url = $plugin_url;
@@ -39,6 +39,7 @@ class WP_MTPC extends stdClass {
 		if ( is_multisite() ) {
 			$this->autoRegister = (bool) get_site_option( "mtpc_registration_auto" );
 		}
+
 		$this->activeAccount = $this->hasActiveAccount();
 
 		if ( $this->activeAccount || $this->autoRegister ) {
@@ -101,7 +102,7 @@ class WP_MTPC extends stdClass {
 			}
 		} );
 
-		add_action( 'admin_enqueue_scripts', function ( $styles ) {
+		add_action( 'admin_enqueue_scripts', function () {
 			wp_enqueue_style( 'metapic_admin_css', $this->plugin_url . '/css/metapic.css' );
 		} );
 
@@ -110,23 +111,21 @@ class WP_MTPC extends stdClass {
 			return $styles;
 		} );
 
-		$jsHandle = 'mtpc_frontend_js';
-		add_action( "wp_head", function () use ( $jsHandle ) {
+		add_action( "wp_enqueue_scripts", function () {
 			if ( defined( 'MTPC_DEBUG' ) && MTPC_DEBUG ) {
-				wp_enqueue_script( $jsHandle, get_option( 'metapic_options' )["cdn_uri_string"] . '/metapic.preLoginNoLogin.min.js', [ 'jquery' ], false, true );
+				wp_enqueue_script( 'mtpc_frontend_js', get_option( 'metapic_options' )["cdn_uri_string"] . '/metapic.preLoginNoLogin.min.js', [ 'jquery' ], false, true );
 				wp_enqueue_style( 'mtpc_frontend_css', get_option( 'metapic_options' )["cdn_uri_string"] . '/metapic.preLogin.css' );
-
 			} else {
-				wp_enqueue_script( $jsHandle, '//s3-eu-west-1.amazonaws.com/metapic-cdn/dev/metapic.preLoginNoLogin.min.js', [ 'jquery' ], false, true );
+				wp_enqueue_script( 'mtpc_frontend_js', '//s3-eu-west-1.amazonaws.com/metapic-cdn/dev/metapic.preLoginNoLogin.min.js', [ 'jquery' ], false, true );
 				wp_enqueue_style( 'mtpc_frontend_css', '//s3-eu-west-1.amazonaws.com/metapic-cdn/site/css/remote/metapic.min.css' );
 			}
 		}, 10 );
 
-		add_filter( 'script_loader_tag', function ( $tag, $handle, $src ) use ( $jsHandle ) {
-			if ( $handle == $jsHandle ) {
+		add_filter( 'script_loader_tag', function ( $tag, $handle, $src ) {
+			if ( $handle == 'mtpc_frontend_js' ) {
 				return str_replace(
 					'<script ',
-					'<script id="metapic-load" data-metapic-user-id="' . get_option( "mtpc_id" ) . '" ',
+					'<script id="metapic-load" data-metapic-user-id="' . esc_attr( get_option( "mtpc_id" ) ) . '" ',
 					$tag );
 			}
 			return $tag;
@@ -173,8 +172,8 @@ class WP_MTPC extends stdClass {
 				if ( $user ) {
 					$this->activateAccount( $user["id"], $user["email"], $user["access_token"]["access_token"] );
 					$this->setStatusMessage( __( "Account created", "metapic" ) );
-					wp_redirect( admin_url( 'options-general.php?page=metapic_settings' ) );
-					die();
+					wp_safe_redirect( admin_url( 'options-general.php?page=metapic_settings' ) );
+					exit;
 				} else {
 					$this->setStatusMessage( __( "Account already exists", "metapic" ), "error" );
 				}
@@ -203,10 +202,10 @@ class WP_MTPC extends stdClass {
 	}
 
 	private function updateOptions( $options, $input ) {
+
 		$options['uri_string']          = untrailingslashit( esc_url( $input['uri_string'] ) );
 		$options['cdn_uri_string']      = untrailingslashit( esc_url( $input['cdn_uri_string'] ) );
 		$options['user_api_uri_string'] = untrailingslashit( esc_url( $input['user_api_uri_string'] ) );
-
 
 		$options['mtpc_deeplink_auto_default'] = (bool) $input['mtpc_deeplink_auto_default'];
 		update_option( 'mtpc_deeplink_auto_default', $options['mtpc_deeplink_auto_default'] );
@@ -397,7 +396,12 @@ class WP_MTPC extends stdClass {
 		if ( ( $lastUpdate && Carbon::parse( $lastUpdate )->diffInMinutes( Carbon::now() ) >= 10 ) || ! $lastUpdate ) {
 			update_site_option( "mtpc_last_click_update", Carbon::now()->toDateTimeString() );
 			try {
-				$wpClicks = $this->client->getClientClicksByDate( get_option( "mtpc_id" ), [ "from" => date( 'Y-m-d', strtotime( '-10 days' ) ), "to" => date( "Y-m-d" ), "user_access_token" => get_option( "mtpc_access_token" ) ] );
+
+				$wpClicks = $this->client->getClientClicksByDate( get_option( "mtpc_id" ), [
+					"from"              => date( 'Y-m-d', strtotime( '-10 days' ) ),
+					"to"                => date( "Y-m-d" ),
+					"user_access_token" => get_option( "mtpc_access_token" ),
+				] );
 
 				$mtpcEmail = get_option( "mtpc_email" );
 				if ( $mtpcEmail && isset( $wpClicks[ $mtpcEmail ] ) ) {
@@ -425,9 +429,9 @@ class WP_MTPC extends stdClass {
 					$mtpcEmail = get_option( "mtpc_email" );
 					if ( $mtpcEmail && isset( $wpClicks[ $mtpcEmail ] ) ) {
 						$clicksToInsert = $this->insertMissingDates( $wpClicks[ $mtpcEmail ]["day"] );
-						update_option( "mtpc_clicks_by_date", $clicksToInsert );
-						update_option( "mtpc_clicks_by_month", isset( $wpClicks[ $mtpcEmail ]["month"] ) ? $wpClicks[ $mtpcEmail ]["month"] : 0 );
-						update_option( "mtpc_clicks_total", isset( $wpClicks[ $mtpcEmail ]["total"] ) ? $wpClicks[ $mtpcEmail ]["total"] : 0 );
+						update_option( "mtpc_clicks_by_date", (int) $clicksToInsert );
+						update_option( "mtpc_clicks_by_month", isset( $wpClicks[ $mtpcEmail ]["month"] ) ? (int) $wpClicks[ $mtpcEmail ]["month"] : 0 );
+						update_option( "mtpc_clicks_total", isset( $wpClicks[ $mtpcEmail ]["total"] ) ? (int) $wpClicks[ $mtpcEmail ]["total"] : 0 );
 					}
 				}
 				switch_to_blog( $orgBlog );
@@ -516,12 +520,12 @@ class WP_MTPC extends stdClass {
 
 	private function activateAccount( $id, $email, $token ) {
 		update_option( "mtpc_active_account", true );
-		update_option( "mtpc_id", $id );
-		update_option( "mtpc_email", $email );
-		update_option( "mtpc_access_token", $token );
+		update_option( "mtpc_id", sanitize_text_field( $id ) );
+		update_option( "mtpc_email", sanitize_email( $email ) );
+		update_option( "mtpc_access_token", sanitize_text_field( $token ) );
 
 		if ( is_multisite() ) {
-			update_option( 'mtpc_deeplink_auto_default', get_site_option( 'mtpc_deeplink_auto_default' ) );
+			update_option( 'mtpc_deeplink_auto_default', (bool) get_site_option( 'mtpc_deeplink_auto_default' ) );
 		} else {
 			add_option( 'mtpc_deeplink_auto_default', true );
 		}
@@ -541,8 +545,8 @@ class WP_MTPC extends stdClass {
 			$this->getTemplate( 'deeplink-publish' );
 		} );
 
-		add_action( 'save_post', function ( $postId ) {
-			update_post_meta( $postId, "mtpc_deeplink_auto", (int) $_POST["mtpc_deeplink_auto"] );
+		add_action( 'save_post', function ( $post_id ) {
+			update_post_meta( $post_id, "mtpc_deeplink_auto", (int) $_POST["mtpc_deeplink_auto"] );
 		} );
 
 		add_filter( 'wp_insert_post_data', function ( $filtered_data, $raw_data ) {
