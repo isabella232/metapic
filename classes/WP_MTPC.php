@@ -3,6 +3,7 @@
 namespace MetaPic;
 
 use \Carbon\Carbon;
+use \Exception;
 
 class WP_MTPC {
 
@@ -340,14 +341,12 @@ class WP_MTPC {
 	private function setupIframeRoutes() {
 		add_action( 'init', function () {
 			add_rewrite_rule( 'hello.php$', 'index.php?' . $this->accessKey, 'top' );
-		}
-		);
+		} );
 
 		add_filter( 'query_vars', function ( $query_vars ) {
 			$query_vars[] = $this->accessKey;
 			return $query_vars;
-		}
-		);
+		} );
 
 		add_action( 'parse_request', function ( $wp ) {
 			if ( array_key_exists( $this->accessKey, $wp->query_vars ) ) {
@@ -393,54 +392,66 @@ class WP_MTPC {
 		} );
 	}
 
-	private function updateClicksForSingleSite() {
-		$lastUpdate = get_option( "mtpc_last_click_update" );
-		if ( ( $lastUpdate && Carbon::parse( $lastUpdate )->diffInMinutes( Carbon::now() ) >= 10 ) || ! $lastUpdate ) {
-			update_site_option( "mtpc_last_click_update", Carbon::now()->toDateTimeString() );
-			try {
+	public function updateClicksForSingleSite() {
 
-				$wpClicks = $this->client->getClientClicksByDate( get_option( "mtpc_id" ), [
-					"from"              => date( 'Y-m-d', strtotime( '-10 days' ) ),
-					"to"                => date( "Y-m-d" ),
-					"user_access_token" => get_option( "mtpc_access_token" ),
-				] );
+		try {
 
+			$wpClicks = (array) $this->client->getClientClicksByDate( get_option( "mtpc_id" ), [
+				"from"              => date( 'Y-m-d', strtotime( '-10 days' ) ),
+				"to"                => date( "Y-m-d" ),
+				"user_access_token" => get_option( "mtpc_access_token" ),
+			] );
+
+			$mtpcEmail = get_option( "mtpc_email" );
+
+			if ( $mtpcEmail && isset( $wpClicks[ $mtpcEmail ] ) ) {
+				$clicksToInsert = $this->insertMissingDates( $wpClicks[ $mtpcEmail ]["day"] );
+				update_option( "mtpc_clicks_by_date", (int) $clicksToInsert );
+				update_option( "mtpc_clicks_by_month", isset( $wpClicks[ $mtpcEmail ]["month"] ) ? (int) $wpClicks[ $mtpcEmail ]["month"] : 0 );
+				update_option( "mtpc_clicks_total", isset( $wpClicks[ $mtpcEmail ]["total"] ) ? (int) $wpClicks[ $mtpcEmail ]["total"] : 0 );
+			}
+
+			update_option( "mtpc_clicks", $wpClicks );
+
+			return $wpClicks;
+
+		} catch ( Exception $e ) {
+			return [ ];
+		}
+
+	}
+
+	public function updateClicksForMultiSite() {
+
+		try {
+
+			$wpClicks = (array) $this->client->getClientClicksByDate( null, [
+				"from" => date( 'Y-m-d', strtotime( '-10 days' ) ),
+				"to"   => date( "Y-m-d" ),
+			] );
+
+			$sites = wp_get_sites();
+
+			foreach ( $sites as $site ) {
+				switch_to_blog( $site["blog_id"] );
 				$mtpcEmail = get_option( "mtpc_email" );
 				if ( $mtpcEmail && isset( $wpClicks[ $mtpcEmail ] ) ) {
 					$clicksToInsert = $this->insertMissingDates( $wpClicks[ $mtpcEmail ]["day"] );
-					update_option( "mtpc_clicks_by_date", $clicksToInsert );
-					update_option( "mtpc_clicks_by_month", isset( $wpClicks[ $mtpcEmail ]["month"] ) ? $wpClicks[ $mtpcEmail ]["month"] : 0 );
-					update_option( "mtpc_clicks_total", isset( $wpClicks[ $mtpcEmail ]["total"] ) ? $wpClicks[ $mtpcEmail ]["total"] : 0 );
+					update_option( "mtpc_clicks_by_date", (int) $clicksToInsert );
+					update_option( "mtpc_clicks_by_month", isset( $wpClicks[ $mtpcEmail ]["month"] ) ? (int) $wpClicks[ $mtpcEmail ]["month"] : 0 );
+					update_option( "mtpc_clicks_total", isset( $wpClicks[ $mtpcEmail ]["total"] ) ? (int) $wpClicks[ $mtpcEmail ]["total"] : 0 );
 				}
-				update_option( "mtpc_clicks", $wpClicks );
-			} catch ( Exception $e ) {
 			}
-		}
-	}
 
-	private function updateClicksForMultiSite() {
-		$lastUpdate = get_site_option( "mtpc_last_click_update" );
-		if ( ( $lastUpdate && Carbon::parse( $lastUpdate )->diffInMinutes( Carbon::now() ) >= 10 ) || ! $lastUpdate ) {
-			update_site_option( "mtpc_last_click_update", Carbon::now()->toDateTimeString() );
-			try {
-				$wpClicks = $this->client->getClientClicksByDate( null, [ "from" => date( 'Y-m-d', strtotime( '-10 days' ) ), "to" => date( "Y-m-d" ) ] );
-				$sites    = wp_get_sites();
-				$orgBlog  = get_current_blog_id();
-				foreach ( $sites as $site ) {
-					switch_to_blog( $site["blog_id"] );
-					$mtpcEmail = get_option( "mtpc_email" );
-					if ( $mtpcEmail && isset( $wpClicks[ $mtpcEmail ] ) ) {
-						$clicksToInsert = $this->insertMissingDates( $wpClicks[ $mtpcEmail ]["day"] );
-						update_option( "mtpc_clicks_by_date", (int) $clicksToInsert );
-						update_option( "mtpc_clicks_by_month", isset( $wpClicks[ $mtpcEmail ]["month"] ) ? (int) $wpClicks[ $mtpcEmail ]["month"] : 0 );
-						update_option( "mtpc_clicks_total", isset( $wpClicks[ $mtpcEmail ]["total"] ) ? (int) $wpClicks[ $mtpcEmail ]["total"] : 0 );
-					}
-				}
-				switch_to_blog( $orgBlog );
-				update_site_option( "mtpc_clicks", $wpClicks );
-			} catch ( Exception $e ) {
-			}
+			switch_to_blog( $blog_id );
+			update_site_option( "mtpc_clicks", $wpClicks );
+
+			return $wpClicks;
+
+		} catch ( Exception $e ) {
+			return [ ];
 		}
+
 	}
 
 	private function setupNetworkDashboardWidget() {
@@ -458,9 +469,17 @@ class WP_MTPC {
 
 	private function updateClicks() {
 		if ( is_multisite() ) {
-			$this->updateClicksForMultiSite();
+			tlc_transient( 'mtpc_client_clicks' )
+				->updates_with( array( $this, 'updateClicksForMultiSite' ), [ get_current_blog_id() ] )
+				->background_only()
+				->expires_in( 600 )
+				->get();
 		} else {
-			$this->updateClicksForSingleSite();
+			tlc_transient( 'mtpc_clicks' )
+				->updates_with( array( $this, 'updateClicksForSingleSite' ) )
+				->background_only()
+				->expires_in( 600 )
+				->get();
 		}
 	}
 
@@ -548,15 +567,27 @@ class WP_MTPC {
 		} );
 
 		add_action( 'save_post', function ( $post_id ) {
-			update_post_meta( $post_id, "mtpc_deeplink_auto", (int) $_POST["mtpc_deeplink_auto"] );
+			if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+				return;
+			}
+
+			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+				return;
+			}
+
+			if ( isset( $_POST['mtpc_deeplink_auto'] ) ) {
+				update_post_meta( $post_id, "mtpc_deeplink_auto", (int) $_POST["mtpc_deeplink_auto"] );
+			}
 		} );
 
 		add_filter( 'wp_insert_post_data', function ( $filtered_data, $raw_data ) {
-			$deepLinkContent = (bool) $raw_data["mtpc_deeplink_auto"];
+			$deepLinkContent = isset( $raw_data['mtpc_deeplink_auto'] ) ? (bool) $raw_data["mtpc_deeplink_auto"] : false;
 			if ( $deepLinkContent ) {
+
 				if ( ! $this->hasActiveAccount() && $this->autoRegister ) {
 					$this->registerCurrentUser();
 				}
+
 				$userId      = get_option( "mtpc_id" );
 				$accessToken = ( is_multisite() ) ? null : get_option( "mtpc_access_token" );
 				$newContent  = $this->client->deepLinkBlogPost( $userId, $filtered_data['post_content'], $accessToken );
