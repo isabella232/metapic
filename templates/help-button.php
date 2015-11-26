@@ -1,1 +1,1 @@
-<a href="#" id="metapic-help-button" class="button" data-token-url="<?= $this->tokenUrl ?>"><?= __("How to earn money", "metapic") ?></a>
+<a href="#" id="metapic-help-button" class="button" data-token-url="<?php echo esc_attr( $this->tokenUrl ); ?>"><?php esc_html_e( "How to earn money", "metapic" ) ?></a>

@@ -1,30 +1,30 @@
 <?php
 /* @var $this WP_MTPC */
 global $post;
-$autoName = "mtpc_deeplink_auto_default";
-$deepLinkActive = ($this->hasActiveAccount()) ? get_option( $autoName ) : get_site_option( $autoName );
-$deepLinkPost = ($this->isEditPage("new")) ? $deepLinkActive : get_post_meta($post->ID, "mtpc_deeplink_auto", true);
-$deepLinkStatus = ($deepLinkPost) ? __( "Active", "metapic" ) : __( "Inactive", "metapic" );
+$autoName       = "mtpc_deeplink_auto_default";
+$deepLinkActive = ( $this->hasActiveAccount() ) ? get_option( $autoName ) : get_site_option( $autoName );
+$deepLinkPost   = ( $this->isEditPage( "new" ) ) ? $deepLinkActive : get_post_meta( $post->ID, "mtpc_deeplink_auto", true );
+$deepLinkStatus = ( $deepLinkPost ) ? esc_html__( "Active", "metapic" ) : esc_html__( "Inactive", "metapic" );
 ?>
 <div class="misc-pub-section mtpc-deeplinking">
-	<span class="mtpc-deeplink-text"><?= __( "Auto link content:", "metapic" ) ?></span>
+	<span class="mtpc-deeplink-text"><?php esc_html_e( "Auto link content:", "metapic" ) ?></span>
 	<span id="deeplink-status-display">
-		<span class="deeplink-status-text status-0" <?php if ($deepLinkPost) { ?>style="display: none;"<?php } ?>><?= __( "Inactive", "metapic" ) ?></span>
-		<span class="deeplink-status-text status-1" <?php if (!$deepLinkPost) { ?>style="display: none;"<?php } ?>><?= __( "Active", "metapic" ) ?></span>
+		<span class="deeplink-status-text status-0" <?php if ( $deepLinkPost ) { ?>style="display: none;"<?php } ?>><?php esc_html_e( "Inactive", "metapic" ) ?></span>
+		<span class="deeplink-status-text status-1" <?php if ( ! $deepLinkPost ) { ?>style="display: none;"<?php } ?>><?php esc_html_e( "Active", "metapic" ) ?></span>
 	</span>
 	<a href="#deeplink-status-select" class="edit-deeplink-status hide-if-no-js"><span
-			aria-hidden="true"><?php _e( 'Edit' ); ?></span> <span
-			class="screen-reader-text"><?php _e( 'Edit auto linking', 'metapic' ); ?></span></a>
+			aria-hidden="true"><?php esc_html_e( 'Edit', 'metapic' ); ?></span> <span
+			class="screen-reader-text"><?php esc_html_e( 'Edit auto linking', 'metapic' ); ?></span></a>
 
 	<div class="hide-if-js" id="deeplink-status-select">
 		<div class="deeplink-status-edit">
-			<input type="hidden" value="<?= $deepLinkPost ?>" id="deeplink-status-auto" name="mtpc_deeplink_auto"/>
-			<input type="checkbox" value="1" id="deeplink-status-check" name="mtpc_deeplink_auto_check" <?php if ($deepLinkPost) { ?>checked="checked"<?php } ?>>
-			<label class="selectit" for="deeplink-status-check"><?= __( "Activate auto linking", "metapic" ) ?></label>
+			<input type="hidden" value="<?php echo esc_attr( $deepLinkPost ); ?>" id="deeplink-status-auto" name="mtpc_deeplink_auto" />
+			<input type="checkbox" value="1" id="deeplink-status-check" name="mtpc_deeplink_auto_check" <?php checked( $deepLinkPost ); ?>>
+			<label class="selectit" for="deeplink-status-check"><?php esc_html_e( "Activate auto linking", "metapic" ) ?></label>
 		</div>
 		<p>
-			<a class="save-deeplink-status hide-if-no-js button" href="#deeplink-status-select"><?php _e('OK'); ?></a>
-			<a class="cancel-deeplink-status hide-if-no-js button-cancel" href="#deeplink-status-select"><?php _e('Cancel'); ?></a>
+			<a class="save-deeplink-status hide-if-no-js button" href="#deeplink-status-select"><?php esc_html_e( 'OK', 'metapic' ); ?></a>
+			<a class="cancel-deeplink-status hide-if-no-js button-cancel" href="#deeplink-status-select"><?php esc_html_e( 'Cancel', 'metapic' ); ?></a>
 		</p>
 	</div>
 </div>
