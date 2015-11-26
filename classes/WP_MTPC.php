@@ -173,8 +173,8 @@ class WP_MTPC extends stdClass {
 				if ( $user ) {
 					$this->activateAccount( $user["id"], $user["email"], $user["access_token"]["access_token"] );
 					$this->setStatusMessage( __( "Account created", "metapic" ) );
-					wp_redirect( admin_url( 'options-general.php?page=metapic_settings' ) );
-					die();
+					wp_safe_redirect( admin_url( 'options-general.php?page=metapic_settings' ) );
+					exit;
 				} else {
 					$this->setStatusMessage( __( "Account already exists", "metapic" ), "error" );
 				}
