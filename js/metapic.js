@@ -11,7 +11,7 @@
 	}
 
 	var getTagLink = function(tag) {
-		return "<a class='mtpc-link' href='http://mtpc.se/tags/Link/" + tag.id + "'>" + tag.text + "</a>";
+		return $( '<a/>', { "class": "mtpc-link", "href": "http://mtpc.se/tags/Link/" + tag.id } ).text( tag.text );
 	};
 
 	var getTagsAsList = function(id, tags) {
@@ -21,7 +21,7 @@
 		tinyDoc.find("ul[data-metapic-id='" + id + "']").remove();
 		list.attr("data-metapic-id", id);
 		for (i = 0; i < tags.length; i++) {
-			list.append("<li>"+ getTagLink(tags[i])+ "</li>");
+			list.append( $( '<li/>' ).append( getTagLink( tags[i] ) ) );
 		}
 		return list;
 	};
