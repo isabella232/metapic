@@ -1,2 +1,3 @@
 js/vendor/*
+/vendor/.git
 /vendor/**/.git
