@@ -5,9 +5,9 @@ $autoRegDefault  = get_site_option( 'mtpc_registration_auto' );
 <div class="wrap">
 	<h2><?php esc_html_e( 'Metapic site settings page', 'metapic' ) ?></h2>
 
+	<?php settings_errors(); ?>
 	<form method="post" action="" novalidate="novalidate">
 		<?php settings_fields( 'metapic_site_options' ); ?>
-		<?php settings_errors(); ?>
 		<h3><?php esc_html_e( 'API Settings', 'metapic' ); ?></h3>
 
 		<?php if ( get_site_option( "mtpc_valid_client" ) ): ?>
