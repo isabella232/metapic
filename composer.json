@@ -5,6 +5,9 @@
       "url": "https://github.com/raket/metapic-api-client.git"
     }
   ],
+  "config": {
+    "prepend-autoloader": false
+  },
   "require": {
     "metapic/api-client": "dev-master",
     "nesbot/carbon": "1.20.0",

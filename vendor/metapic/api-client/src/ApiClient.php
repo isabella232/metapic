@@ -9,9 +9,11 @@ use Guzzle\Http\Message\Request;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\Response;
 use Guzzle\Service\Client;
+use Log;
 
 /**
  * @method array|string getUsers(array $userData = [])
+ * @method array|string getRevenueTiers(array $revenueData = [])
  * @method array|string getUser(\int $userId)
  * @method array|string createUser(array $userData)
  * @method array|string updateUser(\int $userId, array $userData)
@@ -149,7 +151,8 @@ class ApiClient {
 		$response = $this->sendRequest($request);
 		return $response;
 	}
-    public function deepLinkBlogPost($userId,$blogPost, $userToken = null) {
+
+	public function deepLinkBlogPost($userId, $blogPost, $userToken = null) {
         $data = ["blogPost" => $blogPost];
 	    if ($userToken != null)
 		    $data["user_access_token"] = $userToken;
@@ -159,6 +162,15 @@ class ApiClient {
         $response = $this->sendRequest($request);
         return $response;
     }
+
+	public function createDeepLinks($userId, array $links) {
+		$data = ["userId" => $userId, "links" => json_encode($links)];
+
+		$request = $this->setupRequest("post", "deep-links", $data);
+		$request->addPostFields($data);
+		$response = $this->sendRequest($request);
+		return $response;
+	}
 
 	public function getIframeToken($userId) {
 		$request = $this->setupRequest("get", "users/".$userId."/iframe-token");
@@ -269,9 +281,10 @@ class ApiClient {
 
 	public function __call($method, $args) {
 		$arr = preg_split('/(?=[A-Z])/', $method);
-		$lastLetter = substr($arr[1], -1);
-		$resourceName = strtolower($arr[1]);
-		$methodName = strtolower($arr[0]) . "Resource";
+		$methodType = array_shift($arr);
+		$resourceName = strtolower(implode("-", $arr));
+		$lastLetter = substr($resourceName, -1);
+		$methodName = strtolower($methodType) . "Resource";
 		if ($lastLetter != "s") $resourceName .= "s";
 		else $methodName .= "s";
 		$argCount = count($args);

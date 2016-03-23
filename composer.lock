@@ -1,10 +1,11 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "07c37a1920a8d21e0b77d897f1d11c08",
+    "hash": "3ecb361d21d967c99b7de6d945fd699c",
+    "content-hash": "79c03aa96c662452e958ffa5ae0df7ba",
     "packages": [
         {
             "name": "guzzle/guzzle",
@@ -149,12 +150,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/raket/metapic-api-client.git",
-                "reference": "dadbba496a81ec2f6dcc08d472c880d545e27836"
+                "reference": "999aafaacaf41d2b302dc4ed2432766c74484cd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/raket/metapic-api-client/zipball/dadbba496a81ec2f6dcc08d472c880d545e27836",
-                "reference": "dadbba496a81ec2f6dcc08d472c880d545e27836",
+                "url": "https://api.github.com/repos/raket/metapic-api-client/zipball/999aafaacaf41d2b302dc4ed2432766c74484cd9",
+                "reference": "999aafaacaf41d2b302dc4ed2432766c74484cd9",
                 "shasum": ""
             },
             "require": {
@@ -182,7 +183,7 @@
                 "source": "https://github.com/raket/metapic-api-client/tree/master",
                 "issues": "https://github.com/raket/metapic-api-client/issues"
             },
-            "time": "2015-09-25 17:27:11"
+            "time": "2016-03-18 16:01:21"
         },
         {
             "name": "nesbot/carbon",
@@ -237,12 +238,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "a5eb815363c0388e83247e7e9853e5dbc14999cc"
+                "reference": "47d2d8cade9b1c3987573d2943bb9352536cdb87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/a5eb815363c0388e83247e7e9853e5dbc14999cc",
-                "reference": "a5eb815363c0388e83247e7e9853e5dbc14999cc",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/47d2d8cade9b1c3987573d2943bb9352536cdb87",
+                "reference": "47d2d8cade9b1c3987573d2943bb9352536cdb87",
                 "shasum": ""
             },
             "require": {
@@ -289,7 +290,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2015-10-30 20:15:42"
+            "time": "2016-03-07 14:04:32"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -297,12 +298,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "49ff736bd5d41f45240cec77b44967d76e0c3d25"
+                "reference": "1289d16209491b584839022f29257ad859b8532d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/49ff736bd5d41f45240cec77b44967d76e0c3d25",
-                "reference": "49ff736bd5d41f45240cec77b44967d76e0c3d25",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/1289d16209491b584839022f29257ad859b8532d",
+                "reference": "1289d16209491b584839022f29257ad859b8532d",
                 "shasum": ""
             },
             "require": {
@@ -314,7 +315,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
@@ -348,7 +349,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2015-11-20 09:19:13"
+            "time": "2016-01-20 09:13:37"
         },
         {
             "name": "symfony/translation",
@@ -356,12 +357,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "7f14717150a7445f8475864d1235875dd04061fb"
+                "reference": "a515b102eec65c7215baa84573803c3c2c33ee09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/7f14717150a7445f8475864d1235875dd04061fb",
-                "reference": "7f14717150a7445f8475864d1235875dd04061fb",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/a515b102eec65c7215baa84573803c3c2c33ee09",
+                "reference": "a515b102eec65c7215baa84573803c3c2c33ee09",
                 "shasum": ""
             },
             "require": {
@@ -385,7 +386,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev"
+                    "dev-master": "3.1-dev"
                 }
             },
             "autoload": {
@@ -412,7 +413,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2015-11-18 13:48:51"
+            "time": "2016-03-16 16:22:05"
         }
     ],
     "packages-dev": [],

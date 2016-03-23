@@ -6,6 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    $vendorDir . '/symfony/polyfill-mbstring/bootstrap.php',
-    $vendorDir . '/markjaquith/wp-tlc-transients/functions.php',
+    '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => $vendorDir . '/symfony/polyfill-mbstring/bootstrap.php',
+    '925ec30b9eae46a9c16e5d1397becc90' => $vendorDir . '/markjaquith/wp-tlc-transients/functions.php',
 );
