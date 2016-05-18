@@ -74,9 +74,13 @@ class WP_MTPC {
 		}
 	}
 
+	private function getTokenUrl() {
+		return rtrim( get_bloginfo( "url" ), "/" ) . "/?" . $this->accessKey;
+	}
+
 	private function setupJsOptions() {
 		add_filter( 'tiny_mce_before_init', function ( $mceInit, $editor_id ) {
-			$mceInit["mtpc_iframe_url"] = $this->tokenUrl;
+			$mceInit["mtpc_iframe_url"] = $this->getTokenUrl();
 			$mceInit["mtpc_plugin_url"] = $this->plugin_url;
 			return $mceInit;
 		}, 500, 2 );
