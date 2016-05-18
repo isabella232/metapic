@@ -87,31 +87,31 @@ html body.metapic-iframe-open {
 }
 .mtpc-product-list {
 	display:block !important;
-    list-style-type: none;
-    font-size: 13px;
-    color: #666;
-    width: 100%;
+	list-style-type: none;
+	font-size: 13px;
+	color: #666;
+	width: 100%;
 }
 
 .mtpc-product-list li {
-    display: inline-block;
-    padding: 5px 0px;
+	display: inline-block;
+	padding: 5px 0px;
 }
 .mtpc-product-list li:first-child {
-    margin-left:0px;
+	margin-left:0px;
 }
 .mtpc-product-list li a {
-    border-bottom: 1px solid #999;
+	border-bottom: 1px solid #999;
 }
 
 .mtpc-product-list li a:before {
-    content: '     //     ';
-    margin: 0px 7px;
+	content: '     //     ';
+	margin: 0px 7px;
 }
 .mtpc-product-list li:first-child a:before {
-    content: '';
-    margin:0px;
-    display:none;
+	content: '';
+	margin:0px;
+	display:none;
 }
 
 .mtpc-collage {
