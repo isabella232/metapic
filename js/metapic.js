@@ -16,10 +16,12 @@
 
 	var getTagsAsList = function(id, tags) {
 		var list = $("<ul></ul>");
+		var listId = parseInt(id);
 		list.addClass("mtpc-product-list");
 		list.css("display", "none");
-		tinyDoc.find("ul[data-metapic-id='" + id + "']").remove();
-		list.attr("data-metapic-id", id);
+		// Remove both data-metapic-id and data-metapic-related-id for legacy reasons
+		tinyDoc.find("ul[data-metapic-id='" + listId + "'],ul[data-metapic-related-id='" + id + "']").remove();
+		list.attr("data-metapic-related-id", id);
 		for (i = 0; i < tags.length; i++) {
 			list.append( $( '<li/>' ).append( getTagLink( tags[i] ) ) );
 		}
